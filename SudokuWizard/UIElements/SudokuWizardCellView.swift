@@ -1,5 +1,5 @@
 //
-//  SWCellView.swift
+//  SudokuWizardCellView.swift
 //  SudokuWizard
 //
 //  Created by Mike Mayer on 11/22/18.
@@ -8,12 +8,43 @@
 
 import UIKit
 
-class SWCellView: UIView
+protocol SudokuWizardCellViewDelegate {
+  func sudokuWizardCellViewValueChanged(_ cellView:SudokuWizardCellView)
+  func sudokuWizardCellValueMarksChanged(_ cellView:SudokuWizardCellView)
+}
+
+// MARK: -
+
+class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
 {
-  enum MarkType {
-    case digits
-    case dots
+  enum MarkType : Int {
+    case digits = 0
+    case dots = 1
   }
+  
+  enum TouchInputAction : Int {
+    case value = 0
+    case marks = 1
+  }
+  
+  var delegate : SudokuWizardCellViewDelegate?
+  
+  var tapRecognizer : UITapGestureRecognizer!
+  
+  override func awakeFromNib()
+  {
+    super.awakeFromNib()
+    
+    print("Active: ",self.isUserInteractionEnabled)
+    
+    tapRecognizer = UITapGestureRecognizer(target:self,action:#selector(handleTap(_:)))
+    tapRecognizer.numberOfTapsRequired = 1
+    tapRecognizer.delegate = self
+    
+    addGestureRecognizer(tapRecognizer)
+  }
+  
+  // MARK: -
   
   var conflicted = false
   {
@@ -27,10 +58,13 @@ class SWCellView: UIView
   
   var value = 0
   {
-    didSet { self.setNeedsDisplay() }
+    didSet {
+      self.setNeedsDisplay()
+      delegate?.sudokuWizardCellViewValueChanged(self)
+    }
   }
   
-  var marks = [ false, false, false, false, false, false, false, false, false ]
+  private(set) var marks = [ false, false, false, false, false, false, false, false, false ]
   
   var markType = MarkType.digits
   {
@@ -39,8 +73,11 @@ class SWCellView: UIView
   
   func set(mark:Int, on:Bool = true)
   {
+    guard mark > 0, mark < 10 else { return }
+    
     marks[mark-1] = on
     self.setNeedsDisplay()
+    delegate?.sudokuWizardCellValueMarksChanged(self)
   }
   
   func unset(mark:Int)
@@ -48,10 +85,38 @@ class SWCellView: UIView
     set(mark:mark, on:false)
   }
   
+  func isSet(mark:Int) -> Bool
+  {
+    guard mark > 0, mark < 10 else { return false }
+    return marks[mark-1]
+  }
+  
+  var touchInputAction = TouchInputAction.value
+  
   override var bounds : CGRect
   {
     didSet { self.setNeedsDisplay() }
   }
+  
+  // MARK: -
+  
+  override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool
+  {
+    return locked ? false : true
+  }
+  
+  @objc func handleTap(_ sender:UITapGestureRecognizer)
+  {
+    switch touchInputAction
+    {
+    case .value:
+      print ("value popup")
+    case .marks:
+      print ("marks popup")
+    }
+  }
+  
+  // MARK: -
   
   override func draw(_ rect: CGRect)
   {
@@ -64,8 +129,6 @@ class SWCellView: UIView
     if conflicted { UIColor(red: 1.0, green: 0.7, blue: 0.8, alpha: 1.0).setFill() }
     else          { UIColor.white.setFill() }
     path.fill()
-    UIColor.blue.setStroke()
-    path.stroke()
 
     if value > 0
     {

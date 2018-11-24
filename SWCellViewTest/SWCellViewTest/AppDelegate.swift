@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  SWCellViewTest
+//  SudokuWizardCellViewTest
 //
 //  Created by Mike Mayer on 11/22/18.
 //  Copyright © 2018 VMWishes. All rights reserved.

@@ -12,7 +12,7 @@
 		27022B7E21A7B9740078588D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27022B7C21A7B9740078588D /* Main.storyboard */; };
 		27022B8021A7B9750078588D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27022B7F21A7B9750078588D /* Assets.xcassets */; };
 		27022B8321A7B9750078588D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27022B8121A7B9750078588D /* LaunchScreen.storyboard */; };
-		27022B9421A7BAED0078588D /* SWCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27022B9321A7BAED0078588D /* SWCellView.swift */; };
+		27022B9421A7BAED0078588D /* SudokuWizardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27022B9321A7BAED0078588D /* SudokuWizardCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +23,7 @@
 		27022B7F21A7B9750078588D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27022B8221A7B9750078588D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27022B8421A7B9750078588D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		27022B9321A7BAED0078588D /* SWCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SWCellView.swift; path = ../../SudokuWizard/UIElements/SWCellView.swift; sourceTree = "<group>"; };
+		27022B9321A7BAED0078588D /* SudokuWizardCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizardCellView.swift; path = ../../SudokuWizard/UIElements/SudokuWizardCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +56,7 @@
 		27022B7721A7B9740078588D /* SWCellViewTest */ = {
 			isa = PBXGroup;
 			children = (
-				27022B9321A7BAED0078588D /* SWCellView.swift */,
+				27022B9321A7BAED0078588D /* SudokuWizardCellView.swift */,
 				27022B7821A7B9740078588D /* AppDelegate.swift */,
 				27022B7A21A7B9740078588D /* ViewController.swift */,
 				27022B7C21A7B9740078588D /* Main.storyboard */,
@@ -140,7 +140,7 @@
 			files = (
 				27022B7B21A7B9740078588D /* ViewController.swift in Sources */,
 				27022B7921A7B9740078588D /* AppDelegate.swift in Sources */,
-				27022B9421A7BAED0078588D /* SWCellView.swift in Sources */,
+				27022B9421A7BAED0078588D /* SudokuWizardCellView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
