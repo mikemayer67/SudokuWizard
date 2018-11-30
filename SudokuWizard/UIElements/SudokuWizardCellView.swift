@@ -6,39 +6,103 @@
 //  Copyright © 2018 VMWishes. All rights reserved.
 //
 
+// Possible cell state attributes
+//   Locked      = Uneditable (this is a given in the puzzle)
+//   Empty       = Editable without a value (but may have marks)
+//   Filled      = Editable with a value (no marks allowed)
+//   Selected    = Currently active cell
+//   Conflicted  = Has same digit as another cell in row, column, or box
+//   Highlighted = Contains currently "active" digit
+//
+// Possible state combinations
+
+//    State   Selected   Conflicted   Highlighted        bg    fg    font
+//    ------  --------   ----------   -----------        ---   ---   ----
+//
+//    locked                                              -     L      L
+//    locked                 X                            C     C      L
+//    locked                              X               H     L      L
+//    locked                 X            X               H     C      L
+//
+//    empty                                               -     -      -
+//    empty        X                                      S     -      -
+//
+//    filled       X                                      S     -      -
+//    filled       X         X                            S     C      -
+//    filled       X                      X               S     -      -
+//    filled       X         X            X               S     C      -
+//
+//    filled                                              -     -      -
+//    filled                 X                            C     C      -
+//    filled                              X               H     -      -
+//    filled                 X            X               H     C      -
+
 import UIKit
 
-protocol SudokuWizardCellViewDelegate {
-  func sudokuWizardCellViewValueChanged(_ cellView:SudokuWizardCellView)
-  func sudokuWizardCellValueMarksChanged(_ cellView:SudokuWizardCellView)
+
+protocol SudokuWizardCellViewDelegate
+{
+  func sudokuWizardCellTapped(_ cellView:SudokuWizardCellView)
 }
 
 // MARK: -
 
 class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
 {
-  enum MarkType : Int {
+  enum MarkStyle : Int {
     case digits = 0
     case dots = 1
   }
   
-  enum TouchInputAction : Int {
-    case value = 0
-    case marks = 1
+  enum CellState {
+    case empty
+    case locked(Int)
+    case filled(Int)
   }
   
-  var delegate : SudokuWizardCellViewDelegate?
+  // MARK: -
+  
+  let defaultBackgroundColor   = UIColor.white
+  let selectedBackgroundColor  = UIColor(red: 0.85, green: 0.9, blue: 0.95, alpha: 1.0)
+  let conflictBackgroundColor  = UIColor(red: 1.0, green: 0.7, blue: 0.8, alpha: 1.0)
+  let highlightBackgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.7, alpha: 1.0)
+
+  let defaultDigitColor        = UIColor(red:0.0, green: 0.0, blue: 0.75, alpha: 1.0)
+  let lockedDigitColor         = UIColor.black
+  let conflictedDigitColor     = UIColor(red:0.5, green: 0.0, blue: 0.0, alpha: 1.0)
+  
+  let markColor                = UIColor(white: 0.5, alpha: 1.0)
+  
+  let defaultDigitFont         = UIFont.systemFont(ofSize: 12.0).fontName
+  let lockedDigitFont          = UIFont.boldSystemFont(ofSize: 12.0).fontName
+  let markDigitFont            = UIFont.systemFont(ofSize: 8.0).fontName
+  
+  // MARK: -
+  
+  var state       = CellState.empty  { didSet { setNeedsDisplay() } }
+  var selected    = false            { didSet { setNeedsDisplay() } }
+  var highlighted = false            { didSet { setNeedsDisplay() } }
+  var conflicted  = false            { didSet { setNeedsDisplay() } }
+  
+  var markStyle   = MarkStyle.digits { didSet { setNeedsDisplay() } }
+  
+  override var bounds : CGRect       { didSet { setNeedsDisplay() } }
+  
+  // MARK: -
+  
+  var delegate      : SudokuWizardCellViewDelegate?
   
   var tapRecognizer : UITapGestureRecognizer!
+  
+  private(set) var marks = [Bool]()  // Note that these are offset by 1 from digit they represent
   
   override func awakeFromNib()
   {
     super.awakeFromNib()
     
-    print("Active: ",self.isUserInteractionEnabled)
+    for _ in 0..<9 { marks.append(false) }
     
-    tapRecognizer = UITapGestureRecognizer(target:self,action:#selector(handleTap(_:)))
-    tapRecognizer.numberOfTapsRequired = 1
+    tapRecognizer = UITapGestureRecognizer( target:self, action:#selector(handleTap(_:)) )
     tapRecognizer.delegate = self
     
     addGestureRecognizer(tapRecognizer)
@@ -46,74 +110,35 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   
   // MARK: -
   
-  var conflicted = false
-  {
-    didSet { self.setNeedsDisplay() }
-  }
-  
-  var locked = false
-  {
-    didSet { self.setNeedsDisplay() }
-  }
-  
-  var value = 0
-  {
-    didSet {
-      self.setNeedsDisplay()
-      delegate?.sudokuWizardCellViewValueChanged(self)
-    }
-  }
-  
-  private(set) var marks = [ false, false, false, false, false, false, false, false, false ]
-  
-  var markType = MarkType.digits
-  {
-    didSet { self.setNeedsDisplay() }
-  }
-  
-  func set(mark:Int, on:Bool = true)
-  {
-    guard mark > 0, mark < 10 else { return }
-    
-    marks[mark-1] = on
+  func set(mark:Int) {
+    guard mark > 0, mark < 10 else { fatalError(String(format:"Invalid mark index: %d",mark)) }
+    marks[mark-1] = true
     self.setNeedsDisplay()
-    delegate?.sudokuWizardCellValueMarksChanged(self)
   }
   
-  func unset(mark:Int)
-  {
-    set(mark:mark, on:false)
+  func clear(mark:Int)  {
+    guard mark > 0, mark < 10 else { fatalError(String(format:"Invalid mark index: %d",mark)) }
+    marks[mark-1] = false
+    self.setNeedsDisplay()
   }
   
-  func isSet(mark:Int) -> Bool
-  {
-    guard mark > 0, mark < 10 else { return false }
+  func hasMark(_ mark:Int) -> Bool  {
+    guard mark > 0, mark < 10 else { fatalError(String(format:"Invalid mark index: %d",mark)) }
     return marks[mark-1]
-  }
-  
-  var touchInputAction = TouchInputAction.value
-  
-  override var bounds : CGRect
-  {
-    didSet { self.setNeedsDisplay() }
   }
   
   // MARK: -
   
-  override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool
-  {
-    return locked ? false : true
+  override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    switch state
+    {
+    case .locked(_): return false
+    default:         return true
+    }
   }
   
-  @objc func handleTap(_ sender:UITapGestureRecognizer)
-  {
-    switch touchInputAction
-    {
-    case .value:
-      print ("value popup")
-    case .marks:
-      print ("marks popup")
-    }
+  @objc func handleTap(_ sender:UITapGestureRecognizer) {
+    delegate?.sudokuWizardCellTapped(self)
   }
   
   // MARK: -
@@ -121,41 +146,64 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   override func draw(_ rect: CGRect)
   {
     let path = UIBezierPath(rect: rect)
-    path.lineWidth = 2.0
     
     let cw = self.bounds.width
     let ch = self.bounds.height
     
-    if conflicted { UIColor(red: 1.0, green: 0.7, blue: 0.8, alpha: 1.0).setFill() }
-    else          { UIColor.white.setFill() }
+    if      selected    { selectedBackgroundColor.setFill()  }
+    else if highlighted { highlightBackgroundColor.setFill() }
+    else if conflicted  { conflictBackgroundColor.setFill()  }
+    else                { defaultBackgroundColor.setFill()   }
     path.fill()
 
-    if value > 0
+    var fontName : String!
+    var fgColor  : UIColor?
+    var digit    : String?
+    
+    switch state
     {
-      let d = value.description
+    case let .locked(d):
+      fontName = lockedDigitFont
+      fgColor  = conflicted ? conflictedDigitColor : lockedDigitColor
+      digit    = d.description
       
-      var attr = [ NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 12.0),
-                   NSAttributedString.Key.foregroundColor: locked ? UIColor.black : UIColor.blue ]
+    case let .filled(d):
+      fontName = defaultDigitFont
+      fgColor  = conflicted ? conflictedDigitColor : defaultDigitColor
+      digit    = d.description
+      
+    case .empty:
+      fgColor  = markColor
+    }
+    
+    if let d = digit
+    {
+      var attr = [NSAttributedString.Key : Any]()
+      
+      attr[.font] = UIFont(name:fontName, size:12.0)
+      attr[.foregroundColor] = fgColor
       
       let unscaledBounds = d.size(withAttributes: attr)
       let frac = max( unscaledBounds.width / cw, unscaledBounds.height / ch )
       
-      attr[ NSAttributedString.Key.font ] = UIFont.boldSystemFont(ofSize: 9.0 / frac )
+      attr[.font] = UIFont(name:fontName, size: 9.0 / frac)
       
       let scaledBounds = d.size(withAttributes: attr)
       let pt = CGPoint(x: (cw - scaledBounds.width)/2, y: (ch-scaledBounds.height)/2)
       
       d.draw(at:pt, withAttributes:attr)
     }
-    else if markType == .digits
+    else if markStyle == .digits
     {
-      var attr = [ NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12.0),
-                   NSAttributedString.Key.foregroundColor: UIColor(white: 0.5, alpha: 1.0) ]
+      var attr = [NSAttributedString.Key : Any]()
+      
+      attr[.font] = UIFont(name: markDigitFont, size: 12.0)
+      attr[.foregroundColor] = markColor
       
       let unscaledBounds = "0".size(withAttributes: attr)
       let frac = max( unscaledBounds.width / cw, unscaledBounds.height / ch )
       
-      attr[ NSAttributedString.Key.font ] = UIFont.boldSystemFont(ofSize: 3.0 / frac )
+      attr[.font ] = UIFont(name: markDigitFont, size: 3.0/frac)
       
       let xo = cw / 6.0
       let yo = ch / 6.0
@@ -185,7 +233,7 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
       let sx = dx / 5.0
       let sy = dy / 5.0
       
-      UIColor(white: 0.5, alpha: 1.0).setFill()
+      markColor.setFill()
 
       for i in 0...8 {
         if marks[i] {
@@ -202,5 +250,3 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   }
   
 }
-
-
