@@ -206,7 +206,6 @@ class ViewController: UIViewController, SudokuWizardCellViewDelegate
   
   func sudokuWizardCellTapped(_ cellView: SudokuWizardCellView)
   {
-    print("Cell Tapped")
     switch cellView.state
     {
     case .empty, .filled(_):
@@ -214,6 +213,11 @@ class ViewController: UIViewController, SudokuWizardCellViewDelegate
     case .locked(_):
       break
     }
+  }
+  
+  func sudokuWizardCellPressed(_ cellView: SudokuWizardCellView)
+  {
+    print("Cell Pressed")
   }
 }
 

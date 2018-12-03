@@ -43,6 +43,7 @@ import UIKit
 protocol SudokuWizardCellViewDelegate
 {
   func sudokuWizardCellTapped(_ cellView:SudokuWizardCellView)
+  func sudokuWizardCellPressed(_ cellView:SudokuWizardCellView)
 }
 
 // MARK: -
@@ -93,19 +94,45 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   var delegate      : SudokuWizardCellViewDelegate?
   
   var tapRecognizer : UITapGestureRecognizer!
+  var pressRecongnizer : UILongPressGestureRecognizer!
+  
+  var row : Int?
+  var col : Int?
   
   private(set) var marks = [Bool]()  // Note that these are offset by 1 from digit they represent
+  
+  init(row:Int, col:Int)
+  {
+    self.row = row
+    self.col = col
+    
+    super.init(frame:CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0))
+    
+    completeSetup()
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder:aDecoder)
+  }
   
   override func awakeFromNib()
   {
     super.awakeFromNib()
-    
+    completeSetup()
+  }
+  
+  func completeSetup()
+  {
     for _ in 0..<9 { marks.append(false) }
     
     tapRecognizer = UITapGestureRecognizer( target:self, action:#selector(handleTap(_:)) )
     tapRecognizer.delegate = self
     
+    pressRecongnizer = UILongPressGestureRecognizer(target: self, action: #selector(handlePress(_:)) )
+    pressRecongnizer.delegate = self
+    
     addGestureRecognizer(tapRecognizer)
+    addGestureRecognizer(pressRecongnizer)
   }
   
   // MARK: -
@@ -139,6 +166,14 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   
   @objc func handleTap(_ sender:UITapGestureRecognizer) {
     delegate?.sudokuWizardCellTapped(self)
+  }
+  
+  @objc func handlePress(_ sender:UILongPressGestureRecognizer)
+  {
+    if sender.state == .began
+    {
+      delegate?.sudokuWizardCellPressed(self)
+    }
   }
   
   // MARK: -

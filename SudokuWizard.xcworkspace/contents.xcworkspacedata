@@ -7,4 +7,7 @@
    <FileRef
       location = "group:SWCellViewTest/SWCellViewTest.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:SWGridViewTest/SWGridViewTest.xcodeproj">
+   </FileRef>
 </Workspace>
