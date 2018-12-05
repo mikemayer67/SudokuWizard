@@ -15,17 +15,28 @@ enum SudokuWizardError : Error
 
 class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
 {
-  var bgView : SWGBackgroundView!
-  var cellViews = [SudokuWizardCellView]()
+  enum GridState
+  {
+    case Unset
+    case Active
+    case Solved
+  }
+  
+  private(set) var state = GridState.Unset
+  
+  let bgView          = BackgroundView()
+  var cellViews       = [SudokuWizardCellView]()
+  
+  var cellInputController : SudokuWizardInputController?
   
   // MARK: -
   
   override func awakeFromNib()
   {
     super.awakeFromNib()
-    print("awake from nib")
     
-    bgView = SWGBackgroundView()
+    // MARK:  grid content
+
     self.addSubview(bgView)
     
     bgView.translatesAutoresizingMaskIntoConstraints = false
@@ -79,6 +90,9 @@ class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
         index += 1
       }
     }
+    
+    // MARK: popup controller
+    
   }
   
   // MARK: -
@@ -90,6 +104,8 @@ class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
       cell.selected = false
       cell.highlighted = false
     }
+    
+    state = .Unset
   }
   
   func loadPuzzle(_ puzzle:String) throws
@@ -106,12 +122,16 @@ class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
       let d = digits[i]
       if d > 0 { cellViews[i].state = .locked(d) }
     }
+    
+    state = .Active
   }
 
   // MARK: -
   
   func sudokuWizardCellTapped(_ cell: SudokuWizardCellView)
   {
+    guard state == .Active else { return }
+    
     if cell.selected == false
     {
       select(cell)
@@ -123,6 +143,8 @@ class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
   
   func sudokuWizardCellPressed(_ cell: SudokuWizardCellView)
   {
+    guard state == .Active else { return }
+
     select(cell)
     print("Popup mark picker")
   }
@@ -135,12 +157,11 @@ class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
       cell.selected = true
     }
   }
-  
 }
 
 // MARK: -
 
-class SWGBackgroundView: UIView
+class BackgroundView: UIView
 {
   override func draw(_ rect: CGRect)
   {
@@ -150,3 +171,25 @@ class SWGBackgroundView: UIView
     path.fill()
   }
 }
+
+
+//
+//func sudokuWizardCellPopupForUserInput(_ cellView: SudokuWizardCellView)
+//{
+//  if popupController == nil
+//  {
+//    print("Create popup controller")
+//    popupController = SudokuWizardPopupController()
+//  }
+//  if let pc = popupController
+//  {
+//    print("Popup for :", cellView, pc )
+//    print("bounds frame: ", self.boundsView.frame )
+//    print("cell frame: ", cellView.frame )
+//
+//    present(pc, animated: false)
+//    {
+//      print("Popup presented")
+//    }
+//  }
+//}

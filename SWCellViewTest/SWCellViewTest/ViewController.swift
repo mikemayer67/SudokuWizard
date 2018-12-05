@@ -222,24 +222,3 @@ class ViewController: UIViewController, SudokuWizardCellViewDelegate
 }
 
 
-//
-//func sudokuWizardCellPopupForUserInput(_ cellView: SudokuWizardCellView)
-//{
-//  if popupController == nil
-//  {
-//    print("Create popup controller")
-//    popupController = SudokuWizardPopupController()
-//  }
-//  if let pc = popupController
-//  {
-//    print("Popup for :", cellView, pc )
-//    print("bounds frame: ", self.boundsView.frame )
-//    print("cell frame: ", cellView.frame )
-//
-//    present(pc, animated: false)
-//    {
-//      print("Popup presented")
-//    }
-//  }
-//}
-

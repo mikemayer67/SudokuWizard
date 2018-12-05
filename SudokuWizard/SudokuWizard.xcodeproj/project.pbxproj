@@ -15,6 +15,7 @@
 		2785C42921B1CC6E00AAD7D1 /* SudokuWizardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2785C42721B1CC6E00AAD7D1 /* SudokuWizardCellView.swift */; };
 		2785C42A21B1CC6E00AAD7D1 /* SudokuWizardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2785C42821B1CC6E00AAD7D1 /* SudokuWizardGridView.swift */; };
 		27A1D62321B49056007AF213 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D62221B49056007AF213 /* Extensions.swift */; };
+		27A1D62F21B79F7D007AF213 /* SudokuWizardInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D62E21B79F7D007AF213 /* SudokuWizardInputController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		2785C42721B1CC6E00AAD7D1 /* SudokuWizardCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuWizardCellView.swift; sourceTree = "<group>"; };
 		2785C42821B1CC6E00AAD7D1 /* SudokuWizardGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuWizardGridView.swift; sourceTree = "<group>"; };
 		27A1D62221B49056007AF213 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = ../../SWGridViewTest/SWGridViewTest/Extensions.swift; sourceTree = "<group>"; };
+		27A1D62E21B79F7D007AF213 /* SudokuWizardInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SudokuWizardInputController.swift; path = ../../SWGridViewTest/SWGridViewTest/SudokuWizardInputController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,9 +76,10 @@
 		27022B9021A7BA090078588D /* UIElements */ = {
 			isa = PBXGroup;
 			children = (
+				27A1D62221B49056007AF213 /* Extensions.swift */,
 				2785C42721B1CC6E00AAD7D1 /* SudokuWizardCellView.swift */,
 				2785C42821B1CC6E00AAD7D1 /* SudokuWizardGridView.swift */,
-				27A1D62221B49056007AF213 /* Extensions.swift */,
+				27A1D62E21B79F7D007AF213 /* SudokuWizardInputController.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -154,6 +157,7 @@
 			files = (
 				27A1D62321B49056007AF213 /* Extensions.swift in Sources */,
 				27022B5D21A7B6970078588D /* ViewController.swift in Sources */,
+				27A1D62F21B79F7D007AF213 /* SudokuWizardInputController.swift in Sources */,
 				27022B5B21A7B6970078588D /* AppDelegate.swift in Sources */,
 				2785C42A21B1CC6E00AAD7D1 /* SudokuWizardGridView.swift in Sources */,
 				2785C42921B1CC6E00AAD7D1 /* SudokuWizardCellView.swift in Sources */,
