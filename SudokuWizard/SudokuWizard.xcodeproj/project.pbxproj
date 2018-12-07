@@ -12,10 +12,9 @@
 		27022B6021A7B6970078588D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27022B5E21A7B6970078588D /* Main.storyboard */; };
 		27022B6221A7B6980078588D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27022B6121A7B6980078588D /* Assets.xcassets */; };
 		27022B6521A7B6980078588D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27022B6321A7B6980078588D /* LaunchScreen.storyboard */; };
-		2785C42921B1CC6E00AAD7D1 /* SudokuWizardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2785C42721B1CC6E00AAD7D1 /* SudokuWizardCellView.swift */; };
 		2785C42A21B1CC6E00AAD7D1 /* SudokuWizardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2785C42821B1CC6E00AAD7D1 /* SudokuWizardGridView.swift */; };
 		27A1D62321B49056007AF213 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D62221B49056007AF213 /* Extensions.swift */; };
-		27A1D62F21B79F7D007AF213 /* SudokuWizardInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D62E21B79F7D007AF213 /* SudokuWizardInputController.swift */; };
+		27A1D63B21BA25A8007AF213 /* SudokuWizardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D63A21BA25A7007AF213 /* SudokuWizardCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,10 +25,9 @@
 		27022B6121A7B6980078588D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27022B6421A7B6980078588D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27022B6621A7B6980078588D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2785C42721B1CC6E00AAD7D1 /* SudokuWizardCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuWizardCellView.swift; sourceTree = "<group>"; };
 		2785C42821B1CC6E00AAD7D1 /* SudokuWizardGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuWizardGridView.swift; sourceTree = "<group>"; };
 		27A1D62221B49056007AF213 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = ../../SWGridViewTest/SWGridViewTest/Extensions.swift; sourceTree = "<group>"; };
-		27A1D62E21B79F7D007AF213 /* SudokuWizardInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SudokuWizardInputController.swift; path = ../../SWGridViewTest/SWGridViewTest/SudokuWizardInputController.swift; sourceTree = "<group>"; };
+		27A1D63A21BA25A7007AF213 /* SudokuWizardCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuWizardCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,9 +75,8 @@
 			isa = PBXGroup;
 			children = (
 				27A1D62221B49056007AF213 /* Extensions.swift */,
-				2785C42721B1CC6E00AAD7D1 /* SudokuWizardCellView.swift */,
+				27A1D63A21BA25A7007AF213 /* SudokuWizardCellView.swift */,
 				2785C42821B1CC6E00AAD7D1 /* SudokuWizardGridView.swift */,
-				27A1D62E21B79F7D007AF213 /* SudokuWizardInputController.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -156,11 +153,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				27A1D62321B49056007AF213 /* Extensions.swift in Sources */,
+				27A1D63B21BA25A8007AF213 /* SudokuWizardCellView.swift in Sources */,
 				27022B5D21A7B6970078588D /* ViewController.swift in Sources */,
-				27A1D62F21B79F7D007AF213 /* SudokuWizardInputController.swift in Sources */,
 				27022B5B21A7B6970078588D /* AppDelegate.swift in Sources */,
 				2785C42A21B1CC6E00AAD7D1 /* SudokuWizardGridView.swift in Sources */,
-				2785C42921B1CC6E00AAD7D1 /* SudokuWizardCellView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

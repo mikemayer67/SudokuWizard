@@ -13,7 +13,6 @@ class ViewController: UIViewController, SudokuWizardCellViewDelegate
   @IBOutlet weak var sizeSlider: UISlider!
   @IBOutlet weak var xSlider: UISlider!
   @IBOutlet weak var ySlider: UISlider!
-  @IBOutlet weak var boundsView: UIView!
   @IBOutlet weak var cellView: SudokuWizardCellView!
   @IBOutlet weak var viewWidth: NSLayoutConstraint!
   @IBOutlet weak var viewHeight: NSLayoutConstraint!
@@ -204,20 +203,20 @@ class ViewController: UIViewController, SudokuWizardCellViewDelegate
     cellView.markStyle = SudokuWizardCellView.MarkStyle(rawValue: sender.selectedSegmentIndex)!
   }
   
-  func sudokuWizardCellTapped(_ cellView: SudokuWizardCellView)
-  {
-    switch cellView.state
-    {
-    case .empty, .filled(_):
-      cellView.selected = !cellView.selected
-    case .locked(_):
-      break
+  
+  func sudokuWizard(changeValueFor cell: SudokuWizardCellView) {
+    print("Change Value")
+    Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { _ in
+      cell.selected = false
     }
   }
   
-  func sudokuWizardCellPressed(_ cellView: SudokuWizardCellView)
-  {
-    print("Cell Pressed")
+  func sudokuWizard(changeMarksFor cell: SudokuWizardCellView) {
+    print("Change Marks")
+  }
+  
+  func sudokuWizard(selectionChangedTo cell: SudokuWizardCellView) {
+    print("Handle Selection")
   }
 }
 

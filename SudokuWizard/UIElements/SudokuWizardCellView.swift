@@ -42,8 +42,9 @@ import UIKit
 
 protocol SudokuWizardCellViewDelegate
 {
-  func sudokuWizardCellTapped(_ cellView:SudokuWizardCellView)
-  func sudokuWizardCellPressed(_ cellView:SudokuWizardCellView)
+  func sudokuWizard(changeValueFor cell:SudokuWizardCellView)
+  func sudokuWizard(changeMarksFor cell:SudokuWizardCellView)
+  func sudokuWizard(selectionChangedTo cell:SudokuWizardCellView)
 }
 
 // MARK: -
@@ -60,6 +61,8 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
     case locked(Int)
     case filled(Int)
   }
+  
+  static var maximumTapPressDelay : TimeInterval = 0.5
   
   // MARK: -
   
@@ -81,9 +84,15 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   // MARK: -
   
   var state       = CellState.empty  { didSet { setNeedsDisplay() } }
-  var selected    = false            { didSet { setNeedsDisplay() } }
   var highlighted = false            { didSet { setNeedsDisplay() } }
   var conflicted  = false            { didSet { setNeedsDisplay() } }
+  
+  var selected = false {
+    didSet {
+      setNeedsDisplay()
+      if selected { delegate?.sudokuWizard(selectionChangedTo: self) }
+    }
+  }
   
   var markStyle   = MarkStyle.digits { didSet { setNeedsDisplay() } }
   
@@ -93,8 +102,8 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   
   var delegate      : SudokuWizardCellViewDelegate?
   
-  var tapRecognizer : UITapGestureRecognizer!
-  var pressRecongnizer : UILongPressGestureRecognizer!
+  var tapRecognizer      : UITapGestureRecognizer!
+  var pressRecognizer    : UILongPressGestureRecognizer!
   
   var row : Int?
   var col : Int?
@@ -128,11 +137,11 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
     tapRecognizer = UITapGestureRecognizer( target:self, action:#selector(handleTap(_:)) )
     tapRecognizer.delegate = self
     
-    pressRecongnizer = UILongPressGestureRecognizer(target: self, action: #selector(handlePress(_:)) )
-    pressRecongnizer.delegate = self
+    pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handlePress(_:)) )
+    pressRecognizer.delegate = self
     
     addGestureRecognizer(tapRecognizer)
-    addGestureRecognizer(pressRecongnizer)
+    addGestureRecognizer(pressRecognizer)
   }
   
   // MARK: -
@@ -156,23 +165,45 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   
   // MARK: -
   
-  override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+  private(set) var tapPressTimer : Timer?
+  
+  @objc func handleTap(_ sender:UITapGestureRecognizer)
+  {
+    if !selected { selected = true }
+
     switch state
     {
-    case .locked(_): return false
-    default:         return true
+    case .empty,.filled(_):
+      let tapPressTimeout = SudokuWizardCellView.maximumTapPressDelay + pressRecognizer.minimumPressDuration
+      tapPressTimer?.invalidate()
+      tapPressTimer = Timer.scheduledTimer(withTimeInterval: tapPressTimeout, repeats: false) { _ in
+        self.tapPressTimer = nil
+      }
+      
+    case .locked(_):
+      break
     }
-  }
-  
-  @objc func handleTap(_ sender:UITapGestureRecognizer) {
-    delegate?.sudokuWizardCellTapped(self)
   }
   
   @objc func handlePress(_ sender:UILongPressGestureRecognizer)
   {
-    if sender.state == .began
+    guard sender.state == .began else { return }
+    
+    let afterTap = tapPressTimer != nil
+    tapPressTimer?.invalidate()
+    tapPressTimer = nil
+
+    if !selected { selected = true }
+
+    switch state
     {
-      delegate?.sudokuWizardCellPressed(self)
+    case .empty:
+      if afterTap  { delegate?.sudokuWizard(changeMarksFor: self) }
+      else         { delegate?.sudokuWizard(changeValueFor: self) }
+    case .filled(_):
+      if !afterTap { delegate?.sudokuWizard(changeValueFor: self) }
+    case .locked(_):
+      break
     }
   }
   

@@ -15,6 +15,9 @@ enum SudokuWizardError : Error
 
 class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
 {
+  
+  // MARK: -
+
   enum GridState
   {
     case Unset
@@ -22,12 +25,20 @@ class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
     case Solved
   }
   
+  class BackgroundView: UIView
+  {
+    override func draw(_ rect: CGRect) {
+      UIColor.black.setFill()
+      UIBezierPath(rect: rect).fill()
+    }
+  }
+  
+  // MARK: -
+  
   private(set) var state = GridState.Unset
   
-  let bgView          = BackgroundView()
-  var cellViews       = [SudokuWizardCellView]()
-  
-  var cellInputController : SudokuWizardInputController?
+  var bgView : UIView!
+  var cellViews = [SudokuWizardCellView]()
   
   // MARK: -
   
@@ -37,6 +48,7 @@ class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
     
     // MARK:  grid content
 
+    bgView = BackgroundView()
     self.addSubview(bgView)
     
     bgView.translatesAutoresizingMaskIntoConstraints = false
@@ -93,6 +105,7 @@ class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
     
     // MARK: popup controller
     
+    
   }
   
   // MARK: -
@@ -128,49 +141,31 @@ class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
 
   // MARK: -
   
-  func sudokuWizardCellTapped(_ cell: SudokuWizardCellView)
-  {
+  func sudokuWizard(changeValueFor cell: SudokuWizardCellView) {
     guard state == .Active else { return }
-    
-    if cell.selected == false
-    {
-      select(cell)
-      return
-    }
-   
     print("Popup value picker")
   }
   
-  func sudokuWizardCellPressed(_ cell: SudokuWizardCellView)
-  {
+  func sudokuWizard(changeMarksFor cell: SudokuWizardCellView) {
     guard state == .Active else { return }
+    print("Popup marks picker")
 
-    select(cell)
-    print("Popup mark picker")
   }
   
-  func select(_ cell:SudokuWizardCellView)
-  {
-    if cell.selected == false
+  func sudokuWizard(selectionChangedTo cell: SudokuWizardCellView) {
+    if state == .Active
     {
-      for i in 0...80 { cellViews[i].selected = false }
-      cell.selected = true
+      cellViews.forEach { c in if c !== cell { c.selected = false } }
     }
+    else
+    {
+      cell.selected = false
+    }    
   }
 }
 
-// MARK: -
 
-class BackgroundView: UIView
-{
-  override func draw(_ rect: CGRect)
-  {
-    super.draw(rect)
-    UIColor.black.setFill()
-    let path = UIBezierPath(rect: rect)
-    path.fill()
-  }
-}
+
 
 
 //
