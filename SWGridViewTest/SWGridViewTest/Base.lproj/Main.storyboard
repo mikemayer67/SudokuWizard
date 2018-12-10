@@ -26,25 +26,84 @@
                                 </connections>
                             </pickerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pWu-ip-btw" customClass="SudokuWizardGridView" customModule="SWGridViewTest" customModuleProvider="target">
-                                <rect key="frame" x="16" y="236" width="343" height="415"/>
+                                <rect key="frame" x="16" y="236" width="343" height="315.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="viewController" destination="BYZ-38-t0r" id="DBw-kR-O2I"/>
+                                </connections>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Marks:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q8o-dO-pLR">
+                                <rect key="frame" x="16" y="626" width="53" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="53" id="8cc-Zu-Jpd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FRP-fR-AMH">
+                                <rect key="frame" x="16" y="585" width="53" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="HUv-ao-3jN">
+                                <rect key="frame" x="77" y="581.5" width="282" height="29"/>
+                                <segments>
+                                    <segment title=""/>
+                                    <segment title="1"/>
+                                    <segment title="2"/>
+                                    <segment title="3"/>
+                                    <segment title="4"/>
+                                    <segment title="5"/>
+                                    <segment title="6"/>
+                                    <segment title="7"/>
+                                    <segment title="8"/>
+                                    <segment title="9"/>
+                                </segments>
+                                <connections>
+                                    <action selector="handleValueControl:" destination="BYZ-38-t0r" eventType="valueChanged" id="KwQ-Kx-arc"/>
+                                </connections>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2mE-t2-gHq">
+                                <rect key="frame" x="324" y="621.5" width="35" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="sGd-gK-sDD"/>
+                                </constraints>
+                                <state key="normal" title="dots"/>
+                                <connections>
+                                    <action selector="handleDots:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hGJ-hS-pMG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="pWu-ip-btw" secondAttribute="bottom" constant="16" id="1Qt-Et-hLl"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="HUv-ao-3jN" secondAttribute="trailing" constant="16" id="8Yc-EI-E48"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="pWu-ip-btw" secondAttribute="trailing" constant="16" id="Ec8-ZD-wzc"/>
+                            <constraint firstItem="q8o-dO-pLR" firstAttribute="top" secondItem="FRP-fR-AMH" secondAttribute="bottom" constant="20" id="HpD-yt-7ns"/>
+                            <constraint firstItem="FRP-fR-AMH" firstAttribute="width" secondItem="q8o-dO-pLR" secondAttribute="width" id="ST2-V0-Y46"/>
                             <constraint firstItem="pWu-ip-btw" firstAttribute="top" secondItem="DId-YL-atv" secondAttribute="bottom" id="SWH-qI-Fmk"/>
+                            <constraint firstItem="HUv-ao-3jN" firstAttribute="centerY" secondItem="FRP-fR-AMH" secondAttribute="centerY" id="V8S-vN-0V0"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2mE-t2-gHq" secondAttribute="trailing" constant="16" id="aPO-JI-DoH"/>
+                            <constraint firstItem="FRP-fR-AMH" firstAttribute="leading" secondItem="q8o-dO-pLR" secondAttribute="leading" id="byn-P6-CaZ"/>
+                            <constraint firstItem="2mE-t2-gHq" firstAttribute="centerY" secondItem="q8o-dO-pLR" secondAttribute="centerY" id="cZI-Ar-fnd"/>
                             <constraint firstItem="DId-YL-atv" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="dE7-p1-xWB"/>
+                            <constraint firstItem="HUv-ao-3jN" firstAttribute="top" secondItem="pWu-ip-btw" secondAttribute="bottom" constant="30" id="eND-SG-e5S"/>
+                            <constraint firstItem="q8o-dO-pLR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="kHR-3m-5eu"/>
                             <constraint firstItem="DId-YL-atv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="n48-Fd-aaG"/>
                             <constraint firstItem="pWu-ip-btw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="osl-KW-bY9"/>
                             <constraint firstItem="DId-YL-atv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="upW-81-1Ks"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="q8o-dO-pLR" secondAttribute="bottom" constant="20" id="vu8-5T-X41"/>
+                            <constraint firstItem="HUv-ao-3jN" firstAttribute="leading" secondItem="FRP-fR-AMH" secondAttribute="trailing" constant="8" id="zPq-fi-K5s"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="dataPickerView" destination="DId-YL-atv" id="QtR-gx-zh9"/>
+                        <outlet property="dotsButton" destination="2mE-t2-gHq" id="OB6-E9-4hy"/>
+                        <outlet property="marksLabel" destination="q8o-dO-pLR" id="oSc-ah-jSg"/>
                         <outlet property="sudokuGrid" destination="pWu-ip-btw" id="Uaf-bC-E3h"/>
+                        <outlet property="valueSegmentedControl" destination="HUv-ao-3jN" id="hfm-PW-rew"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

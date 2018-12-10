@@ -269,7 +269,7 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
       let unscaledBounds = "0".size(withAttributes: attr)
       let frac = max( unscaledBounds.width / cw, unscaledBounds.height / ch )
       
-      attr[.font ] = UIFont(name: markDigitFont, size: 3.0/frac)
+      attr[.font ] = UIFont(name: markDigitFont, size: 4.5/frac)
       
       let xo = cw / 6.0
       let yo = ch / 6.0

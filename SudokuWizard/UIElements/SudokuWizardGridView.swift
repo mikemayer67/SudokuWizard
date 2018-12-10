@@ -13,8 +13,9 @@ enum SudokuWizardError : Error
   case InvalidPuzzle(String)
 }
 
-class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
+class SudokuWizardGridView: UIView
 {
+  @IBOutlet weak var viewController : UIViewController!
   
   // MARK: -
 
@@ -40,6 +41,14 @@ class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
   var bgView : UIView!
   var cellViews = [SudokuWizardCellView]()
   
+  var selectedCell : SudokuWizardCellView?
+  {
+    didSet
+    {
+      cellViews.forEach { c in if c !== selectedCell { c.selected = false } }
+    }
+  }
+    
   // MARK: -
   
   override func awakeFromNib()
@@ -52,9 +61,20 @@ class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
     self.addSubview(bgView)
     
     bgView.translatesAutoresizingMaskIntoConstraints = false
-    bgView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-    bgView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-    bgView.widthAnchor.constraint(equalTo: bgView.heightAnchor).isActive = true
+    
+    let bgw = self.bounds.width
+    let bgh = self.bounds.height
+    print("bgw:\(bgw) bgh:\(bgh))")
+    if bgw < bgh {
+      bgView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+      bgView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+      bgView.widthAnchor.constraint(equalTo: bgView.heightAnchor).isActive = true
+    } else {
+      bgView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+      bgView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+      bgView.widthAnchor.constraint(equalTo: bgView.heightAnchor).isActive = true
+      bgView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+    }
     
     var index = 0;
     for row in 0...8 {
@@ -97,14 +117,11 @@ class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
           cell.heightAnchor.constraint(equalTo: cellViews[0].heightAnchor).isActive = true
         }
         
-        cell.delegate = self
-        
         index += 1
       }
     }
     
     // MARK: popup controller
-    
     
   }
   
@@ -138,53 +155,4 @@ class SudokuWizardGridView: UIView, SudokuWizardCellViewDelegate
     
     state = .Active
   }
-
-  // MARK: -
-  
-  func sudokuWizard(changeValueFor cell: SudokuWizardCellView) {
-    guard state == .Active else { return }
-    print("Popup value picker")
-  }
-  
-  func sudokuWizard(changeMarksFor cell: SudokuWizardCellView) {
-    guard state == .Active else { return }
-    print("Popup marks picker")
-
-  }
-  
-  func sudokuWizard(selectionChangedTo cell: SudokuWizardCellView) {
-    if state == .Active
-    {
-      cellViews.forEach { c in if c !== cell { c.selected = false } }
-    }
-    else
-    {
-      cell.selected = false
-    }    
-  }
 }
-
-
-
-
-
-//
-//func sudokuWizardCellPopupForUserInput(_ cellView: SudokuWizardCellView)
-//{
-//  if popupController == nil
-//  {
-//    print("Create popup controller")
-//    popupController = SudokuWizardPopupController()
-//  }
-//  if let pc = popupController
-//  {
-//    print("Popup for :", cellView, pc )
-//    print("bounds frame: ", self.boundsView.frame )
-//    print("cell frame: ", cellView.frame )
-//
-//    present(pc, animated: false)
-//    {
-//      print("Popup presented")
-//    }
-//  }
-//}
