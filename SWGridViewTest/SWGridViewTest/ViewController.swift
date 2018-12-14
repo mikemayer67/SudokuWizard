@@ -25,7 +25,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
   @IBOutlet weak var sudokuGrid: SudokuWizardGridView!
   @IBOutlet weak var valueSegmentedControl: UISegmentedControl!
   @IBOutlet weak var marksLabel: UILabel!
-  @IBOutlet weak var dotsButton: UIButton!
+  @IBOutlet weak var markStyleControl: UISegmentedControl!
+  @IBOutlet weak var autoMarkControl: UISegmentedControl!
   
   var markButtons = [UIButton]()
   
@@ -34,6 +35,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     puzzleKeys = puzzleData.keys.sorted()
     dataPickerView.selectRow(0, inComponent: 0, animated: true)
+    markStyleControl.selectedSegmentIndex = 0
+    autoMarkControl.selectedSegmentIndex = 1
     
     var last : UIButton!
     for i in 1...9
@@ -54,7 +57,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
       case 1:
         btn.leftAnchor.constraint(equalTo: valueSegmentedControl.leftAnchor).isActive = true
       case 9:
-        btn.rightAnchor.constraint(equalTo: dotsButton.leftAnchor).isActive = true
+        btn.rightAnchor.constraint(equalTo: valueSegmentedControl.rightAnchor).isActive = true
         fallthrough
       default:
         btn.leftAnchor.constraint(equalTo: last.rightAnchor).isActive = true
@@ -66,10 +69,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
       last = btn
     }
     
-    sudokuGrid.cellViews.forEach { cell in
-      cell.markStyle = .digits
-      cell.delegate = self
-    }
+    sudokuGrid.cellViews.forEach { cell in cell.delegate = self }
   }
   
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -101,6 +101,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         key = puzzleKeys[row-1]
       }
     }
+    
+    valueSegmentedControl.selectedSegmentIndex = 0
+    markButtons.forEach { $0.isSelected = false }
     
     let puzzle = puzzleData[key]!
 
@@ -170,11 +173,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
       case (.empty,_):
         cell.state = .filled(d)
         for m in 1...9 { markButtons[m-1].isSelected = false }
+        sudokuGrid.updateMarks(changed:cell)
       case (.filled(_),0):
         cell.state = .empty
         for m in 1...9 { markButtons[m-1].isSelected = cell.hasMark(m) }
+        sudokuGrid.updateMarks(changed:cell)
       case (.filled(_), _):
         cell.state = .filled(d)
+        sudokuGrid.updateMarks(changed:cell)
       case let (.locked(v),_):
         sender.selectedSegmentIndex = v
       }
@@ -201,13 +207,41 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
   }
   
-  @IBAction func handleDots(_ sender: UIButton)
+  @IBAction func handleMarkStyle(_ sender: UISegmentedControl)
   {
-    sender.isSelected = !sender.isSelected
+    sudokuGrid.markStyle =  sender.selectedSegmentIndex == 0 ? .digits : .dots
+  }
+  
+  @IBAction func handleAutoMarkControl(_ sender: UISegmentedControl)
+  {
+    switch sender.selectedSegmentIndex
+    {
+    case 0: // erase
+      sudokuGrid.markStrategy = .manual
+      sudokuGrid.clearAllMarks()
+      Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false) {_ in sender.selectedSegmentIndex = 1 }
+      markButtons.forEach { btn in btn.isEnabled = true }
+    case 1:
+      sudokuGrid.markStrategy = .manual
+      markButtons.forEach { btn in btn.isEnabled = true }
+    case 2:
+      sudokuGrid.markStrategy = .allowed
+      markButtons.forEach { btn in btn.isEnabled = false }
+    case 3:
+      sudokuGrid.markStrategy = .conflicted
+      markButtons.forEach { btn in btn.isEnabled = false }
+    default:
+      break
+    }
     
-    sudokuGrid.cellViews.forEach { cell in
-      cell.markStyle = sender.isSelected ? .dots : .digits
+    if let cell = sudokuGrid.selectedCell {
+      if case .empty = cell.state {
+        for m in 1...9 { markButtons[m-1].isSelected = cell.hasMark(m) }
+      } else {
+        for m in 1...9 { markButtons[m-1].isSelected = false }
+      }
     }
   }
+  
 }
 

@@ -15,6 +15,10 @@
 		27AA195221B1CB47002BCC5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AA195021B1CB47002BCC5A /* Main.storyboard */; };
 		27AA195421B1CB49002BCC5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27AA195321B1CB49002BCC5A /* Assets.xcassets */; };
 		27AA195721B1CB49002BCC5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AA195521B1CB49002BCC5A /* LaunchScreen.storyboard */; };
+		27EC0D7721C3E62E00BA561B /* icons8-erase.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EC0D7621C3E62D00BA561B /* icons8-erase.png */; };
+		27EC0D7921C3E65B00BA561B /* icons8-pencil_tip.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EC0D7821C3E65A00BA561B /* icons8-pencil_tip.png */; };
+		27EC0D7B21C3E67F00BA561B /* icons8-settings3.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EC0D7A21C3E67E00BA561B /* icons8-settings3.png */; };
+		27EC0D7D21C3E68B00BA561B /* icons8-settings_3_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EC0D7C21C3E68B00BA561B /* icons8-settings_3_filled.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,10 @@
 		27AA195321B1CB49002BCC5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27AA195621B1CB49002BCC5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27AA195821B1CB49002BCC5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27EC0D7621C3E62D00BA561B /* icons8-erase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-erase.png"; sourceTree = "<group>"; };
+		27EC0D7821C3E65A00BA561B /* icons8-pencil_tip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-pencil_tip.png"; sourceTree = "<group>"; };
+		27EC0D7A21C3E67E00BA561B /* icons8-settings3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-settings3.png"; sourceTree = "<group>"; };
+		27EC0D7C21C3E68B00BA561B /* icons8-settings_3_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-settings_3_filled.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,10 +71,14 @@
 				27A1D62421B490AE007AF213 /* Extensions.swift */,
 				27A1D63E21BA25D4007AF213 /* SudokuWizardCellView.swift */,
 				2785C42E21B1CCA600AAD7D1 /* SudokuWizardGridView.swift */,
-				27AA194C21B1CB47002BCC5A /* AppDelegate.swift */,
 				27AA194E21B1CB47002BCC5A /* ViewController.swift */,
+				27AA194C21B1CB47002BCC5A /* AppDelegate.swift */,
 				27AA195021B1CB47002BCC5A /* Main.storyboard */,
 				27AA195321B1CB49002BCC5A /* Assets.xcassets */,
+				27EC0D7621C3E62D00BA561B /* icons8-erase.png */,
+				27EC0D7821C3E65A00BA561B /* icons8-pencil_tip.png */,
+				27EC0D7C21C3E68B00BA561B /* icons8-settings_3_filled.png */,
+				27EC0D7A21C3E67E00BA561B /* icons8-settings3.png */,
 				27AA195521B1CB49002BCC5A /* LaunchScreen.storyboard */,
 				27AA195821B1CB49002BCC5A /* Info.plist */,
 			);
@@ -131,8 +143,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27EC0D7721C3E62E00BA561B /* icons8-erase.png in Resources */,
+				27EC0D7921C3E65B00BA561B /* icons8-pencil_tip.png in Resources */,
 				27AA195721B1CB49002BCC5A /* LaunchScreen.storyboard in Resources */,
 				27AA195421B1CB49002BCC5A /* Assets.xcassets in Resources */,
+				27EC0D7D21C3E68B00BA561B /* icons8-settings_3_filled.png in Resources */,
+				27EC0D7B21C3E67F00BA561B /* icons8-settings3.png in Resources */,
 				27AA195221B1CB47002BCC5A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

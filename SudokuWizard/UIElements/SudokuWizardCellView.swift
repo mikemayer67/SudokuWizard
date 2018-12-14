@@ -87,6 +87,15 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   var highlighted = false            { didSet { setNeedsDisplay() } }
   var conflicted  = false            { didSet { setNeedsDisplay() } }
   
+  var value : Int?
+  {
+    switch state {
+    case let .locked(v): return v
+    case let .filled(v): return v
+    default: return nil
+    }
+  }
+  
   var selected = false {
     didSet {
       setNeedsDisplay()
@@ -156,6 +165,30 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
     guard mark > 0, mark < 10 else { fatalError(String(format:"Invalid mark index: %d",mark)) }
     marks[mark-1] = false
     self.setNeedsDisplay()
+  }
+  
+  func set(marks:[Bool])
+  {
+    var needsDisplay = false
+    for i in 0...8 {
+      if marks[i] != self.marks[i] {
+        self.marks[i] = marks[i]
+        needsDisplay = true
+      }
+    }
+    if needsDisplay { self.setNeedsDisplay() }
+  }
+  
+  func clearAllMarks()
+  {
+    var needsDisplay = false
+    for i in 0...8 {
+      if marks[i] {
+        marks[i] = false
+        needsDisplay = true
+      }
+    }
+    if needsDisplay { self.setNeedsDisplay() }
   }
   
   func hasMark(_ mark:Int) -> Bool  {
@@ -296,8 +329,8 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
       let yo = ch / 6.0
       let dx = cw / 3.0
       let dy = ch / 3.0
-      let sx = dx / 5.0
-      let sy = dy / 5.0
+      let sx = dx / 3.0
+      let sy = dy / 3.0
       
       markColor.setFill()
 

@@ -18,6 +18,13 @@ class SudokuWizardGridView: UIView
   @IBOutlet weak var viewController : UIViewController!
   
   // MARK: -
+  
+  enum MarkStrategy
+  {
+    case manual
+    case allowed
+    case conflicted
+  }
 
   enum GridState
   {
@@ -47,6 +54,16 @@ class SudokuWizardGridView: UIView
     {
       cellViews.forEach { c in if c !== selectedCell { c.selected = false } }
     }
+  }
+  
+  var markStyle : SudokuWizardCellView.MarkStyle = .digits
+  {
+    didSet { cellViews.forEach { cell in cell.markStyle = markStyle } }
+  }
+  
+  var markStrategy : MarkStrategy = .manual
+  {
+    didSet { if markStrategy != oldValue { computeAllMarks() } }
   }
     
   // MARK: -
@@ -80,8 +97,9 @@ class SudokuWizardGridView: UIView
     for row in 0...8 {
       for col in 0...8 {
         let cell = SudokuWizardCellView(row:row,col:col)
-        cellViews.append(cell)
+        cell.markStyle = markStyle
         
+        cellViews.append(cell)
         bgView.addSubview(cell)
         
         cell.translatesAutoresizingMaskIntoConstraints = false
@@ -133,9 +151,11 @@ class SudokuWizardGridView: UIView
       cell.state = .empty
       cell.selected = false
       cell.highlighted = false
+      cell.clearAllMarks()
     }
     
     state = .Unset
+    selectedCell = nil
   }
   
   func loadPuzzle(_ puzzle:String) throws
@@ -153,6 +173,106 @@ class SudokuWizardGridView: UIView
       if d > 0 { cellViews[i].state = .locked(d) }
     }
     
+    computeAllMarks()
+    
     state = .Active
+  }
+  
+  // MARK: -
+  
+  func clearAllMarks()
+  {
+    if markStrategy == .manual {
+      cellViews.forEach { cell in cell.clearAllMarks() }
+    }
+  }
+  
+  func computeAllMarks()
+  {
+    guard markStrategy != .manual else { return }
+    
+    // turn on all marks until demonstrated otherwise
+    var marks = [[Bool]](repeating: [Bool](repeating: true, count: 9), count: 81)
+    
+    // loop over grid cells, update marks based on values
+    cellViews.forEach { cell in
+      if case .empty = cell.state { return }
+      
+      let r = cell.row!
+      let c = cell.col!
+      let v = cell.value!
+      
+      let br = 3*(r/3)  // row index of NW corner of current box
+      let bc = 3*(c/3)  // col index of NW corner of current box
+      
+      for i in 0...8 {
+        marks[9*r + c][i] = false  // clear all marks in current cell
+        
+        marks[9*r + i][v-1] = false  // clear v-mark in current column
+        marks[9*i + c][v-1] = false  // clear v-mark in current row
+        
+        let ri = i/3  // ith row offset in current box
+        let ci = i%3  // ith col offset in current box
+        
+        marks[9*(br+ri) + (bc+ci)][v-1] = false // clear v-mark in current box
+      }
+    }
+    
+    for i in 0...80 {
+      if markStrategy == .conflicted {
+        for j in 0...8 { marks[i][j] = !marks[i][j] }
+      }
+      cellViews[i].set(marks: marks[i])
+    }
+  }
+  
+  func updateMarks(changed cell:SudokuWizardCellView)
+  {
+    guard markStrategy != .manual else { return }
+
+    let r = cell.row!
+    let c = cell.col!
+    
+    let br = 3*(r/3)  // row index of NW corner of current box
+    let bc = 3*(c/3)  // col index of NW corner of current box
+    
+    for i in 0...8 {
+      if i != c { updateMarks(for: cellViews[9*r + i] ) }
+      if i != r { updateMarks(for: cellViews[9*i + c] ) }
+      
+      let ri = i/3  // ith row offset in current box
+      let ci = i%3  // ith col offset in current box
+      updateMarks(for: cellViews[9*(br+ri) + (bc+ci)] )
+    }
+    
+  }
+  
+  func updateMarks(for cell:SudokuWizardCellView)
+  {
+    guard markStrategy != .manual else { return }
+    
+    let r = cell.row!
+    let c = cell.col!
+    
+    let br = 3*(r/3)  // row index of NW corner of current box
+    let bc = 3*(c/3)  // col index of NW corner of current box
+    
+    var marks = [Bool](repeating:true,count:9)
+    
+    for m in 1...9 {
+      for i in 0...8 {
+        if cellViews[9*r + i].value == m { marks[m-1] = false; break }
+        if cellViews[9*i + c].value == m { marks[m-1] = false; break }
+        
+        let ri = i/3  // ith row offset in current box
+        let ci = i%3  // ith col offset in current box
+        if cellViews[9*(br+ri)+(bc+ci)].value == m { marks[m-1] = false; break }
+      }
+    }
+    if markStrategy == .conflicted {
+      for i in 0...8 { marks[i] = !marks[i] }
+    }
+    
+    cell.set(marks:marks)
   }
 }
