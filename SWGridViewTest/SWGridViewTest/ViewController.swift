@@ -155,10 +155,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         valueSegmentedControl.selectedSegmentIndex = v
       }
     }
-    else
-    {
-      print("Grid selection cleared")
-    }
   }
   
   @IBAction func handleValueControl(_ sender: UISegmentedControl)
@@ -173,14 +169,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
       case (.empty,_):
         cell.state = .filled(d)
         for m in 1...9 { markButtons[m-1].isSelected = false }
-        sudokuGrid.updateMarks(changed:cell)
+        sudokuGrid.handleValueChange(for:cell)
       case (.filled(_),0):
         cell.state = .empty
         for m in 1...9 { markButtons[m-1].isSelected = cell.hasMark(m) }
-        sudokuGrid.updateMarks(changed:cell)
+        sudokuGrid.handleValueChange(for:cell)
       case (.filled(_), _):
         cell.state = .filled(d)
-        sudokuGrid.updateMarks(changed:cell)
+        sudokuGrid.handleValueChange(for:cell)
       case let (.locked(v),_):
         sender.selectedSegmentIndex = v
       }
@@ -219,15 +215,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     case 0: // erase
       sudokuGrid.markStrategy = .manual
       sudokuGrid.clearAllMarks()
-      Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false) {_ in sender.selectedSegmentIndex = 1 }
       markButtons.forEach { btn in btn.isEnabled = true }
-    case 1:
+      Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false) {_ in sender.selectedSegmentIndex = 1 }
+    case 1: // manual
       sudokuGrid.markStrategy = .manual
       markButtons.forEach { btn in btn.isEnabled = true }
-    case 2:
+    case 2: // allowed
       sudokuGrid.markStrategy = .allowed
       markButtons.forEach { btn in btn.isEnabled = false }
-    case 3:
+    case 3: // conflicted
       sudokuGrid.markStrategy = .conflicted
       markButtons.forEach { btn in btn.isEnabled = false }
     default:

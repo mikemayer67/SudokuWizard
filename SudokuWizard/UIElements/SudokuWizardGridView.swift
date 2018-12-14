@@ -150,6 +150,7 @@ class SudokuWizardGridView: UIView
     cellViews.forEach  { (cell) in
       cell.state = .empty
       cell.selected = false
+      cell.conflicted = false
       cell.highlighted = false
       cell.clearAllMarks()
     }
@@ -226,10 +227,8 @@ class SudokuWizardGridView: UIView
     }
   }
   
-  func updateMarks(changed cell:SudokuWizardCellView)
+  func handleValueChange(for cell:SudokuWizardCellView)
   {
-    guard markStrategy != .manual else { return }
-
     let r = cell.row!
     let c = cell.col!
     
@@ -237,14 +236,46 @@ class SudokuWizardGridView: UIView
     let bc = 3*(c/3)  // col index of NW corner of current box
     
     for i in 0...8 {
-      if i != c { updateMarks(for: cellViews[9*r + i] ) }
-      if i != r { updateMarks(for: cellViews[9*i + c] ) }
+      if i != c { update(cellViews[9*r + i] ) }
+      if i != r { update(cellViews[9*i + c] ) }
       
       let ri = i/3  // ith row offset in current box
       let ci = i%3  // ith col offset in current box
-      updateMarks(for: cellViews[9*(br+ri) + (bc+ci)] )
+      update(cellViews[9*(br+ri) + (bc+ci)] )
     }
+  }
+  
+  func update(_ cell:SudokuWizardCellView)
+  {
+    checkConflicts(for:cell)
+    updateMarks(for:cell)
+  }
+  
+  func checkConflicts(for cell:SudokuWizardCellView)
+  {
+    cell.conflicted = false
     
+    let r = cell.row!
+    let c = cell.col!
+    
+    guard let v = cell.value else { return }
+    
+    let br = 3*(r/3)  // row index of NW corner of current box
+    let bc = 3*(c/3)  // col index of NW corner of current box
+    
+    for i in 0...8 {
+      let rowCell = cellViews[9*r + i]
+      let colCell = cellViews[9*i + c]
+      
+      let ri = i/3  // ith row offset in current box
+      let ci = i%3  // ith col offset in current box
+      
+      let boxCell = cellViews[9*(br+ri)+(bc+ci)]
+      
+      for tc in [rowCell,colCell,boxCell] {
+        if tc !== cell, tc.value == v { cell.conflicted = true; return }
+      }
+    }
   }
   
   func updateMarks(for cell:SudokuWizardCellView)
