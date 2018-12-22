@@ -19,7 +19,7 @@ let puzzleData : [String:String] =
 var puzzleKeys = [String]()
 var firstSelectionMade = false
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, SudokuWizardCellViewDelegate
+class GridTestViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, SudokuWizardCellViewDelegate
 {
   @IBOutlet weak var dataPickerView: UIPickerView!
   @IBOutlet weak var sudokuGrid: SudokuWizardGridView!
@@ -27,6 +27,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
   @IBOutlet weak var marksLabel: UILabel!
   @IBOutlet weak var markStyleControl: UISegmentedControl!
   @IBOutlet weak var autoMarkControl: UISegmentedControl!
+  @IBOutlet weak var conflictsButton: UIButton!
   
   var markButtons = [UIButton]()
   
@@ -67,6 +68,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
       btn.addTarget(self, action: #selector(handleMarkButton(_:)), for: .touchUpInside)
       
       last = btn
+      
+      conflictsButton.isSelected = sudokuGrid.errorFeedback == .conflict
     }
     
     sudokuGrid.cellViews.forEach { cell in cell.delegate = self }
@@ -201,6 +204,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         break;
       }
     }
+  }
+  
+  @IBAction func handleConflicts(_ sender: UIButton)
+  {
+    sender.isSelected = !sender.isSelected
+    sudokuGrid.errorFeedback = ( sender.isSelected ? .conflict : .none )
   }
   
   @IBAction func handleMarkStyle(_ sender: UISegmentedControl)

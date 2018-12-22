@@ -11,31 +11,33 @@
 //   Empty       = Editable without a value (but may have marks)
 //   Filled      = Editable with a value (no marks allowed)
 //   Selected    = Currently active cell
-//   Conflicted  = Has same digit as another cell in row, column, or box
+//   Errant      = Something(*) is wrong with value in cell
 //   Highlighted = Contains currently "active" digit
+//
+//   (* SudokuWizardGridView options define what errant means)
 //
 // Possible state combinations
 
-//    State   Selected   Conflicted   Highlighted        bg    fg    font
-//    ------  --------   ----------   -----------        ---   ---   ----
+//    State   Selected   Errant   Highlighted        bg    fg    font
+//    ------  --------   ------   -----------        ---   ---   ----
 //
-//    locked                                              -     L      L
-//    locked                 X                            C     C      L
-//    locked                              X               H     L      L
-//    locked                 X            X               H     C      L
+//    locked                                          -     L      L
+//    locked               X                          C     C      L
+//    locked                          X               H     L      L
+//    locked               X          X               H     C      L
 //
-//    empty                                               -     -      -
-//    empty        X                                      S     -      -
+//    empty                                           -     -      -
+//    empty        X                                  S     -      -
 //
-//    filled       X                                      S     -      -
-//    filled       X         X                            S     C      -
-//    filled       X                      X               S     -      -
-//    filled       X         X            X               S     C      -
+//    filled       X                                  S     -      -
+//    filled       X       X                          S     C      -
+//    filled       X                  X               S     -      -
+//    filled       X       X          X               S     C      -
 //
-//    filled                                              -     -      -
-//    filled                 X                            C     C      -
-//    filled                              X               H     -      -
-//    filled                 X            X               H     C      -
+//    filled                                          -     -      -
+//    filled               X                          C     C      -
+//    filled                          X               H     -      -
+//    filled               X          X               H     C      -
 
 import UIKit
 
@@ -51,11 +53,6 @@ protocol SudokuWizardCellViewDelegate
 
 class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
 {
-  enum MarkStyle : Int {
-    case digits = 0
-    case dots = 1
-  }
-  
   enum CellState {
     case empty
     case locked(Int)
@@ -68,12 +65,12 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   
   let defaultBackgroundColor   = UIColor.white
   let selectedBackgroundColor  = UIColor(red: 0.85, green: 0.9, blue: 0.95, alpha: 1.0)
-  let conflictBackgroundColor  = UIColor(red: 1.0, green: 0.7, blue: 0.8, alpha: 1.0)
+  let errantBackgroundColor    = UIColor(red: 1.0, green: 0.7, blue: 0.8, alpha: 1.0)
   let highlightBackgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.7, alpha: 1.0)
 
   let defaultDigitColor        = UIColor(red:0.0, green: 0.0, blue: 0.75, alpha: 1.0)
   let lockedDigitColor         = UIColor.black
-  let conflictedDigitColor     = UIColor(red:0.5, green: 0.0, blue: 0.0, alpha: 1.0)
+  let errantDigitColor         = UIColor(red:0.5, green: 0.0, blue: 0.0, alpha: 1.0)
   
   let markColor                = UIColor(white: 0.5, alpha: 1.0)
   
@@ -85,7 +82,7 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   
   var state       = CellState.empty  { didSet { setNeedsDisplay() } }
   var highlighted = false            { didSet { setNeedsDisplay() } }
-  var conflicted  = false            { didSet { setNeedsDisplay() } }
+  var errant      = false            { didSet { setNeedsDisplay() } }
   
   var value : Int?
   {
@@ -103,9 +100,9 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
     }
   }
   
-  var markStyle   = MarkStyle.digits { didSet { setNeedsDisplay() } }
+  var markStyle   = SudokuWizard.MarkStyle.digits { didSet { setNeedsDisplay() } }
   
-  override var bounds : CGRect       { didSet { setNeedsDisplay() } }
+  override var bounds : CGRect  { didSet { setNeedsDisplay() } }
   
   // MARK: -
   
@@ -251,7 +248,7 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
     
     if      selected    { selectedBackgroundColor.setFill()  }
     else if highlighted { highlightBackgroundColor.setFill() }
-    else if conflicted  { conflictBackgroundColor.setFill()  }
+    else if errant      { errantBackgroundColor.setFill()  }
     else                { defaultBackgroundColor.setFill()   }
     path.fill()
 
@@ -263,12 +260,12 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
     {
     case let .locked(d):
       fontName = lockedDigitFont
-      fgColor  = conflicted ? conflictedDigitColor : lockedDigitColor
+      fgColor  = errant ? errantDigitColor : lockedDigitColor
       digit    = d.description
       
     case let .filled(d):
       fontName = defaultDigitFont
-      fgColor  = conflicted ? conflictedDigitColor : defaultDigitColor
+      fgColor  = errant ? errantDigitColor : defaultDigitColor
       digit    = d.description
       
     case .empty:

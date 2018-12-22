@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CellTestViewController.swift
 //  SudokuWizardCellViewTest
 //
 //  Created by Mike Mayer on 11/22/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, SudokuWizardCellViewDelegate
+class CellTestViewController: UIViewController, SudokuWizardCellViewDelegate
 {
   @IBOutlet weak var sizeSlider: UISlider!
   @IBOutlet weak var xSlider: UISlider!
@@ -19,7 +19,7 @@ class ViewController: UIViewController, SudokuWizardCellViewDelegate
   @IBOutlet weak var viewTop: NSLayoutConstraint!
   @IBOutlet weak var viewLeading: NSLayoutConstraint!
   @IBOutlet weak var lockedSwitch: UISwitch!
-  @IBOutlet weak var conflictedSwitch: UISwitch!
+  @IBOutlet weak var errantSwitch: UISwitch!
   @IBOutlet weak var highlightedSwitch: UISwitch!
   @IBOutlet weak var valueControl: UISegmentedControl!
   @IBOutlet weak var markTypeControl: UISegmentedControl!
@@ -54,7 +54,7 @@ class ViewController: UIViewController, SudokuWizardCellViewDelegate
     viewTop.constant     = 0.5 * (ph-startSize)
     
     lockedSwitch.transform      = CGAffineTransform(scaleX: 0.75, y: 0.75)
-    conflictedSwitch.transform  = CGAffineTransform(scaleX: 0.75, y: 0.75)
+    errantSwitch.transform      = CGAffineTransform(scaleX: 0.75, y: 0.75)
     highlightedSwitch.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
     
     switch cellView.state
@@ -62,22 +62,22 @@ class ViewController: UIViewController, SudokuWizardCellViewDelegate
     case .empty:
       lockedSwitch.isOn = false
       lockedSwitch.isEnabled = false
-      conflictedSwitch.isOn = false
-      conflictedSwitch.isEnabled = false
+      errantSwitch.isOn = false
+      errantSwitch.isEnabled = false
       highlightedSwitch.isOn = false
     case let .filled(d):
       lockedSwitch.isOn = false
       lockedSwitch.isEnabled = true
-      conflictedSwitch.isOn = cellView.conflicted
-      conflictedSwitch.isEnabled = true
+      errantSwitch.isOn = cellView.errant
+      errantSwitch.isEnabled = true
       highlightedSwitch.isOn = cellView.highlighted
       highlightedSwitch.isEnabled = true
       valueControl.selectedSegmentIndex = d
     case let .locked (d):
       lockedSwitch.isOn = true
       lockedSwitch.isEnabled = true
-      conflictedSwitch.isOn = cellView.conflicted
-      conflictedSwitch.isEnabled = true
+      errantSwitch.isOn = cellView.errant
+      errantSwitch.isEnabled = true
       highlightedSwitch.isOn = cellView.highlighted
       highlightedSwitch.isEnabled = true
       valueControl.selectedSegmentIndex = d
@@ -123,9 +123,9 @@ class ViewController: UIViewController, SudokuWizardCellViewDelegate
         break
       }
     }
-    else if sender == conflictedSwitch
+    else if sender == errantSwitch
     {
-      cellView.conflicted = sender.isOn
+      cellView.errant = sender.isOn
     }
     else if sender == highlightedSwitch
     {
@@ -147,11 +147,11 @@ class ViewController: UIViewController, SudokuWizardCellViewDelegate
         cellView.state = .empty
         lockedSwitch.isOn = false
         lockedSwitch.isEnabled = false
-        conflictedSwitch.isOn = false
-        conflictedSwitch.isEnabled = false
+        errantSwitch.isOn = false
+        errantSwitch.isEnabled = false
         highlightedSwitch.isOn = false
         highlightedSwitch.isEnabled = false
-        cellView.conflicted = false
+        cellView.errant = false
         cellView.highlighted = false
       case let .locked(oldValue):
         sender.selectedSegmentIndex = oldValue
@@ -164,7 +164,7 @@ class ViewController: UIViewController, SudokuWizardCellViewDelegate
       case .empty:
         cellView.state = .filled(d)
         lockedSwitch.isEnabled = true
-        conflictedSwitch.isEnabled = true
+        errantSwitch.isEnabled = true
         highlightedSwitch.isEnabled = true
       case .filled(_):
         cellView.state = .filled(d)
@@ -200,7 +200,7 @@ class ViewController: UIViewController, SudokuWizardCellViewDelegate
   
   @IBAction func handleMarkType(_ sender: UISegmentedControl)
   {
-    cellView.markStyle = SudokuWizardCellView.MarkStyle(rawValue: sender.selectedSegmentIndex)!
+    cellView.markStyle = SudokuWizard.MarkStyle(rawValue: sender.selectedSegmentIndex)!
   }
   
   

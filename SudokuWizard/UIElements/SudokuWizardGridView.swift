@@ -19,13 +19,6 @@ class SudokuWizardGridView: UIView
   
   // MARK: -
   
-  enum MarkStrategy
-  {
-    case manual
-    case allowed
-    case conflicted
-  }
-
   enum GridState
   {
     case Unset
@@ -56,16 +49,21 @@ class SudokuWizardGridView: UIView
     }
   }
   
-  var markStyle : SudokuWizardCellView.MarkStyle = .digits
+  var markStyle : SudokuWizard.MarkStyle = .digits
   {
     didSet { cellViews.forEach { cell in cell.markStyle = markStyle } }
   }
   
-  var markStrategy : MarkStrategy = .manual
+  var markStrategy : SudokuWizard.MarkStrategy = .manual
   {
     didSet { if markStrategy != oldValue { computeAllMarks() } }
   }
-    
+  
+  var errorFeedback : SudokuWizard.ErrorFeedback = .conflict
+  {
+    didSet { if errorFeedback != oldValue { findAllConflicts() } }
+  }
+  
   // MARK: -
   
   override func awakeFromNib()
@@ -150,7 +148,7 @@ class SudokuWizardGridView: UIView
     cellViews.forEach  { (cell) in
       cell.state = .empty
       cell.selected = false
-      cell.conflicted = false
+      cell.errant = false
       cell.highlighted = false
       cell.clearAllMarks()
     }
@@ -175,6 +173,7 @@ class SudokuWizardGridView: UIView
     }
     
     computeAllMarks()
+    findAllConflicts()
     
     state = .Active
   }
@@ -227,6 +226,11 @@ class SudokuWizardGridView: UIView
     }
   }
   
+  func findAllConflicts()
+  {
+    cellViews.forEach { cell in checkConflicts(for:cell) }
+  }
+  
   func handleValueChange(for cell:SudokuWizardCellView)
   {
     let r = cell.row!
@@ -253,7 +257,9 @@ class SudokuWizardGridView: UIView
   
   func checkConflicts(for cell:SudokuWizardCellView)
   {
-    cell.conflicted = false
+    cell.errant = false
+    
+    guard errorFeedback == .conflict else { return }
     
     let r = cell.row!
     let c = cell.col!
@@ -273,7 +279,7 @@ class SudokuWizardGridView: UIView
       let boxCell = cellViews[9*(br+ri)+(bc+ci)]
       
       for tc in [rowCell,colCell,boxCell] {
-        if tc !== cell, tc.value == v { cell.conflicted = true; return }
+        if tc !== cell, tc.value == v { cell.errant = true; return }
       }
     }
   }

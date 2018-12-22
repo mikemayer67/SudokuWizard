@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27161F0921CD3E08006CDB71 /* icons8-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 27161F0821CD3DD2006CDB71 /* icons8-settings.png */; };
+		27161F0F21CD43FC006CDB71 /* SudokuWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27161F0E21CD43FC006CDB71 /* SudokuWizard.swift */; };
 		2785C43021B1CCA600AAD7D1 /* SudokuWizardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2785C42E21B1CCA600AAD7D1 /* SudokuWizardGridView.swift */; };
 		27A1D62521B490AE007AF213 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D62421B490AE007AF213 /* Extensions.swift */; };
 		27A1D63F21BA25D4007AF213 /* SudokuWizardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D63E21BA25D4007AF213 /* SudokuWizardCellView.swift */; };
 		27AA194D21B1CB47002BCC5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA194C21B1CB47002BCC5A /* AppDelegate.swift */; };
-		27AA194F21B1CB47002BCC5A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA194E21B1CB47002BCC5A /* ViewController.swift */; };
+		27AA194F21B1CB47002BCC5A /* GridTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA194E21B1CB47002BCC5A /* GridTestViewController.swift */; };
 		27AA195221B1CB47002BCC5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AA195021B1CB47002BCC5A /* Main.storyboard */; };
 		27AA195421B1CB49002BCC5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27AA195321B1CB49002BCC5A /* Assets.xcassets */; };
 		27AA195721B1CB49002BCC5A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27AA195521B1CB49002BCC5A /* LaunchScreen.storyboard */; };
@@ -22,12 +24,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		27161F0821CD3DD2006CDB71 /* icons8-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-settings.png"; path = "../../SudokuWizard/images/icons8-settings.png"; sourceTree = "<group>"; };
+		27161F0E21CD43FC006CDB71 /* SudokuWizard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizard.swift; path = ../../SudokuWizard/UIElements/SudokuWizard.swift; sourceTree = "<group>"; };
 		2785C42E21B1CCA600AAD7D1 /* SudokuWizardGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizardGridView.swift; path = ../../SudokuWizard/UIElements/SudokuWizardGridView.swift; sourceTree = "<group>"; };
 		27A1D62421B490AE007AF213 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		27A1D63E21BA25D4007AF213 /* SudokuWizardCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizardCellView.swift; path = ../../SudokuWizard/UIElements/SudokuWizardCellView.swift; sourceTree = "<group>"; };
 		27AA194921B1CB47002BCC5A /* SWGridViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWGridViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27AA194C21B1CB47002BCC5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		27AA194E21B1CB47002BCC5A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		27AA194E21B1CB47002BCC5A /* GridTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridTestViewController.swift; sourceTree = "<group>"; };
 		27AA195121B1CB47002BCC5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		27AA195321B1CB49002BCC5A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27AA195621B1CB49002BCC5A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -68,14 +72,16 @@
 		27AA194B21B1CB47002BCC5A /* SWGridViewTest */ = {
 			isa = PBXGroup;
 			children = (
+				27161F0E21CD43FC006CDB71 /* SudokuWizard.swift */,
 				27A1D62421B490AE007AF213 /* Extensions.swift */,
 				27A1D63E21BA25D4007AF213 /* SudokuWizardCellView.swift */,
 				2785C42E21B1CCA600AAD7D1 /* SudokuWizardGridView.swift */,
-				27AA194E21B1CB47002BCC5A /* ViewController.swift */,
+				27AA194E21B1CB47002BCC5A /* GridTestViewController.swift */,
 				27AA194C21B1CB47002BCC5A /* AppDelegate.swift */,
 				27AA195021B1CB47002BCC5A /* Main.storyboard */,
 				27AA195321B1CB49002BCC5A /* Assets.xcassets */,
 				27EC0D7621C3E62D00BA561B /* icons8-erase.png */,
+				27161F0821CD3DD2006CDB71 /* icons8-settings.png */,
 				27EC0D7821C3E65A00BA561B /* icons8-pencil_tip.png */,
 				27EC0D7C21C3E68B00BA561B /* icons8-settings_3_filled.png */,
 				27EC0D7A21C3E67E00BA561B /* icons8-settings3.png */,
@@ -143,6 +149,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27161F0921CD3E08006CDB71 /* icons8-settings.png in Resources */,
 				27EC0D7721C3E62E00BA561B /* icons8-erase.png in Resources */,
 				27EC0D7921C3E65B00BA561B /* icons8-pencil_tip.png in Resources */,
 				27AA195721B1CB49002BCC5A /* LaunchScreen.storyboard in Resources */,
@@ -162,7 +169,8 @@
 			files = (
 				27A1D62521B490AE007AF213 /* Extensions.swift in Sources */,
 				27A1D63F21BA25D4007AF213 /* SudokuWizardCellView.swift in Sources */,
-				27AA194F21B1CB47002BCC5A /* ViewController.swift in Sources */,
+				27AA194F21B1CB47002BCC5A /* GridTestViewController.swift in Sources */,
+				27161F0F21CD43FC006CDB71 /* SudokuWizard.swift in Sources */,
 				27AA194D21B1CB47002BCC5A /* AppDelegate.swift in Sources */,
 				2785C43021B1CCA600AAD7D1 /* SudokuWizardGridView.swift in Sources */,
 			);

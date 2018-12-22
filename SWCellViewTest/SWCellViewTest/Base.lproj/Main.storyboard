@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Cell Test View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SWCellViewTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="CellTestViewController" customModule="SWCellViewTest" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -59,8 +59,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Conflicted" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wYb-sN-JTc">
-                                <rect key="frame" x="222" y="626" width="79" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Errant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wYb-sN-JTc">
+                                <rect key="frame" x="254" y="626" width="47" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -268,8 +268,8 @@
                     </view>
                     <connections>
                         <outlet property="cellView" destination="izr-og-2bS" id="fam-Ba-zbF"/>
-                        <outlet property="conflictedSwitch" destination="hKL-zf-fOd" id="zTX-ct-kcH"/>
-                        <outlet property="highlightedSwitch" destination="m33-Rl-uIe" id="bSg-Gm-oJ4"/>
+                        <outlet property="errantSwitch" destination="hKL-zf-fOd" id="jRO-Oz-0ty"/>
+                        <outlet property="highlightedSwitch" destination="m33-Rl-uIe" id="rTB-U1-Gcs"/>
                         <outlet property="lockedSwitch" destination="B4O-nP-jsI" id="fmu-f1-fIJ"/>
                         <outlet property="markEight" destination="gqQ-NP-seQ" id="EYZ-89-0BP"/>
                         <outlet property="markFive" destination="hzj-jB-p36" id="nX9-VM-6ba"/>

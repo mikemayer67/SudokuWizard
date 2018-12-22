@@ -13,7 +13,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SWGridViewTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="GridTestViewController" customModule="SWGridViewTest" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -99,16 +99,25 @@
                                     <action selector="handleAutoMarkControl:" destination="BYZ-38-t0r" eventType="valueChanged" id="ihC-4s-SLD"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="suV-Z1-Umf">
+                                <rect key="frame" x="16" y="621" width="30" height="30"/>
+                                <state key="normal" title="err"/>
+                                <connections>
+                                    <action selector="handleConflicts:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SLJ-Fc-Qo5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ffh-Fi-Eub" firstAttribute="top" secondItem="q8o-dO-pLR" secondAttribute="bottom" constant="10" id="4hd-AX-Zuu"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="suV-Z1-Umf" secondAttribute="bottom" constant="16" id="4lM-1Y-83H"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="HUv-ao-3jN" secondAttribute="trailing" constant="16" id="8Yc-EI-E48"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="pWu-ip-btw" secondAttribute="trailing" constant="16" id="Ec8-ZD-wzc"/>
                             <constraint firstItem="q8o-dO-pLR" firstAttribute="top" secondItem="FRP-fR-AMH" secondAttribute="bottom" constant="20" id="HpD-yt-7ns"/>
                             <constraint firstItem="ffh-Fi-Eub" firstAttribute="leading" secondItem="HUv-ao-3jN" secondAttribute="leading" id="Rlz-YP-0s2"/>
                             <constraint firstItem="FRP-fR-AMH" firstAttribute="width" secondItem="q8o-dO-pLR" secondAttribute="width" id="ST2-V0-Y46"/>
                             <constraint firstItem="pWu-ip-btw" firstAttribute="top" secondItem="DId-YL-atv" secondAttribute="bottom" id="SWH-qI-Fmk"/>
+                            <constraint firstItem="suV-Z1-Umf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="V4M-Zh-ovt"/>
                             <constraint firstItem="HUv-ao-3jN" firstAttribute="centerY" secondItem="FRP-fR-AMH" secondAttribute="centerY" id="V8S-vN-0V0"/>
                             <constraint firstItem="dMs-lt-Dyh" firstAttribute="leading" secondItem="ffh-Fi-Eub" secondAttribute="trailing" constant="20" id="Vv3-GF-HyQ"/>
                             <constraint firstItem="ffh-Fi-Eub" firstAttribute="centerY" secondItem="dMs-lt-Dyh" secondAttribute="centerY" id="XVO-YZ-GWu"/>
@@ -127,6 +136,7 @@
                     </view>
                     <connections>
                         <outlet property="autoMarkControl" destination="dMs-lt-Dyh" id="PdJ-pw-8zI"/>
+                        <outlet property="conflictsButton" destination="suV-Z1-Umf" id="3JR-Wn-maT"/>
                         <outlet property="dataPickerView" destination="DId-YL-atv" id="QtR-gx-zh9"/>
                         <outlet property="markStyleControl" destination="ffh-Fi-Eub" id="w6S-pY-Eq2"/>
                         <outlet property="marksLabel" destination="q8o-dO-pLR" id="oSc-ah-jSg"/>
