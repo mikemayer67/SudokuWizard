@@ -24,7 +24,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   {
     if let dest = segue.destination as? SettingsViewController
     {
-      dest.settings = Settings.shared
       dest.delegate = self
     }
     else
@@ -44,8 +43,10 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     return SettingsTransition(operation)
   }
   
-  func settingsViewController(update settings: Settings) {
-    print("Settings: ",settings)
+  func settingsViewController(update settings: Settings)
+  {
+    Settings.shared = settings\
+    print("Settings changed")
   }
 
 }

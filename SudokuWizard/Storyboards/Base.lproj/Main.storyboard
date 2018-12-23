@@ -97,6 +97,7 @@
                                                 <constraint firstItem="kV8-GF-KRo" firstAttribute="centerY" secondItem="g6n-d6-zrU" secondAttribute="centerY" id="SFQ-rP-MXx"/>
                                                 <constraint firstItem="Ogx-xE-T1r" firstAttribute="centerY" secondItem="g6n-d6-zrU" secondAttribute="centerY" id="V2e-fj-h1m"/>
                                                 <constraint firstAttribute="trailing" secondItem="Ogx-xE-T1r" secondAttribute="trailing" constant="16" id="mML-dk-uE4"/>
+                                                <constraint firstItem="Ogx-xE-T1r" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kV8-GF-KRo" secondAttribute="trailing" id="z5n-aa-ogi"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -127,6 +128,7 @@
                                                 <constraint firstItem="f2i-C5-EiI" firstAttribute="centerY" secondItem="e0Y-Om-OCE" secondAttribute="centerY" id="KMk-lf-J1h"/>
                                                 <constraint firstItem="ldl-3d-tbB" firstAttribute="centerY" secondItem="e0Y-Om-OCE" secondAttribute="centerY" id="gEh-8x-ODt"/>
                                                 <constraint firstAttribute="trailing" secondItem="ldl-3d-tbB" secondAttribute="trailing" constant="18" id="iUP-sW-Jlw"/>
+                                                <constraint firstItem="ldl-3d-tbB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="f2i-C5-EiI" secondAttribute="trailing" constant="10" id="uJ5-KP-1x0"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -158,6 +160,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="Urw-Ks-7Ie" secondAttribute="trailing" constant="16" id="5XS-CQ-AcS"/>
                                                 <constraint firstItem="dhI-Nt-CHk" firstAttribute="centerY" secondItem="nic-Td-c3A" secondAttribute="centerY" id="9SE-5N-rSq"/>
+                                                <constraint firstItem="Urw-Ks-7Ie" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dhI-Nt-CHk" secondAttribute="trailing" constant="10" id="Rvc-ql-ttG"/>
                                                 <constraint firstItem="dhI-Nt-CHk" firstAttribute="leading" secondItem="nic-Td-c3A" secondAttribute="leading" constant="16" id="UbH-3T-Ih6"/>
                                                 <constraint firstItem="Urw-Ks-7Ie" firstAttribute="centerY" secondItem="nic-Td-c3A" secondAttribute="centerY" id="ZHF-d1-IKc"/>
                                             </constraints>
@@ -190,6 +193,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Tbc-z2-wE9" firstAttribute="centerY" secondItem="Yza-ex-oeF" secondAttribute="centerY" id="0cV-Q7-cw3"/>
+                                                <constraint firstItem="Qk6-kI-sO2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tbc-z2-wE9" secondAttribute="trailing" constant="10" id="b7I-UT-V0b"/>
                                                 <constraint firstItem="Qk6-kI-sO2" firstAttribute="centerY" secondItem="Yza-ex-oeF" secondAttribute="centerY" id="cU3-jg-ie9"/>
                                                 <constraint firstAttribute="trailing" secondItem="Qk6-kI-sO2" secondAttribute="trailing" constant="16" id="lRu-GW-d6I"/>
                                                 <constraint firstItem="Tbc-z2-wE9" firstAttribute="leading" secondItem="Yza-ex-oeF" secondAttribute="leadingMargin" id="wV1-xC-eQn"/>
@@ -221,6 +225,7 @@
                                                 <constraint firstItem="fm5-pl-qyV" firstAttribute="centerY" secondItem="cCb-x7-gCz" secondAttribute="centerY" id="0Ot-1r-Vxa"/>
                                                 <constraint firstItem="KhV-cI-OWe" firstAttribute="centerY" secondItem="cCb-x7-gCz" secondAttribute="centerY" id="TUC-pm-Emm"/>
                                                 <constraint firstItem="KhV-cI-OWe" firstAttribute="leading" secondItem="cCb-x7-gCz" secondAttribute="leadingMargin" id="XhN-pb-qFn"/>
+                                                <constraint firstItem="fm5-pl-qyV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KhV-cI-OWe" secondAttribute="trailing" constant="10" id="sFv-Ba-RYV"/>
                                                 <constraint firstAttribute="trailing" secondItem="fm5-pl-qyV" secondAttribute="trailing" constant="16" id="x5t-X3-8J2"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -234,27 +239,41 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="Vhj-qT-Wug">
-                        <barButtonItem key="leftBarButtonItem" title="update" id="dA1-Uf-xZj">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="handleButtonItem:" destination="7ZW-Ld-AKy" id="CmW-Pp-KJg"/>
-                            </connections>
+                        <barButtonItem key="leftBarButtonItem" id="iKd-zC-6vR">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oyI-Jv-hLS">
+                                <rect key="frame" x="16" y="5.5" width="83" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="apply">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="handleButton:" destination="7ZW-Ld-AKy" eventType="touchUpInside" id="mTi-J1-TJk"/>
+                                </connections>
+                            </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="cancel" id="4Br-PV-kca">
-                            <color key="tintColor" red="1" green="0.91044330630000003" blue="0.4770181201" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="handleButtonItem:" destination="7ZW-Ld-AKy" id="bzk-BB-Gm7"/>
-                            </connections>
+                        <barButtonItem key="rightBarButtonItem" id="8mb-fX-Bf3">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bnr-Mw-8Kw">
+                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="cancel">
+                                    <color key="titleColor" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
+                                </state>
+                                <connections>
+                                    <action selector="handleButton:" destination="7ZW-Ld-AKy" eventType="touchUpInside" id="Kb9-Wp-ho6"/>
+                                </connections>
+                            </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="autoMarkPolicy" destination="Urw-Ks-7Ie" id="6Sc-Fm-uVM"/>
                         <outlet property="autoMarkSwitch" destination="ldl-3d-tbB" id="KUi-76-WWP"/>
-                        <outlet property="cancelButtonItem" destination="4Br-PV-kca" id="ATq-p5-wjz"/>
+                        <outlet property="cancelButton" destination="bnr-Mw-8Kw" id="xpl-or-gMN"/>
                         <outlet property="conflictedEntrySwitch" destination="fm5-pl-qyV" id="T5X-ne-9ep"/>
                         <outlet property="incorrectEntrySwitch" destination="Qk6-kI-sO2" id="Wrj-BW-EoT"/>
                         <outlet property="styleSegmentedControl" destination="Ogx-xE-T1r" id="YSC-7u-xXQ"/>
-                        <outlet property="updateButtonItem" destination="dA1-Uf-xZj" id="8ux-9c-dvJ"/>
+                        <outlet property="updateButton" destination="oyI-Jv-hLS" id="bib-Rh-7fB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uXg-bk-81G" userLabel="First Responder" sceneMemberID="firstResponder"/>

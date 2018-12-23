@@ -15,8 +15,8 @@ protocol SettingsViewControllerDelegate
 
 class SettingsViewController: UITableViewController
 {
-  @IBOutlet weak var updateButtonItem: UIBarButtonItem!
-  @IBOutlet weak var cancelButtonItem: UIBarButtonItem!
+  @IBOutlet weak var updateButton: UIButton!
+  @IBOutlet weak var cancelButton: UIButton!
   @IBOutlet weak var styleSegmentedControl: UISegmentedControl!
   @IBOutlet weak var autoMarkSwitch: UISwitch!
   @IBOutlet weak var autoMarkPolicy: UISegmentedControl!
@@ -25,20 +25,6 @@ class SettingsViewController: UITableViewController
   
   var settings = Settings()
   var delegate : SettingsViewControllerDelegate?
-  
-  @IBAction func handleButtonItem(_ sender: UIBarButtonItem)
-  {
-    if sender == updateButtonItem
-    {
-      delegate?.settingsViewController(update: settings)
-    }
-    self.navigationController?.popViewController(animated: true)
-  }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    print ("SVC: viewDidLoad")
-  }
   
   override func viewWillAppear(_ animated: Bool)
   {
@@ -77,6 +63,17 @@ class SettingsViewController: UITableViewController
       incorrectEntrySwitch.isOn = false
       conflictedEntrySwitch.isOn = false
     }
+    
+    checkState()
+  }
+  
+  @IBAction func handleButton(_ sender: UIButton)
+  {
+    if sender == updateButton
+    {
+      delegate?.settingsViewController(update: settings)
+    }
+    self.navigationController?.popViewController(animated: true)
   }
   
   @IBAction func handleSegmentedControl(_ sender: UISegmentedControl)
@@ -117,10 +114,9 @@ class SettingsViewController: UITableViewController
     
     let dirty = delegate != nil && settings.differ(from: Settings.shared)
     
-    updateButtonItem.setTitle((dirty ? "Apply" : "Back"), for: .normal)
-    cancelButtonItem.isEnabled = dirty
-    cancelButtonItem.isHidden  = (dirty == false)
+    updateButton.setTitle((dirty ? "apply" : "back"), for: .normal)
+    cancelButton.isEnabled = dirty
+    cancelButton.isHidden  = (dirty == false)
   }
-  
   
 }
