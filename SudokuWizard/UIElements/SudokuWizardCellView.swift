@@ -84,6 +84,8 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   var highlighted = false            { didSet { setNeedsDisplay() } }
   var errant      = false            { didSet { setNeedsDisplay() } }
   
+  var correctValue : Int?
+  
   var value : Int?
   {
     switch state {

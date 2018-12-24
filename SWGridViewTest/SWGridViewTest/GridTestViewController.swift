@@ -16,6 +16,9 @@ let puzzleData : [String:String] =
     "err 2" : "1......2........3........4........5........6........7........8........9........12345",
     "err 3" : "1........2........3........4........5........6........7........8........Q........" ]
 
+let truthData : [String:String] =
+  [ "demo1" : "123124125134234934564579289231242351522149752612734812398476515428791236127528987" ]
+
 var puzzleKeys = [String]()
 var firstSelectionMade = false
 
@@ -27,7 +30,7 @@ class GridTestViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   @IBOutlet weak var marksLabel: UILabel!
   @IBOutlet weak var markStyleControl: UISegmentedControl!
   @IBOutlet weak var autoMarkControl: UISegmentedControl!
-  @IBOutlet weak var conflictsButton: UIButton!
+  @IBOutlet weak var errorSegmentedControl: UISegmentedControl!
   
   var markButtons = [UIButton]()
   
@@ -69,7 +72,10 @@ class GridTestViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
       
       last = btn
       
-      conflictsButton.isSelected = sudokuGrid.errorFeedback == .conflict
+      errorSegmentedControl.selectedSegmentIndex = (
+        sudokuGrid.errorFeedback == .conflict ? 1 :
+        sudokuGrid.errorFeedback == .error    ? 2 : 0
+      )
     }
     
     sudokuGrid.cellViews.forEach { cell in cell.delegate = self }
@@ -109,10 +115,11 @@ class GridTestViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     markButtons.forEach { $0.isSelected = false }
     
     let puzzle = puzzleData[key]!
+    let truth : String? = truthData[key]
 
     do
     {
-      try sudokuGrid.loadPuzzle(puzzle)
+      try sudokuGrid.loadPuzzle(puzzle, solution:truth)
     }
     catch SudokuWizardError.InvalidPuzzle(let errMessage)
     {
@@ -206,10 +213,16 @@ class GridTestViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
   }
   
-  @IBAction func handleConflicts(_ sender: UIButton)
+  @IBAction func handleErrorPolicy(_ sender: UISegmentedControl)
   {
-    sender.isSelected = !sender.isSelected
-    sudokuGrid.errorFeedback = ( sender.isSelected ? .conflict : .none )
+    switch sender.selectedSegmentIndex {
+    case 1:
+      sudokuGrid.errorFeedback = .conflict
+    case 2:
+      sudokuGrid.errorFeedback = .error
+    default:
+      sudokuGrid.errorFeedback = .none
+    }
   }
   
   @IBAction func handleMarkStyle(_ sender: UISegmentedControl)

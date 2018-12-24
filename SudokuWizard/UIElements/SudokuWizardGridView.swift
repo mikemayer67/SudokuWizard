@@ -61,7 +61,7 @@ class SudokuWizardGridView: UIView
   
   var errorFeedback : SudokuWizard.ErrorFeedback = .conflict
   {
-    didSet { if errorFeedback != oldValue { findAllConflicts() } }
+    didSet { if errorFeedback != oldValue { findAllErrors() } }
   }
   
   // MARK: -
@@ -151,13 +151,14 @@ class SudokuWizardGridView: UIView
       cell.errant = false
       cell.highlighted = false
       cell.clearAllMarks()
+      cell.correctValue = nil
     }
     
     state = .Unset
     selectedCell = nil
   }
   
-  func loadPuzzle(_ puzzle:String) throws
+  func loadPuzzle(_ puzzle:String, solution:String? = nil) throws
   {
     clear()
     guard puzzle.count == 81 else { throw SudokuWizardError.InvalidPuzzle("Puzzle string must contiain 81 characters") }
@@ -172,8 +173,22 @@ class SudokuWizardGridView: UIView
       if d > 0 { cellViews[i].state = .locked(d) }
     }
     
+    if let sol = solution
+    {
+      guard sol.count == 81 else { throw SudokuWizardError.InvalidPuzzle("Puzzle solution must contiain 81 characters") }
+      
+      let digitString = sol.replacingOccurrences(of: "0", with: ".")
+      let digits = digitString.compactMap{Int(String($0))}
+      
+      guard digits.count == 81 else { throw SudokuWizardError.InvalidPuzzle("Puzzle solution must contiain only digits 1-9") }
+      
+      for i in 0...80 {
+        cellViews[i].correctValue = digits[i]
+      }
+    }
+    
     computeAllMarks()
-    findAllConflicts()
+    findAllErrors()
     
     state = .Active
   }
@@ -226,9 +241,9 @@ class SudokuWizardGridView: UIView
     }
   }
   
-  func findAllConflicts()
+  func findAllErrors()
   {
-    cellViews.forEach { cell in checkConflicts(for:cell) }
+    cellViews.forEach { cell in checkForErrors(for:cell) }
   }
   
   func handleValueChange(for cell:SudokuWizardCellView)
@@ -251,15 +266,24 @@ class SudokuWizardGridView: UIView
   
   func update(_ cell:SudokuWizardCellView)
   {
-    checkConflicts(for:cell)
+    checkForErrors(for:cell)
     updateMarks(for:cell)
   }
   
-  func checkConflicts(for cell:SudokuWizardCellView)
+  func checkForErrors(for cell:SudokuWizardCellView)
   {
     cell.errant = false
     
-    guard errorFeedback == .conflict else { return }
+    if errorFeedback == .none { return }
+    
+    if errorFeedback == .error
+    {
+      if let v = cell.value, let cv = cell.correctValue, v != cv
+      {
+        cell.errant = true
+        return
+      }
+    }
     
     let r = cell.row!
     let c = cell.col!
