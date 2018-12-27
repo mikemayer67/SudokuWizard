@@ -13,6 +13,21 @@ enum SudokuWizardError : Error
   case InvalidPuzzle(String)
 }
 
+extension String
+{
+  func parseAsSudokuDigits() throws -> [Int]
+  {
+    guard self.count == 81 else { throw SudokuWizardError.InvalidPuzzle("Puzzle string must contiain 81 characters") }
+  
+    let digitString = self.replacingOccurrences(of: ".", with: "0")
+    let digits = digitString.compactMap{Int(String($0))}
+  
+    guard digits.count == 81 else { throw SudokuWizardError.InvalidPuzzle("Puzzle string must contiain only digits and periods") }
+  
+    return digits;
+  }
+}
+
 class SudokuWizardGridView: UIView
 {
   @IBOutlet weak var viewController : UIViewController!
@@ -161,29 +176,22 @@ class SudokuWizardGridView: UIView
   func loadPuzzle(_ puzzle:String, solution:String? = nil) throws
   {
     clear()
-    guard puzzle.count == 81 else { throw SudokuWizardError.InvalidPuzzle("Puzzle string must contiain 81 characters") }
     
-    let digitString = puzzle.replacingOccurrences(of: ".", with: "0")
-    let digits = digitString.compactMap{Int(String($0))}
-    
-    guard digits.count == 81 else { throw SudokuWizardError.InvalidPuzzle("Puzzle string must contiain only digits and periods") }
+    let digits = try puzzle.parseAsSudokuDigits()
 
     for i in 0...80 {
       let d = digits[i]
       if d > 0 { cellViews[i].state = .locked(d) }
     }
     
-    if let sol = solution
+    if solution != nil
     {
-      guard sol.count == 81 else { throw SudokuWizardError.InvalidPuzzle("Puzzle solution must contiain 81 characters") }
-      
-      let digitString = sol.replacingOccurrences(of: "0", with: ".")
-      let digits = digitString.compactMap{Int(String($0))}
-      
-      guard digits.count == 81 else { throw SudokuWizardError.InvalidPuzzle("Puzzle solution must contiain only digits 1-9") }
+      let solutionDigits = try solution!.parseAsSudokuDigits()
       
       for i in 0...80 {
-        cellViews[i].correctValue = digits[i]
+        let d = solutionDigits[i]
+        guard d > 0 else { throw SudokuWizardError.InvalidPuzzle("Puzzle solution must contiain only digits 1-9") }
+        cellViews[i].correctValue = d
       }
     }
     

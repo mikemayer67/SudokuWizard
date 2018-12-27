@@ -44,6 +44,12 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="OEC-JU-PJA">
+                        <barButtonItem key="leftBarButtonItem" image="icons8-squared_menu_filled.png" id="vzw-Y0-QVQ">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="handleNewPuzzle:" destination="BYZ-38-t0r" id="gs0-gb-AFN"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="icons8-settings.png" id="vsN-Q1-QrK">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -51,6 +57,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Sw4-EA-bfS" kind="show" id="Ml1-Zw-KAI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -168,7 +177,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Errors" footerTitle="Configures types of errors to show." id="1F5-JT-CGl">
+                            <tableViewSection headerTitle="Highlight" footerTitle="Configures types of errors to show." id="1F5-JT-CGl">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="hb0-1A-nB8">
                                         <rect key="frame" x="0.0" y="263" width="375" height="44"/>
@@ -239,12 +248,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="Vhj-qT-Wug">
-                        <barButtonItem key="leftBarButtonItem" id="iKd-zC-6vR">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oyI-Jv-hLS">
+                        <barButtonItem key="leftBarButtonItem" image="icons8-erase.png" id="iKd-zC-6vR">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oyI-Jv-hLS">
                                 <rect key="frame" x="16" y="5.5" width="83" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="apply">
+                                <state key="normal" title="cancel">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -253,7 +262,7 @@
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="8mb-fX-Bf3">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bnr-Mw-8Kw">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bnr-Mw-8Kw">
                                 <rect key="frame" x="276" y="5.5" width="83" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -280,12 +289,27 @@
             </objects>
             <point key="canvasLocation" x="1862" y="196"/>
         </scene>
+        <!--New Puzzle View Controller-->
+        <scene sceneID="4j5-FI-BuP">
+            <objects>
+                <viewController id="Sw4-EA-bfS" customClass="NewPuzzleViewController" customModule="SudokuWizard" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="N19-mC-jdX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="ruK-G6-S1G"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e2l-sU-qEB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1862" y="991"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="IGH-Tk-Ich">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="v84-td-af4" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="9Je-w7-Ypr">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" backIndicatorImage="icons8-erase.png" backIndicatorTransitionMaskImage="icons8-erase.png" id="9Je-w7-Ypr">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -302,6 +326,8 @@
     </scenes>
     <resources>
         <image name="SudokuWizardSplash.png" width="800" height="1597"/>
+        <image name="icons8-erase.png" width="25" height="25"/>
         <image name="icons8-settings.png" width="25" height="25"/>
+        <image name="icons8-squared_menu_filled.png" width="25" height="25"/>
     </resources>
 </document>

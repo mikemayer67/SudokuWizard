@@ -114,7 +114,7 @@ class SettingsViewController: UITableViewController
     
     let dirty = delegate != nil && settings.differ(from: Settings.shared)
     
-    updateButton.setTitle((dirty ? "apply" : "back"), for: .normal)
+    updateButton.setTitle((dirty ? "apply" : "return"), for: .normal)
     cancelButton.isEnabled = dirty
     cancelButton.isHidden  = (dirty == false)
   }
