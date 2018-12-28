@@ -19,6 +19,12 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     case scan
   }
   
+  override func awakeFromNib() {
+    if let bg = UIImage(named:"SudokuBackground") {
+      view.backgroundColor = UIColor(patternImage: bg)
+    }
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
   }
@@ -77,13 +83,26 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
       let selection = UIAlertController(title:"New Puzzle",
                                         message:"How would you like to start the puzzle",
                                         preferredStyle:.actionSheet)
-      selection.addAction( UIAlertAction(title:"manual",style:.default) { _ in self.startNewPuzzle(.manual) } )
-      selection.addAction( UIAlertAction(title:"random",style:.default) { _ in self.startNewPuzzle(.random) } )
-      selection.addAction( UIAlertAction(title:"scanned",style:.default) { _ in self.startNewPuzzle(.scan) } )
-      if required == false
-      {
-        selection.addAction(UIAlertAction(title:"cancel",style:.cancel))
+      
+      let manualAction = UIAlertAction(title:"manual",style:.default) { _ in
+        print("manual")
+        self.performSegue(withIdentifier: "showNewPuzzle", sender: self)
       }
+      
+      let randomAction = UIAlertAction(title:"random",style:.default) { _ in
+        self.performSegue(withIdentifier: "showRandomPuzzle", sender: self)
+      }
+      
+      let scanAction = UIAlertAction(title:"scanned",style:.default) { _ in
+        self.performSegue(withIdentifier: "showScanPuzzle", sender: self)
+      }
+                  
+      selection.addAction(manualAction)
+      selection.addAction(randomAction)
+      selection.addAction(scanAction)
+      
+      if !required { selection.addAction( UIAlertAction(title:"cancel",style:.cancel) ) }
+      
       self.present(selection,animated: true)
     }
     
@@ -103,11 +122,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     {
       newPuzzleSelection()
     }
-  }
-  
-  func startNewPuzzle(_ method:NewPuzzleMethod)
-  {
-    print("startNewPuzzle:",method)
   }
   
 }

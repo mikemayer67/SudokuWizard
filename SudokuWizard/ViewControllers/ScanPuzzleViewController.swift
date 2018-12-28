@@ -1,5 +1,5 @@
 //
-//  NewPuzzleViewController.swift
+//  ScanPuzzleViewController.swift
 //  SudokuWizard
 //
 //  Created by Mike Mayer on 12/27/18.
@@ -8,16 +8,18 @@
 
 import UIKit
 
-class NewPuzzleViewController: UIViewController
-{
-  override func viewDidLoad()
-  {
+class ScanPuzzleViewController: UIViewController {
+  
+  override func viewDidLoad() {
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
   }
   
-  @IBAction func handleCancel(_ sender: UIButton) {
+  
+  @IBAction func handleCancel(_ sender: UIButton)
+  {
     self.navigationController?.popViewController(animated: true)
   }
+  
 }

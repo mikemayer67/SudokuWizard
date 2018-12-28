@@ -17,9 +17,14 @@
 		27161F1321CEA928006CDB71 /* icons8-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 27161F1021CE1BE0006CDB71 /* icons8-settings.png */; };
 		2734F54021C7589A005DA954 /* SudokuWizardSplash.png in Resources */ = {isa = PBXBuildFile; fileRef = 2734F53F21C7589A005DA954 /* SudokuWizardSplash.png */; };
 		2734F54721C86C62005DA954 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734F54621C86C62005DA954 /* SettingsViewController.swift */; };
-		2734F54921C98238005DA954 /* icons8-left_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 2734F54821C98238005DA954 /* icons8-left_4.png */; };
 		2734F55121CA0741005DA954 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734F55021CA0741005DA954 /* Settings.swift */; };
 		2734F55621CBBCC5005DA954 /* Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734F55521CBBCC5005DA954 /* Transitions.swift */; };
+		2744C0AE21D5418A009DB55A /* icons8-left_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744C0AD21D5418A009DB55A /* icons8-left_4.png */; };
+		2744C0B021D541F3009DB55A /* icons8-squared_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744C0AF21D541F3009DB55A /* icons8-squared_menu.png */; };
+		2744C0B221D544BE009DB55A /* ScanPuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2744C0B121D544BE009DB55A /* ScanPuzzleViewController.swift */; };
+		2744C0B421D54584009DB55A /* icons8-under_construction_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744C0B321D54584009DB55A /* icons8-under_construction_filled.png */; };
+		2744C0B621D54B22009DB55A /* RandomPuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2744C0B521D54B22009DB55A /* RandomPuzzleViewController.swift */; };
+		2744C0B821D56375009DB55A /* SudokuBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744C0B721D56375009DB55A /* SudokuBackground.png */; };
 		2785C42A21B1CC6E00AAD7D1 /* SudokuWizardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2785C42821B1CC6E00AAD7D1 /* SudokuWizardGridView.swift */; };
 		27A1D62321B49056007AF213 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D62221B49056007AF213 /* Extensions.swift */; };
 		27A1D63B21BA25A8007AF213 /* SudokuWizardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D63A21BA25A7007AF213 /* SudokuWizardCellView.swift */; };
@@ -40,9 +45,14 @@
 		27161F1121CE1C43006CDB71 /* FactoryDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = FactoryDefaults.plist; sourceTree = "<group>"; };
 		2734F53F21C7589A005DA954 /* SudokuWizardSplash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SudokuWizardSplash.png; sourceTree = "<group>"; };
 		2734F54621C86C62005DA954 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		2734F54821C98238005DA954 /* icons8-left_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-left_4.png"; sourceTree = "<group>"; };
 		2734F55021CA0741005DA954 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		2734F55521CBBCC5005DA954 /* Transitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transitions.swift; sourceTree = "<group>"; };
+		2744C0AD21D5418A009DB55A /* icons8-left_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-left_4.png"; path = "../../../../Documents/com.visualpharm.Icons8/ios/Arrows/25/ffffff/icons8-left_4.png"; sourceTree = "<group>"; };
+		2744C0AF21D541F3009DB55A /* icons8-squared_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-squared_menu.png"; sourceTree = "<group>"; };
+		2744C0B121D544BE009DB55A /* ScanPuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanPuzzleViewController.swift; sourceTree = "<group>"; };
+		2744C0B321D54584009DB55A /* icons8-under_construction_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-under_construction_filled.png"; sourceTree = "<group>"; };
+		2744C0B521D54B22009DB55A /* RandomPuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPuzzleViewController.swift; sourceTree = "<group>"; };
+		2744C0B721D56375009DB55A /* SudokuBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SudokuBackground.png; sourceTree = "<group>"; };
 		2785C42821B1CC6E00AAD7D1 /* SudokuWizardGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuWizardGridView.swift; sourceTree = "<group>"; };
 		27A1D62221B49056007AF213 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = ../../SWGridViewTest/SWGridViewTest/Extensions.swift; sourceTree = "<group>"; };
 		27A1D63A21BA25A7007AF213 /* SudokuWizardCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuWizardCellView.swift; sourceTree = "<group>"; };
@@ -106,10 +116,13 @@
 		2734F54321C86BA1005DA954 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				2744C0B721D56375009DB55A /* SudokuBackground.png */,
 				2734F53F21C7589A005DA954 /* SudokuWizardSplash.png */,
+				2744C0AD21D5418A009DB55A /* icons8-left_4.png */,
 				27161F1021CE1BE0006CDB71 /* icons8-settings.png */,
-				2734F54821C98238005DA954 /* icons8-left_4.png */,
+				2744C0AF21D541F3009DB55A /* icons8-squared_menu.png */,
 				27B13BC321D4278900B4B81D /* icons8-squared_menu_filled.png */,
+				2744C0B321D54584009DB55A /* icons8-under_construction_filled.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -129,6 +142,8 @@
 				27022B5C21A7B6970078588D /* MainViewController.swift */,
 				2734F54621C86C62005DA954 /* SettingsViewController.swift */,
 				27B13BE521D52F9A00B4B81D /* NewPuzzleViewController.swift */,
+				2744C0B121D544BE009DB55A /* ScanPuzzleViewController.swift */,
+				2744C0B521D54B22009DB55A /* RandomPuzzleViewController.swift */,
 				2734F55521CBBCC5005DA954 /* Transitions.swift */,
 			);
 			path = ViewControllers;
@@ -203,10 +218,13 @@
 			files = (
 				27161F1321CEA928006CDB71 /* icons8-settings.png in Resources */,
 				2734F54021C7589A005DA954 /* SudokuWizardSplash.png in Resources */,
+				2744C0B821D56375009DB55A /* SudokuBackground.png in Resources */,
 				27B13BC421D4278900B4B81D /* icons8-squared_menu_filled.png in Resources */,
+				2744C0B421D54584009DB55A /* icons8-under_construction_filled.png in Resources */,
 				27022B6521A7B6980078588D /* LaunchScreen.storyboard in Resources */,
-				2734F54921C98238005DA954 /* icons8-left_4.png in Resources */,
+				2744C0B021D541F3009DB55A /* icons8-squared_menu.png in Resources */,
 				27161F1221CE1C43006CDB71 /* FactoryDefaults.plist in Resources */,
+				2744C0AE21D5418A009DB55A /* icons8-left_4.png in Resources */,
 				27022B6221A7B6980078588D /* Assets.xcassets in Resources */,
 				27022B6021A7B6970078588D /* Main.storyboard in Resources */,
 			);
@@ -228,6 +246,8 @@
 				2734F55121CA0741005DA954 /* Settings.swift in Sources */,
 				2785C42A21B1CC6E00AAD7D1 /* SudokuWizardGridView.swift in Sources */,
 				27161F0B21CD42AE006CDB71 /* SudokuWizard.swift in Sources */,
+				2744C0B221D544BE009DB55A /* ScanPuzzleViewController.swift in Sources */,
+				2744C0B621D54B22009DB55A /* RandomPuzzleViewController.swift in Sources */,
 				2734F54721C86C62005DA954 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
