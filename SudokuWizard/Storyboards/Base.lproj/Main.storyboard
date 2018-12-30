@@ -270,7 +270,7 @@
         <!--Puzzle Editor-->
         <scene sceneID="4j5-FI-BuP">
             <objects>
-                <viewController id="Sw4-EA-bfS" customClass="NewPuzzleViewController" customModule="SudokuWizard" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Sw4-EA-bfS" customClass="ManualPuzzleViewController" customModule="SudokuWizard" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="N19-mC-jdX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -284,7 +284,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="cancel" image="icons8-left_4.png"/>
                                 <connections>
-                                    <action selector="handleCancel:" destination="Sw4-EA-bfS" eventType="touchUpInside" id="RpW-Yn-usp"/>
+                                    <action selector="handleCancel:" destination="Sw4-EA-bfS" eventType="touchUpInside" id="Ket-wx-fXv"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -311,7 +311,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="cancel" image="icons8-left_4.png"/>
                                 <connections>
-                                    <action selector="handleCancel:" destination="9Tc-y0-J2h" eventType="touchUpInside" id="m2Y-kb-BM9"/>
+                                    <action selector="handleCancel:" destination="9Tc-y0-J2h" eventType="touchUpInside" id="Xgm-1y-urQ"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -329,7 +329,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons8-under_construction_filled.png" translatesAutoresizingMaskIntoConstraints="NO" id="RVg-te-IzS">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons8-under_construction_filled.png" translatesAutoresizingMaskIntoConstraints="NO" id="RVg-te-IzS">
                                 <rect key="frame" x="94" y="240" width="187.5" height="187.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="RVg-te-IzS" secondAttribute="height" id="TBV-4K-Auo"/>
@@ -359,7 +359,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="cancel" image="icons8-left_4.png"/>
                                 <connections>
-                                    <action selector="handleCancel:" destination="Mrr-Mm-ygk" eventType="touchUpInside" id="wz3-M3-g7a"/>
+                                    <action selector="handleCancel:" destination="Mrr-Mm-ygk" eventType="touchUpInside" id="QVP-GV-tHL"/>
                                 </connections>
                             </button>
                         </barButtonItem>

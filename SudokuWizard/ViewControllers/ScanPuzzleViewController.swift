@@ -8,18 +8,10 @@
 
 import UIKit
 
-class ScanPuzzleViewController: UIViewController {
-  
+class ScanPuzzleViewController: NewPuzzleViewController
+{
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    // Do any additional setup after loading the view.
-  }
-  
-  
-  @IBAction func handleCancel(_ sender: UIButton)
-  {
-    self.navigationController?.popViewController(animated: true)
-  }
-  
+    print("SPVC viewDidLoad")
+  }  
 }
