@@ -23,24 +23,14 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     if let bg = UIImage(named:"SudokuBackground") {
       view.backgroundColor = UIColor(patternImage: bg)
     }
-  }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-  }
-  
-  override func viewWillAppear(_ animated: Bool)
-  {
     self.navigationController?.delegate = self
     self.modalPresentationStyle = .overCurrentContext
   }
   
-  var firstappear = true
   override func viewDidAppear(_ animated: Bool)
   {
     print("Put this into an if condition once loading old puzzles is implemented: ",#file,":",#line)
-    if firstappear { startNewPuzzle(required:true) }
-    firstappear = false
+    startNewPuzzle(required:true)
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)

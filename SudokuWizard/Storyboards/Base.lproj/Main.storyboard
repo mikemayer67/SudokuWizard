@@ -284,11 +284,25 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="cancel" image="icons8-left_4.png"/>
                                 <connections>
-                                    <action selector="handleCancel:" destination="Sw4-EA-bfS" eventType="touchUpInside" id="Ket-wx-fXv"/>
+                                    <action selector="handleCancel:" destination="Sw4-EA-bfS" eventType="touchUpInside" id="Kmg-ed-NFF"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="xVR-Fq-ehi">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8Ux-7q-Ejt">
+                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="start"/>
+                                <connections>
+                                    <action selector="handleStart:" destination="Sw4-EA-bfS" eventType="touchUpInside" id="eSj-hS-JMW"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="startButton" destination="8Ux-7q-Ejt" id="J8g-Vo-qIq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e2l-sU-qEB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -315,7 +329,21 @@
                                 </connections>
                             </button>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="I6r-5Q-dg5">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qgz-YS-Foo">
+                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="start"/>
+                                <connections>
+                                    <action selector="handleStart:" destination="9Tc-y0-J2h" eventType="touchUpInside" id="ZEQ-vN-hHL"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="startButton" destination="qgz-YS-Foo" id="EmX-S5-juf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mPU-fZ-Rca" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -363,7 +391,21 @@
                                 </connections>
                             </button>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="5vv-Nz-fLs">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="N4p-pA-Jec">
+                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="start"/>
+                                <connections>
+                                    <action selector="handleStart:" destination="Mrr-Mm-ygk" eventType="touchUpInside" id="IVa-Q3-w2P"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="startButton" destination="N4p-pA-Jec" id="evI-yk-YOH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDa-CY-gxO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

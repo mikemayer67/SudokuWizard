@@ -10,12 +10,32 @@ import UIKit
 
 class NewPuzzleViewController: UIViewController
 {
+  var dirty = false
+
   override func viewDidLoad()
   {
     super.viewDidLoad()
   }
   
   @IBAction func handleCancel(_ sender: UIButton) {
+    if dirty {
+      let alert = UIAlertController(title:"Discard Puzzle",
+                                    message:"This will throw away this new puzzle",
+                                    preferredStyle:.alert)
+      alert.addAction( UIAlertAction(title: "OK", style:.destructive) { _ in
+        self.navigationController?.popViewController(animated: true) } )
+      alert.addAction( UIAlertAction(title:"Cancel", style:.cancel) )
+      
+      self.present(alert,animated: true)
+    }
+    else
+    {
+      self.navigationController?.popViewController(animated: true)
+    }
+  }
+  
+  func handleStart()
+  {
     self.navigationController?.popViewController(animated: true)
   }
 }

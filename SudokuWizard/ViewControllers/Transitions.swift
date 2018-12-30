@@ -110,9 +110,6 @@ class NewPuzzleTransition : CustomTransition
     let containerView = transitionContext.containerView
     let finalFrame    = transitionContext.finalFrame(for: toVC)
     
-    print("Final Frame (to): ",finalFrame)
-    print("Container Frame: ",containerView.frame)
-    
     switch operation
     {
     case .push:
@@ -141,7 +138,8 @@ class NewPuzzleTransition : CustomTransition
         fromView.alpha = 1.0
       }
       
-    default: return false
+    default:
+      return false
     }
     
     return true

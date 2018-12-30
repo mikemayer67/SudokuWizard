@@ -10,7 +10,14 @@ import UIKit
 
 class RandomPuzzleViewController: NewPuzzleViewController
 {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+  @IBOutlet weak var startButton: UIButton!
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+  
+  @IBAction func handleStart(_ sender: UIButton) {
+    print("RPVC: handle start")
+    handleStart()
+  }
 }

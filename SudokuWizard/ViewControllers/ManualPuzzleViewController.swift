@@ -10,7 +10,16 @@ import UIKit
 
 class ManualPuzzleViewController: NewPuzzleViewController
 {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+  @IBOutlet weak var startButton: UIButton!
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    startButton.isHidden = true
+  }
+    
+  @IBAction func handleStart(_ sender: UIButton) {
+    print("MPVC: handle start")
+    handleStart()
+  }
+  
 }

@@ -10,8 +10,15 @@ import UIKit
 
 class ScanPuzzleViewController: NewPuzzleViewController
 {
+  @IBOutlet weak var startButton: UIButton!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    print("SPVC viewDidLoad")
-  }  
+    startButton.isHidden = true
+  }
+  
+  @IBAction func handleStart(_ sender: UIButton) {
+    print("SPVC: handle start")
+    handleStart()
+  }
 }
