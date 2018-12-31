@@ -25,6 +25,17 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     }
     self.navigationController?.delegate = self
     self.modalPresentationStyle = .overCurrentContext
+    
+    newPuzzleBackgroundAlpha = newPuzzleBackgroundView.alpha
+    enterButtonOffset  = enterButtonBottomConstraint.constant
+    randomButtonOffset = randomButtonBottomConstraint.constant
+    scanButtonOffset   = scanButtonBottomConstraint.constant
+    
+    enterPuzzleButton.layer.cornerRadius = enterPuzzleButton.frame.height/2.0
+    randomPuzzleButton.layer.cornerRadius = randomPuzzleButton.frame.height/2.0
+    scanPuzzleButton.layer.cornerRadius = scanPuzzleButton.frame.height/2.0
+    
+    hideNewPuzzleInput()
   }
   
   override func viewDidAppear(_ animated: Bool)
@@ -44,8 +55,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
       print("Prepare to segue to: ",segue.destination)
     }
   }
-
-  // Mark: - Navigation Controller Delegate Methods
+  
+  // MARK: - Navigation Controller Delegate Methods
   
   func navigationController(_ navigationController: UINavigationController,
                             animationControllerFor operation: UINavigationController.Operation,
@@ -65,8 +76,53 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     Settings.shared = settings
     print("Settings changed -- do something with them")
   }
-
-  // Mark: - New Puzzle
+  
+  // MARK: - New Puzzle outlets
+  
+  @IBOutlet weak var newPuzzleButton: UIBarButtonItem!
+  @IBOutlet weak var puzzleSettingsButton: UIBarButtonItem!
+  
+  
+  @IBOutlet weak var newPuzzleBackgroundView: UIView!
+  @IBOutlet weak var enterPuzzleButton: UIButton!
+  @IBOutlet weak var randomPuzzleButton: UIButton!
+  @IBOutlet weak var scanPuzzleButton: UIButton!
+  @IBOutlet weak var cancelNewPuzzleButton: UIButton!
+  
+  @IBOutlet weak var scanButtonBottomConstraint: NSLayoutConstraint!
+  @IBOutlet weak var randomButtonBottomConstraint: NSLayoutConstraint!
+  @IBOutlet weak var enterButtonBottomConstraint: NSLayoutConstraint!
+  
+   // MARK: - New Puzzle properties
+  
+  var newPuzzleBackgroundAlpha : CGFloat!
+  var enterButtonOffset : CGFloat!
+  var randomButtonOffset : CGFloat!
+  var scanButtonOffset : CGFloat!
+  
+  // MARK: - New Puzzle methods
+  
+  func hideNewPuzzleInput()
+  {
+    newPuzzleBackgroundView.isHidden = true
+    enterPuzzleButton.isHidden = true
+    randomPuzzleButton.isHidden = true
+    scanPuzzleButton.isHidden = true
+    cancelNewPuzzleButton.isHidden = true
+    
+    newPuzzleBackgroundView.alpha = 0.0
+    enterPuzzleButton.alpha = 1.0
+    randomPuzzleButton.alpha = 1.0
+    scanPuzzleButton.alpha = 1.0
+    cancelNewPuzzleButton.alpha = 0.0
+    
+    scanButtonBottomConstraint.constant = scanPuzzleButton.frame.height
+    randomButtonBottomConstraint.constant = 0.0
+    enterButtonBottomConstraint.constant = 0.0
+    
+    newPuzzleButton.isEnabled = true
+    puzzleSettingsButton.isEnabled = true
+  }
   
   @IBAction func handleNewPuzzle(_ sender: UIBarButtonItem)
   {
@@ -88,25 +144,58 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   
   func startNewPuzzle(required:Bool=false)
   {
-    let selection = UIAlertController(title:"New Puzzle",
-                                      message:"How would you like to start the puzzle",
-                                      preferredStyle:.actionSheet)
+    newPuzzleButton.isEnabled = false
+    puzzleSettingsButton.isEnabled = false
     
-    selection.addAction( UIAlertAction(title:"manual",style:.default) { _ in
-      self.performSegue(withIdentifier: "showNewPuzzle", sender: self)
-    } )
-    selection.addAction( UIAlertAction(title:"random",style:.default) { _ in
-      self.performSegue(withIdentifier: "showRandomPuzzle", sender: self)
-    } )
-    selection.addAction( UIAlertAction(title:"scanned",style:.default) { _ in
-      self.performSegue(withIdentifier: "showScanPuzzle", sender: self)
-    } )
+    newPuzzleBackgroundView.isHidden = false
+    enterPuzzleButton.isHidden = false
+    randomPuzzleButton.isHidden = false
+    scanPuzzleButton.isHidden = false
     
-    if !required { selection.addAction( UIAlertAction(title:"cancel",style:.cancel) ) }
+    if !required {
+      cancelNewPuzzleButton.isHidden = false
+    }
     
-    self.present(selection,animated: true)
+    view.layoutIfNeeded()
+    
+    UIView.animateKeyframes(withDuration: 0.35, delay: 0.0, options: .calculationModeLinear, animations: {
+      self.scanButtonBottomConstraint.constant = self.scanButtonOffset
+      self.randomButtonBottomConstraint.constant = self.randomButtonOffset
+      self.enterButtonBottomConstraint.constant = self.enterButtonOffset
+      UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.25, animations: {
+        self.newPuzzleBackgroundView.alpha = self.newPuzzleBackgroundAlpha
+      })
+      if !required {
+        UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.25, animations: {
+          self.cancelNewPuzzleButton.alpha = 1.0
+        } )
+      }
+      self.view.layoutIfNeeded()
+    })
   }
   
-  
-  
+  @IBAction func handlePuzzleSelection(_ sender: UIButton)
+  {
+    UIView.animate(withDuration: 0.35, animations: {
+      self.newPuzzleBackgroundView.alpha = 0.0
+      self.enterPuzzleButton.alpha = 0.0
+      self.randomPuzzleButton.alpha = 0.0
+      self.scanPuzzleButton.alpha = 0.0
+      self.cancelNewPuzzleButton.alpha = 0.0
+    }) { (_) in
+      self.hideNewPuzzleInput()
+      
+      switch sender {
+      case self.enterPuzzleButton:
+        self.performSegue(withIdentifier: "showNewPuzzle", sender: self)
+      case self.randomPuzzleButton:
+        self.performSegue(withIdentifier: "showRandomPuzzle", sender: self)
+      case self.scanPuzzleButton:
+        self.performSegue(withIdentifier: "showScanPuzzle", sender: self)
+      default:
+        break
+      }
+    }
+  }
 }
+
