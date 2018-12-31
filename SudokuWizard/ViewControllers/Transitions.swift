@@ -108,38 +108,27 @@ class NewPuzzleTransition : CustomTransition
       else { return false }
     
     let containerView = transitionContext.containerView
-    let finalFrame    = transitionContext.finalFrame(for: toVC)
     
-    switch operation
-    {
-    case .push:
-      containerView.addSubview(toView)
-      toView.layer.cornerRadius = 10.0
-      toView.transform = CGAffineTransform(translationX: 0.0, y: -finalFrame.height/2.0).scaledBy(x: 0.01, y: 0.01)
-      
-      UIView.animate(withDuration: duration, delay: 0.0, options: .curveLinear, animations: {
-        toView.layer.cornerRadius = 0.0
-        toView.transform = CGAffineTransform.identity
-      }) { _ in
-        transitionContext.completeTransition(true)
-      }
-      
-    case .pop:
-      containerView.insertSubview(toView, at: 0)
-      
-      UIView.animate(withDuration: duration, delay: 0.0, options: .curveLinear, animations: {
-        fromView.transform = CGAffineTransform(translationX: 0.0, y: -finalFrame.height/2.0).scaledBy(x: 0.1, y: 0.1)
-        fromView.layer.cornerRadius = 10.0
+    let midView = UIView(frame: containerView.frame)
+    midView.backgroundColor = fromVC.navigationController?.navigationBar.barTintColor ?? UIColor.red
+    containerView.insertSubview(midView, at: 0)
+
+    if operation == .push { containerView.addSubview(toView) }
+    else                  { containerView.insertSubview(toView, at: 1) }
+
+    let f = 0.6
+    toView.alpha = 0.0
+    UIView.animateKeyframes(withDuration: duration, delay: 0.0, options: .calculationModeCubic, animations: {
+      UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: f, animations: {
         fromView.alpha = 0.0
-      }) { _ in
-        transitionContext.completeTransition(true)
-        fromView.transform = CGAffineTransform.identity
-        fromView.layer.cornerRadius = 0.0
-        fromView.alpha = 1.0
-      }
-      
-    default:
-      return false
+      })
+      UIView.addKeyframe(withRelativeStartTime: 1.0-f, relativeDuration: f, animations: {
+        toView.alpha = 1.0
+      })
+    }) { (_) in
+      fromView.alpha = 1.0
+      transitionContext.completeTransition(true)
+      midView.removeFromSuperview()
     }
     
     return true

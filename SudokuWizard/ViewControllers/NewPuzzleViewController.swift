@@ -11,6 +11,13 @@ import UIKit
 class NewPuzzleViewController: UIViewController
 {
   var dirty = false
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    if let bg = UIImage(named:"SudokuBackground") {
+      view.backgroundColor = UIColor(patternImage: bg)
+    }
+  }
 
   override func viewDidLoad()
   {
@@ -34,7 +41,7 @@ class NewPuzzleViewController: UIViewController
     }
   }
   
-  func handleStart()
+  func dismiss()
   {
     self.navigationController?.popViewController(animated: true)
   }

@@ -19,7 +19,7 @@ class ManualPuzzleViewController: NewPuzzleViewController
     
   @IBAction func handleStart(_ sender: UIButton) {
     print("MPVC: handle start")
-    handleStart()
+    dismiss()
   }
   
 }

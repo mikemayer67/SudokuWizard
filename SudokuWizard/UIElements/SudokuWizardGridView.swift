@@ -79,6 +79,11 @@ class SudokuWizardGridView: UIView
     didSet { if errorFeedback != oldValue { findAllErrors() } }
   }
   
+  var delegateForCells : SudokuWizardCellViewDelegate?
+  {
+    didSet { cellViews.forEach { c in c.delegate = delegateForCells } }
+  }
+  
   // MARK: -
   
   override func awakeFromNib()

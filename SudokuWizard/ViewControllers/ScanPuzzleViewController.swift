@@ -19,6 +19,6 @@ class ScanPuzzleViewController: NewPuzzleViewController
   
   @IBAction func handleStart(_ sender: UIButton) {
     print("SPVC: handle start")
-    handleStart()
+    dismiss()
   }
 }
