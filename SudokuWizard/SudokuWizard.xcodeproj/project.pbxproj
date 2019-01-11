@@ -31,6 +31,13 @@
 		27B13BC421D4278900B4B81D /* icons8-squared_menu_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B13BC321D4278900B4B81D /* icons8-squared_menu_filled.png */; };
 		27B13BE621D52F9A00B4B81D /* NewPuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B13BE521D52F9A00B4B81D /* NewPuzzleViewController.swift */; };
 		27C118B821D66D94001CC6CD /* ManualPuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C118B721D66D94001CC6CD /* ManualPuzzleViewController.swift */; };
+		27E94DA421DAADCA00D0C4EE /* DLXAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94D9F21DAADCA00D0C4EE /* DLXAlgorithm.swift */; };
+		27E94DA521DAADCA00D0C4EE /* DLX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DA021DAADCA00D0C4EE /* DLX.swift */; };
+		27E94DA621DAADCA00D0C4EE /* DLXColumnNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DA121DAADCA00D0C4EE /* DLXColumnNode.swift */; };
+		27E94DA721DAADCA00D0C4EE /* DLXGridNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DA221DAADCA00D0C4EE /* DLXGridNode.swift */; };
+		27E94DA821DAADCA00D0C4EE /* DLXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DA321DAADCA00D0C4EE /* DLXNode.swift */; };
+		27E94DAA21DAADE900D0C4EE /* DLXSudoku.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DA921DAADE900D0C4EE /* DLXSudoku.swift */; };
+		27E94DAE21DBD76900D0C4EE /* RandomSudoku.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DAD21DBD76900D0C4EE /* RandomSudoku.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +67,13 @@
 		27B13BC321D4278900B4B81D /* icons8-squared_menu_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-squared_menu_filled.png"; sourceTree = "<group>"; };
 		27B13BE521D52F9A00B4B81D /* NewPuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPuzzleViewController.swift; sourceTree = "<group>"; };
 		27C118B721D66D94001CC6CD /* ManualPuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualPuzzleViewController.swift; sourceTree = "<group>"; };
+		27E94D9F21DAADCA00D0C4EE /* DLXAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLXAlgorithm.swift; sourceTree = "<group>"; };
+		27E94DA021DAADCA00D0C4EE /* DLX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLX.swift; sourceTree = "<group>"; };
+		27E94DA121DAADCA00D0C4EE /* DLXColumnNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLXColumnNode.swift; sourceTree = "<group>"; };
+		27E94DA221DAADCA00D0C4EE /* DLXGridNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLXGridNode.swift; sourceTree = "<group>"; };
+		27E94DA321DAADCA00D0C4EE /* DLXNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLXNode.swift; sourceTree = "<group>"; };
+		27E94DA921DAADE900D0C4EE /* DLXSudoku.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLXSudoku.swift; sourceTree = "<group>"; };
+		27E94DAD21DBD76900D0C4EE /* RandomSudoku.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSudoku.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +90,7 @@
 		27022B4E21A7B6970078588D = {
 			isa = PBXGroup;
 			children = (
+				27E94D9E21DAAD9200D0C4EE /* DLX */,
 				27022B9021A7BA090078588D /* UIElements */,
 				2734F55221CA077F005DA954 /* Data */,
 				2734F55321CA07BC005DA954 /* ViewControllers */,
@@ -134,6 +149,7 @@
 			children = (
 				2734F55021CA0741005DA954 /* Settings.swift */,
 				27161F1121CE1C43006CDB71 /* FactoryDefaults.plist */,
+				27E94DAD21DBD76900D0C4EE /* RandomSudoku.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -159,6 +175,19 @@
 				27022B6321A7B6980078588D /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		27E94D9E21DAAD9200D0C4EE /* DLX */ = {
+			isa = PBXGroup;
+			children = (
+				27E94DA921DAADE900D0C4EE /* DLXSudoku.swift */,
+				27E94DA021DAADCA00D0C4EE /* DLX.swift */,
+				27E94D9F21DAADCA00D0C4EE /* DLXAlgorithm.swift */,
+				27E94DA121DAADCA00D0C4EE /* DLXColumnNode.swift */,
+				27E94DA221DAADCA00D0C4EE /* DLXGridNode.swift */,
+				27E94DA321DAADCA00D0C4EE /* DLXNode.swift */,
+			);
+			path = DLX;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,9 +274,16 @@
 				2734F55621CBBCC5005DA954 /* Transitions.swift in Sources */,
 				27022B5D21A7B6970078588D /* MainViewController.swift in Sources */,
 				27C118B821D66D94001CC6CD /* ManualPuzzleViewController.swift in Sources */,
+				27E94DAA21DAADE900D0C4EE /* DLXSudoku.swift in Sources */,
 				27022B5B21A7B6970078588D /* AppDelegate.swift in Sources */,
+				27E94DA421DAADCA00D0C4EE /* DLXAlgorithm.swift in Sources */,
 				27B13BE621D52F9A00B4B81D /* NewPuzzleViewController.swift in Sources */,
+				27E94DAE21DBD76900D0C4EE /* RandomSudoku.swift in Sources */,
 				2734F55121CA0741005DA954 /* Settings.swift in Sources */,
+				27E94DA521DAADCA00D0C4EE /* DLX.swift in Sources */,
+				27E94DA821DAADCA00D0C4EE /* DLXNode.swift in Sources */,
+				27E94DA721DAADCA00D0C4EE /* DLXGridNode.swift in Sources */,
+				27E94DA621DAADCA00D0C4EE /* DLXColumnNode.swift in Sources */,
 				2785C42A21B1CC6E00AAD7D1 /* SudokuWizardGridView.swift in Sources */,
 				27161F0B21CD42AE006CDB71 /* SudokuWizard.swift in Sources */,
 				2744C0B221D544BE009DB55A /* ScanPuzzleViewController.swift in Sources */,

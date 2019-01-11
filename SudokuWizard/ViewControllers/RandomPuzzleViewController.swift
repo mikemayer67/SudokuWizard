@@ -61,7 +61,15 @@ class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
   
   func generate()
   {
-    print("generate puzzle")
+    let rs = RandomSudoku()
+    
+    do {
+      try gridView.loadPuzzle(rs.puzzle, solution: rs.truth)
+      difficultyLabel.text = String(format:"%d",rs.difficulty)
+    }
+    catch {
+      fatalError("Should never get here \(#file):\(#line)")
+    }
   }
   
   // MARK: - Grid Delegate methods
