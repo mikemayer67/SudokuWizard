@@ -26,7 +26,6 @@
 		2744C0B621D54B22009DB55A /* RandomPuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2744C0B521D54B22009DB55A /* RandomPuzzleViewController.swift */; };
 		2744C0B821D56375009DB55A /* SudokuBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744C0B721D56375009DB55A /* SudokuBackground.png */; };
 		2785C42A21B1CC6E00AAD7D1 /* SudokuWizardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2785C42821B1CC6E00AAD7D1 /* SudokuWizardGridView.swift */; };
-		27A1D62321B49056007AF213 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D62221B49056007AF213 /* Extensions.swift */; };
 		27A1D63B21BA25A8007AF213 /* SudokuWizardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D63A21BA25A7007AF213 /* SudokuWizardCellView.swift */; };
 		27B13BC421D4278900B4B81D /* icons8-squared_menu_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B13BC321D4278900B4B81D /* icons8-squared_menu_filled.png */; };
 		27B13BE621D52F9A00B4B81D /* NewPuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B13BE521D52F9A00B4B81D /* NewPuzzleViewController.swift */; };
@@ -38,6 +37,7 @@
 		27E94DA821DAADCA00D0C4EE /* DLXNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DA321DAADCA00D0C4EE /* DLXNode.swift */; };
 		27E94DAA21DAADE900D0C4EE /* DLXSudoku.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DA921DAADE900D0C4EE /* DLXSudoku.swift */; };
 		27E94DAE21DBD76900D0C4EE /* RandomSudoku.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DAD21DBD76900D0C4EE /* RandomSudoku.swift */; };
+		27E94DB021E946C900D0C4EE /* SudokuGrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DAF21E946C900D0C4EE /* SudokuGrader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,7 +62,6 @@
 		2744C0B521D54B22009DB55A /* RandomPuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPuzzleViewController.swift; sourceTree = "<group>"; };
 		2744C0B721D56375009DB55A /* SudokuBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SudokuBackground.png; sourceTree = "<group>"; };
 		2785C42821B1CC6E00AAD7D1 /* SudokuWizardGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuWizardGridView.swift; sourceTree = "<group>"; };
-		27A1D62221B49056007AF213 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = ../../SWGridViewTest/SWGridViewTest/Extensions.swift; sourceTree = "<group>"; };
 		27A1D63A21BA25A7007AF213 /* SudokuWizardCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuWizardCellView.swift; sourceTree = "<group>"; };
 		27B13BC321D4278900B4B81D /* icons8-squared_menu_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-squared_menu_filled.png"; sourceTree = "<group>"; };
 		27B13BE521D52F9A00B4B81D /* NewPuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPuzzleViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +73,7 @@
 		27E94DA321DAADCA00D0C4EE /* DLXNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLXNode.swift; sourceTree = "<group>"; };
 		27E94DA921DAADE900D0C4EE /* DLXSudoku.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLXSudoku.swift; sourceTree = "<group>"; };
 		27E94DAD21DBD76900D0C4EE /* RandomSudoku.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSudoku.swift; sourceTree = "<group>"; };
+		27E94DAF21E946C900D0C4EE /* SudokuGrader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGrader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +122,6 @@
 		27022B9021A7BA090078588D /* UIElements */ = {
 			isa = PBXGroup;
 			children = (
-				27A1D62221B49056007AF213 /* Extensions.swift */,
 				27A1D63A21BA25A7007AF213 /* SudokuWizardCellView.swift */,
 				2785C42821B1CC6E00AAD7D1 /* SudokuWizardGridView.swift */,
 				27161F0A21CD42AE006CDB71 /* SudokuWizard.swift */,
@@ -150,6 +149,7 @@
 				2734F55021CA0741005DA954 /* Settings.swift */,
 				27161F1121CE1C43006CDB71 /* FactoryDefaults.plist */,
 				27E94DAD21DBD76900D0C4EE /* RandomSudoku.swift */,
+				27E94DAF21E946C900D0C4EE /* SudokuGrader.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -269,7 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27A1D62321B49056007AF213 /* Extensions.swift in Sources */,
+				27E94DB021E946C900D0C4EE /* SudokuGrader.swift in Sources */,
 				27A1D63B21BA25A8007AF213 /* SudokuWizardCellView.swift in Sources */,
 				2734F55621CBBCC5005DA954 /* Transitions.swift in Sources */,
 				27022B5D21A7B6970078588D /* MainViewController.swift in Sources */,

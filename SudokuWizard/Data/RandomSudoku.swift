@@ -38,15 +38,15 @@ let links : Array<Set<Int>> = {
 // the indices of unambiguous cells when attempting to symmetrically
 // hide 4 or 2 cells respectively
 //
-//  00 01 02 03 04 05 06 07 08   00 01 02 03 04 05 06 07 bb   00 01 02 03 04 05 06 07 08
-//  09 10 11 12 13 14 15 16 17   dd 10 11 12 13 14 15 bb bb   aa 10 11 12 13 14 15 16 17
-//  18 19 20 21 22 23 24 25 26   dd dd 20 21 22 23 bb bb bb   aa aa 20 21 22 23 24 25 26
-//  27 28 29 30 31 32 33 34 35   dd dd dd 30 31 bb bb bb bb   aa aa aa 30 31 32 33 34 35
-//  36 37 38 39 40 41 42 43 44   dd dd dd dd XX bb bb bb bb   aa aa aa aa XX 41 42 43 44
-//  45 46 47 48 49 50 51 52 53   dd dd dd dd cc cc bb bb bb   aa aa aa aa aa aa 51 52 53
-//  54 55 56 57 58 59 60 61 62   dd dd dd cc cc cc cc bb bb   aa aa aa aa aa aa aa 61 62
-//  63 64 65 66 67 68 69 70 71   dd dd cc cc cc cc cc cc bb   aa aa aa aa aa aa aa aa 71
-//  72 73 74 75 76 77 78 79 80   dd cc cc cc cc cc cc cc cc   aa aa aa aa aa aa aa aa aa 
+//  00 01 02 03 04 05 06 07 08   00 01 02 03 04 05 06 07 ||   00 01 02 03 04 05 06 07 08
+//  09 10 11 12 13 14 15 16 17   ++ 10 11 12 13 14 15 || ||   -- 10 11 12 13 14 15 16 17
+//  18 19 20 21 22 23 24 25 26   ++ ++ 20 21 22 23 || || ||   -- -- 20 21 22 23 24 25 26
+//  27 28 29 30 31 32 33 34 35   ++ ++ ++ 30 31 || || || ||   -- -- -- 30 31 32 33 34 35
+//  36 37 38 39 40 41 42 43 44   ++ ++ ++ ++    || || || ||   -- -- -- --    41 42 43 44
+//  45 46 47 48 49 50 51 52 53   ++ ++ ++ ++ -- -- || || ||   -- -- -- -- -- -- 51 52 53
+//  54 55 56 57 58 59 60 61 62   ++ ++ ++ -- -- -- -- || ||   -- -- -- -- -- -- -- 61 62
+//  63 64 65 66 67 68 69 70 71   ++ ++ -- -- -- -- -- -- ||   -- -- -- -- -- -- -- -- 71
+//  72 73 74 75 76 77 78 79 80   ++ -- -- -- -- -- -- -- --   -- -- -- -- -- -- -- -- -- 
 
 let hide4Candidates : Array<Int> = {
   var rval = Array(0...7)
@@ -74,15 +74,12 @@ class RandomSudoku
   var solution = Array<Int>()
   var showing : Array<Bool>!
   
-  var truth : String
-  var puzzle : String
+  var truth : String!
+  var puzzle : String!
   
-  var difficulty : Int { return computeDifficulty() }
+  var difficulty : Int { return SudokuGrader(puzzle).difficulty }
   
-  init() {
-    truth = "oops"
-    puzzle = "oops"
-    
+  init() {    
     generateSolution()
     generatePuzzle()
   }
@@ -96,12 +93,7 @@ class RandomSudoku
       fatalError("Should never see this (\(#file):\(#line))")
     }
     
-    truth = ""
-    let zero = Int(UnicodeScalar("0").value)
-    for i in 0...80 {
-      let c = Character(UnicodeScalar(zero+solution[i])!)
-      truth.append(c)
-    }
+    truth = String(digits:solution)
   }
   
   private func addRandomDigit(to cell:Int) -> Bool
@@ -133,17 +125,9 @@ class RandomSudoku
     if validPuzzle() { hidden += 1 }
     else             { showing[40] = true }
     
-    puzzle = ""
-    let zero = Int(UnicodeScalar("0").value)
-    for i in 0...80 {
-      if showing[i] {
-        let c = Character(UnicodeScalar(zero+solution[i])!)
-        puzzle.append(c)
-      }
-      else {
-        puzzle.append(".")
-      }
-    }
+    var tmp = solution
+    for i in 0...80 { if !showing[i] { tmp[i] = 0 } }
+    puzzle = String(digits:tmp)
   }
   
   private func hide4() -> Int
@@ -216,34 +200,5 @@ class RandomSudoku
       return true
     }
   }
-  
-  private func computeDifficulty() -> Int
-  {
-    return 50
-    
-//    // Difficulty will be on scale from 0-100
-//    //   100 = can only be solved with calls to DLX
-//    //     0 = no work needed at all (i.e. given completely filled in puzzle)
-//    // Assign points as follow
-//    //   call to DLX algorithm
-//    // Normalize to final range
-//    //   max value = 810
-//
-//    var hidden = Set<Int>()
-//
-//    var givens = [(Int,Int,Int)]()
-//    for i in 0...80 {
-//      if showing[i] { givens.append((row:i/9, col:i%9, solution[i])) }
-//      else { hidden.insert(i) }
-//    }
-//
-//    var dlxCalls = 0
-//
-//    while hidden.isEmpty == false
-//    {
-//    }
-//    }
-  }
-  
 }
 
