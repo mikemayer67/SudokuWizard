@@ -55,8 +55,8 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
 {
   enum CellState {
     case empty
-    case locked(Int)
-    case filled(Int)
+    case locked(Digit)
+    case filled(Digit)
   }
   
   static var maximumTapPressDelay : TimeInterval = 0.5
@@ -84,9 +84,9 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   var highlighted = false            { didSet { setNeedsDisplay() } }
   var errant      = false            { didSet { setNeedsDisplay() } }
   
-  var correctValue : Int?
+  var correctValue : Digit?
   
-  var value : Int?
+  var value : Digit?
   {
     switch state {
     case let .locked(v): return v

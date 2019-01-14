@@ -13,21 +13,6 @@ enum SudokuWizardError : Error
   case InvalidPuzzle(String)
 }
 
-extension String
-{
-  func parseAsSudokuDigits() throws -> [Int]
-  {
-    guard self.count == 81 else { throw SudokuWizardError.InvalidPuzzle("Puzzle string must contiain 81 characters") }
-  
-    let digitString = self.replacingOccurrences(of: ".", with: "0")
-    let digits = digitString.compactMap{Int(String($0))}
-  
-    guard digits.count == 81 else { throw SudokuWizardError.InvalidPuzzle("Puzzle string must contiain only digits and periods") }
-  
-    return digits;
-  }
-}
-
 class SudokuWizardGridView: UIView
 {
   @IBOutlet weak var viewController : UIViewController!
@@ -178,24 +163,27 @@ class SudokuWizardGridView: UIView
     selectedCell = nil
   }
   
-  func loadPuzzle(_ puzzle:String, solution:String? = nil) throws
+  func loadPuzzle(string puzzle:String, solution:String? = nil) throws
+  {
+    try loadPuzzle( puzzle.sudokuGrid(), solution:solution?.sudokuGrid() )
+  }
+  
+  func loadPuzzle(_ puzzle:SudokuGrid, solution:SudokuGrid? = nil) throws
   {
     clear()
     
-    let digits = try puzzle.parseAsSudokuDigits()
-
     for i in 0...80 {
-      let d = digits[i]
-      if d > 0 { cellViews[i].state = .locked(d) }
+      if let d = puzzle[i/9][i%9], d>0 {
+        cellViews[i].state = .locked(d)
+      }
     }
     
-    if solution != nil
+    if let s = solution
     {
-      let solutionDigits = try solution!.parseAsSudokuDigits()
-      
       for i in 0...80 {
-        let d = solutionDigits[i]
-        guard d > 0 else { throw SudokuWizardError.InvalidPuzzle("Puzzle solution must contiain only digits 1-9") }
+        guard let d = s[i/9][i%9] else {
+          throw SudokuWizardError.InvalidPuzzle("Puzzle solution must contiain only digits 1-9")
+        }
         cellViews[i].correctValue = d
       }
     }
@@ -228,7 +216,7 @@ class SudokuWizardGridView: UIView
       
       let r = cell.row!
       let c = cell.col!
-      let v = cell.value!
+      let v = Int(cell.value!)
       
       let br = 3*(r/3)  // row index of NW corner of current box
       let bc = 3*(c/3)  // col index of NW corner of current box
@@ -333,14 +321,15 @@ class SudokuWizardGridView: UIView
     
     var marks = [Bool](repeating:true,count:9)
     
-    for m in 1...9 {
+    for m : Digit in 1...9 {
+      let j = Int(m)-1
       for i in 0...8 {
-        if cellViews[9*r + i].value == m { marks[m-1] = false; break }
-        if cellViews[9*i + c].value == m { marks[m-1] = false; break }
+        if cellViews[9*r + i].value == m { marks[j] = false; break }
+        if cellViews[9*i + c].value == m { marks[j] = false; break }
         
         let ri = i/3  // ith row offset in current box
         let ci = i%3  // ith col offset in current box
-        if cellViews[9*(br+ri)+(bc+ci)].value == m { marks[m-1] = false; break }
+        if cellViews[9*(br+ri)+(bc+ci)].value == m { marks[j] = false; break }
       }
     }
     if markStrategy == .conflicted {

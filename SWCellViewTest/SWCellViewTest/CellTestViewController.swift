@@ -72,7 +72,7 @@ class CellTestViewController: UIViewController, SudokuWizardCellViewDelegate
       errantSwitch.isEnabled = true
       highlightedSwitch.isOn = cellView.highlighted
       highlightedSwitch.isEnabled = true
-      valueControl.selectedSegmentIndex = d
+      valueControl.selectedSegmentIndex = Int(d)
     case let .locked (d):
       lockedSwitch.isOn = true
       lockedSwitch.isEnabled = true
@@ -80,7 +80,7 @@ class CellTestViewController: UIViewController, SudokuWizardCellViewDelegate
       errantSwitch.isEnabled = true
       highlightedSwitch.isOn = cellView.highlighted
       highlightedSwitch.isEnabled = true
-      valueControl.selectedSegmentIndex = d
+      valueControl.selectedSegmentIndex = Int(d)
     }
     
     cellView.delegate = self
@@ -135,7 +135,7 @@ class CellTestViewController: UIViewController, SudokuWizardCellViewDelegate
   
   @IBAction func handleValueSelection(_ sender: UISegmentedControl)
   {
-    let d = sender.selectedSegmentIndex
+    let d = Digit(sender.selectedSegmentIndex)
     
     if d == 0
     {
@@ -154,7 +154,7 @@ class CellTestViewController: UIViewController, SudokuWizardCellViewDelegate
         cellView.errant = false
         cellView.highlighted = false
       case let .locked(oldValue):
-        sender.selectedSegmentIndex = oldValue
+        sender.selectedSegmentIndex = Int(oldValue)
       }
     }
     else
@@ -169,7 +169,7 @@ class CellTestViewController: UIViewController, SudokuWizardCellViewDelegate
       case .filled(_):
         cellView.state = .filled(d)
       case let .locked(oldValue):
-        sender.selectedSegmentIndex = oldValue
+        sender.selectedSegmentIndex = Int(oldValue)
       }
     }
   }

@@ -12,24 +12,27 @@ import Foundation
 // it contains the indices of all cells PRIOR to a given cell
 // which are in teh same row, column, or box
 
-let links : Array<Set<Int>> = {
-  var rval = Array<Set<Int>>(repeating: Set<Int>(), count: 81)
+let links : [[RowCol]] = {
+  var rval = [[RowCol]]()
   
-  for i in 1...80 {
-    let r = i/9
-    let c = i%9
-    let b = 3*(r/3) + (c/3)
-    for j in 0..<i {
-      let rr = j/9
-      let cc = j%9
-      let bb = 3*(rr/3) + (cc/3)
+  for r in 0...8 {
+    let br = 3*(r/3)
+    for c in 0...8 {
+      let bc = 3*(c/3)
       
-      if( r == rr || c == cc || b == bb )
-      {
-        rval[i].insert(j)
+      var rc = [RowCol]()
+      for j in 0..<c { rc.append((r,j)) }
+      for j in 0..<r { rc.append((j,c)) }
+      for j in br..<r {
+        for k in 0..<3 {
+          if bc+k != c { rc.append((j,bc+k)) }
+        }
       }
+      
+      rval.append(rc)
     }
   }
+  
   return rval
 }()
 
@@ -39,152 +42,141 @@ let links : Array<Set<Int>> = {
 // hide 4 or 2 cells respectively
 //
 //  00 01 02 03 04 05 06 07 08   00 01 02 03 04 05 06 07 ||   00 01 02 03 04 05 06 07 08
-//  09 10 11 12 13 14 15 16 17   ++ 10 11 12 13 14 15 || ||   -- 10 11 12 13 14 15 16 17
-//  18 19 20 21 22 23 24 25 26   ++ ++ 20 21 22 23 || || ||   -- -- 20 21 22 23 24 25 26
-//  27 28 29 30 31 32 33 34 35   ++ ++ ++ 30 31 || || || ||   -- -- -- 30 31 32 33 34 35
-//  36 37 38 39 40 41 42 43 44   ++ ++ ++ ++    || || || ||   -- -- -- --    41 42 43 44
-//  45 46 47 48 49 50 51 52 53   ++ ++ ++ ++ -- -- || || ||   -- -- -- -- -- -- 51 52 53
-//  54 55 56 57 58 59 60 61 62   ++ ++ ++ -- -- -- -- || ||   -- -- -- -- -- -- -- 61 62
-//  63 64 65 66 67 68 69 70 71   ++ ++ -- -- -- -- -- -- ||   -- -- -- -- -- -- -- -- 71
-//  72 73 74 75 76 77 78 79 80   ++ -- -- -- -- -- -- -- --   -- -- -- -- -- -- -- -- -- 
+//  10 11 12 13 14 15 16 17 18   ++ 11 12 13 14 15 16 || ||   -- 11 12 13 14 15 16 17 18
+//  20 21 22 23 24 25 26 27 28   ++ ++ 22 23 24 25 || || ||   -- -- 22 23 24 25 26 27 28
+//  30 31 32 33 34 35 36 37 38   ++ ++ ++ 33 34 || || || ||   -- -- -- 33 34 35 36 37 38
+//  40 41 42 43 44 45 46 47 48   ++ ++ ++ ++    || || || ||   -- -- -- --    45 46 47 48
+//  50 51 52 53 54 55 56 57 58   ++ ++ ++ ++ -- -- || || ||   -- -- -- -- -- -- 56 57 58
+//  60 61 62 63 64 65 66 67 68   ++ ++ ++ -- -- -- -- || ||   -- -- -- -- -- -- -- 67 68
+//  70 71 72 73 74 75 76 77 78   ++ ++ -- -- -- -- -- -- ||   -- -- -- -- -- -- -- -- 78
+//  80 81 82 83 84 85 86 87 88   ++ -- -- -- -- -- -- -- --   -- -- -- -- -- -- -- -- -- 
 
-let hide4Candidates : Array<Int> = {
-  var rval = Array(0...7)
-  rval.append(contentsOf:Array(10...15))
-  rval.append(contentsOf:Array(20...23))
-  rval.append(contentsOf:Array(30...31))
+let hide4Candidates : [RowCol] = {
+  var rval = [RowCol]()
+  for r in 0...3 {
+    for c in r..<(8-r) {
+      rval.append((r,c))
+    }
+  }
   return rval
 }()
 
-let hide2Candidates : Array<Int> = {
-  var rval = Array(0...8)
-  rval.append(contentsOf:Array(10...17))
-  rval.append(contentsOf:Array(20...26))
-  rval.append(contentsOf:Array(30...35))
-  rval.append(contentsOf:Array(41...44))
-  rval.append(contentsOf:Array(51...53))
-  rval.append(contentsOf:Array(61...62))
-  rval.append(71)
+let hide2Candidates : [RowCol] = {
+  var rval = [RowCol]()
+  for r in 0...3 {
+    for c in r...8 {
+      rval.append((r,c))
+    }
+  }
+  for r in 4...7 {
+    for c in (r+1)...8 {
+      rval.append((r,c))
+    }
+  }
   return rval
 }()
 
 
 class RandomSudoku
 {
-  var solution = Array<Int>()
-  var showing : Array<Bool>!
+  var solution : SudokuGrid
+  var puzzle   : SudokuGrid!
   
-  var truth : String!
-  var puzzle : String!
+  lazy var difficulty : Int  = {
+    return Int( SudokuGrader(puzzle,solution).difficulty )
+  }()
   
-  var difficulty : Int { return SudokuGrader(puzzle).difficulty }
-  
-  init() {    
+  init() {
+    solution = SudokuGrid(repeating: [Digit?](repeating: nil, count: 9), count: 9)
+    
     generateSolution()
     generatePuzzle()
   }
   
   private func generateSolution()
   {
-    solution = Array<Int>(repeating: 0, count: 81)
-    solution[0] = Int.random(in: 1...9)
+    solution[0][0] = Digit.random(in: 1...9)
     
-    guard addRandomDigit(to:1) else {
+    guard addRandomDigit(row:0,col:1) else {
       fatalError("Should never see this (\(#file):\(#line))")
     }
-    
-    truth = String(digits:solution)
   }
   
-  private func addRandomDigit(to cell:Int) -> Bool
+  private func addRandomDigit(row:Int,col:Int) -> Bool
   {
-    guard cell < 81 else { return true }
-    var candidates = Set(Array(1...9))
+    guard row < 9 else { return true }
+    let cell = 9*row + col
+    
+    var candidates = DigitSet(true)
     for linked in links[cell] {
-      candidates.remove(solution[linked])
-      if candidates.isEmpty { return false }
+      if let d = solution[linked.row][linked.col] {
+        candidates.clear(d)
+        if candidates.isEmpty { return false }
+      }
     }
     
-    let pool = candidates.shuffled()
+    let next : RowCol = col == 8 ? (row+1,0) : (row,col+1)
+    
+    let pool = candidates.digits().shuffled()
     for digit in pool {
-      solution[cell] = digit
-      if addRandomDigit(to: cell+1) { return true }
+      solution[row][col] = digit
+      if addRandomDigit(row:next.row, col:next.col ) { return true }
     }
     return false
   }
   
   private func generatePuzzle()
   {
-    showing = Array<Bool>(repeating: true, count: 81)
+    puzzle = solution
     
-    var hidden = 0
-    hidden += hide4()
-    hidden += hide2()
+    hide4()
+    hide2()
     
-    showing[40] = false
-    if validPuzzle() { hidden += 1 }
-    else             { showing[40] = true }
-    
-    var tmp = solution
-    for i in 0...80 { if !showing[i] { tmp[i] = 0 } }
-    puzzle = String(digits:tmp)
+    puzzle[4][4] = nil
+    if validPuzzle() == false { puzzle[4][4] = solution[4][4] }
   }
   
-  private func hide4() -> Int
+  private func hide4()
   {
-    var rval = 0
     let cand = hide4Candidates.shuffled()
-    for n in cand {
-      let e = 8 + 9*(n%9) - (n/9)
-      let s = 8 + 9*(e%9) - (e/9)
-      let w = 8 + 9*(s%9) - (s/9)
-      showing[n] = false
-      showing[e] = false
-      showing[s] = false
-      showing[w] = false
+    for rc in cand {
+      puzzle[  rc.row][  rc.col] = nil
+      puzzle[8-rc.col][  rc.row] = nil
+      puzzle[8-rc.row][8-rc.col] = nil
+      puzzle[  rc.col][8-rc.row] = nil
       
-      if validPuzzle() {
-        rval += 4
-      }
-      else
-      {
-        showing[n] = true
-        showing[e] = true
-        showing[s] = true
-        showing[w] = true
+      if validPuzzle() == false {
+        puzzle[  rc.row][  rc.col] = solution[  rc.row][  rc.col]
+        puzzle[8-rc.col][  rc.row] = solution[8-rc.col][  rc.row]
+        puzzle[8-rc.row][8-rc.col] = solution[8-rc.row][8-rc.col]
+        puzzle[  rc.col][8-rc.row] = solution[  rc.col][8-rc.row]
       }
     }
-    return rval
   }
   
-  private func hide2() -> Int
+  private func hide2()
   {
-    var rval = 0
     let cand = hide2Candidates.shuffled()
-    for ne in cand {
-      if showing[ne] {
-        let sw = 80 - ne
-        showing[ne] = false
-        showing[sw] = false
-        
-        if validPuzzle() {
-          rval += 2
-        }
-        else
-        {
-          showing[ne] = true
-          showing[sw] = true
-        }
+    for rc in cand {
+      puzzle[  rc.row][  rc.col] = nil
+      puzzle[8-rc.row][8-rc.col] = nil
+      
+      if validPuzzle() == false {
+        puzzle[  rc.row][  rc.col] = solution[  rc.row][  rc.col]
+        puzzle[8-rc.row][8-rc.col] = solution[8-rc.row][8-rc.col]
       }
     }
-    return rval
   }
   
   private func validPuzzle() -> Bool
   {
     var givens = [(Int,Int,Int)]()
-    for i in 0...80 {
-      if showing[i] { givens.append((row:i/9, col:i%9, solution[i])) }
+    for r in 0...8 {
+      for c in 0...8 {
+        if let d = puzzle[r][c] {
+          givens.append((r,c,Int(d)))
+        }
+      }
     }
     
     let dlx = try! DLXSudoku(givens)

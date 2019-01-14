@@ -119,7 +119,7 @@ class GridTestViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 
     do
     {
-      try sudokuGrid.loadPuzzle(puzzle, solution:truth)
+      try sudokuGrid.loadPuzzle(string:puzzle, solution:truth)
     }
     catch SudokuWizardError.InvalidPuzzle(let errMessage)
     {
@@ -159,17 +159,17 @@ class GridTestViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         valueSegmentedControl.selectedSegmentIndex = 0
       case let .filled(v):
         for d in 1...9 { markButtons[d-1].isSelected = false }
-        valueSegmentedControl.selectedSegmentIndex = v
+        valueSegmentedControl.selectedSegmentIndex = Int(v)
       case let .locked(v):
         for d in 1...9 { markButtons[d-1].isSelected = false }
-        valueSegmentedControl.selectedSegmentIndex = v
+        valueSegmentedControl.selectedSegmentIndex = Int(v)
       }
     }
   }
   
   @IBAction func handleValueControl(_ sender: UISegmentedControl)
   {
-    let d = sender.selectedSegmentIndex
+    let d = Digit(sender.selectedSegmentIndex)
     if let cell = sudokuGrid.selectedCell
     {
       switch (cell.state,d)
@@ -188,7 +188,7 @@ class GridTestViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         cell.state = .filled(d)
         sudokuGrid.handleValueChange(for:cell)
       case let (.locked(v),_):
-        sender.selectedSegmentIndex = v
+        sender.selectedSegmentIndex = Int(v)
       }
     }
   }

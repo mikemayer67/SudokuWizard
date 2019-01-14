@@ -38,6 +38,7 @@
 		27E94DAA21DAADE900D0C4EE /* DLXSudoku.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DA921DAADE900D0C4EE /* DLXSudoku.swift */; };
 		27E94DAE21DBD76900D0C4EE /* RandomSudoku.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DAD21DBD76900D0C4EE /* RandomSudoku.swift */; };
 		27E94DB021E946C900D0C4EE /* SudokuGrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DAF21E946C900D0C4EE /* SudokuGrader.swift */; };
+		27E94DB621ECD3E800D0C4EE /* DigitSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DB521ECD3E700D0C4EE /* DigitSet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +75,7 @@
 		27E94DA921DAADE900D0C4EE /* DLXSudoku.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLXSudoku.swift; sourceTree = "<group>"; };
 		27E94DAD21DBD76900D0C4EE /* RandomSudoku.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSudoku.swift; sourceTree = "<group>"; };
 		27E94DAF21E946C900D0C4EE /* SudokuGrader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGrader.swift; sourceTree = "<group>"; };
+		27E94DB521ECD3E700D0C4EE /* DigitSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitSet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				27161F1121CE1C43006CDB71 /* FactoryDefaults.plist */,
 				27E94DAD21DBD76900D0C4EE /* RandomSudoku.swift */,
 				27E94DAF21E946C900D0C4EE /* SudokuGrader.swift */,
+				27E94DB521ECD3E700D0C4EE /* DigitSet.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				27022B5D21A7B6970078588D /* MainViewController.swift in Sources */,
 				27C118B821D66D94001CC6CD /* ManualPuzzleViewController.swift in Sources */,
 				27E94DAA21DAADE900D0C4EE /* DLXSudoku.swift in Sources */,
+				27E94DB621ECD3E800D0C4EE /* DigitSet.swift in Sources */,
 				27022B5B21A7B6970078588D /* AppDelegate.swift in Sources */,
 				27E94DA421DAADCA00D0C4EE /* DLXAlgorithm.swift in Sources */,
 				27B13BE621D52F9A00B4B81D /* NewPuzzleViewController.swift in Sources */,

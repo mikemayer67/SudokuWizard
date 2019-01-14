@@ -64,7 +64,7 @@ class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
     let rs = RandomSudoku()
     
     do {
-      try gridView.loadPuzzle(rs.puzzle, solution: rs.truth)
+      try gridView.loadPuzzle(rs.puzzle, solution: rs.solution)
       difficultyLabel.text = String(format:"%d",rs.difficulty)
     }
     catch {

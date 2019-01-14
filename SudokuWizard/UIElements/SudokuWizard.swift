@@ -8,9 +8,15 @@
 
 import Foundation
 
-fileprivate let zero = Int(UnicodeScalar("0").value)
-fileprivate let nine = zero + 9
-fileprivate let dot  = Int(UnicodeScalar(".").value)
+typealias Digit        = UInt8
+typealias SudokuDigits = [Digit?]
+typealias SudokuGrid   = [[Digit?]]
+
+typealias RowColDigit = (row:Int, col:Int, digit:Digit)
+typealias RowCol      = (row:Int, col:Int)
+
+fileprivate let utf8_zero = Digit(UnicodeScalar("0").value)
+fileprivate let utf8_dot  = Digit(UnicodeScalar(".").value)
 
 class SudokuWizard
 {
@@ -36,30 +42,38 @@ class SudokuWizard
 
 extension String
 {
-  init(digits:Array<Int>)
+  init(sudokuGrid grid:SudokuGrid)
   {
     self = ""
-    for d in digits {
-      switch d {
-      case 1...9: self += "\(UnicodeScalar(zero+d)!)"
-      case 0:     self += "."
-      default:    fatalError("digits must each be in range 0-9")
+    for row in grid {
+      for digit in row {
+        if let d = digit {
+          guard d>=1 && d<=9 else { fatalError("digits must each be in range 0-9") }
+          self += "\(UnicodeScalar(utf8_zero+d))"
+        } else {
+          self += "\(UnicodeScalar(utf8_dot))"
+        }
       }
     }
   }
   
-  func digits() -> Array<Int>
+  func sudokuGrid() -> SudokuGrid
   {
-    var rval = Array<Int>()
+    var rval = SudokuGrid(repeating: [Digit?](repeating: nil, count: 9), count: 9)
+    
+    var i = 0
     for c in self.utf8 {
-      let d = Int(c)
-      switch(d) {
-      case dot:         rval.append(0)
-      case zero...nine: rval.append(d-zero)
-      default:          fatalError("digits must be '.' or 0-9")
+      guard i < 81 else { fatalError("Puzzle length too long") }
+      let d = Digit(c)
+      switch d {
+      case utf8_zero, utf8_dot:           rval[i/9][i%9] = nil
+      case (utf8_zero+1)...(utf8_zero+9): rval[i/9][i%9] = d-utf8_zero
+      default: fatalError("digits must each be in range 0-9 or '.'")
       }
+      i += 1
     }
-    guard rval.count == 81 else { fatalError("Invalid puzzle length \(rval.count)") }
+    guard i == 81 else { fatalError("Puzzle length too short") }
+    
     return rval
   }
 }
