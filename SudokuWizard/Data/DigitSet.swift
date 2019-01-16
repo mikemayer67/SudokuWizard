@@ -21,28 +21,31 @@ struct DigitSet
     if on { n = 9; digitBits = 0b111111111 }
   }
   
+  init(_ bits:UInt16) {
+    digitBits = bits
+    n = countBits()
+  }
+  
   mutating func set(_ digit:Digit) {
-    let mask : UInt16 = 1 << UInt16(digit-1)
-    if digitBits & mask == 0 { n += 1; digitBits |= mask }
+    let m = mask(digit)
+    if digitBits & m == 0 { n += 1; digitBits |= m }
   }
   
   mutating func clear(_ digit:Digit) {
-    let mask : UInt16 = 1 << UInt16(digit-1)
-    if digitBits & mask != 0 { n -= 1; digitBits &= ~mask }
+    let m = mask(digit)
+    if digitBits & m != 0 { n -= 1; digitBits &= ~m }
   }
   
   var isEmpty : Bool { return n==0 }
   
   func has(digit:Digit) -> Bool
   {
-    let mask : UInt16 = 1 << UInt16(digit-1)
-    return digitBits & mask != 0
+    return digitBits & mask(digit) != 0
   }
   
   func missing(digit:Digit) -> Bool
   {
-    let mask : UInt16 = 1 << UInt16(digit-1)
-    return digitBits & mask == 0
+    return digitBits & mask(digit) == 0
   }
   
   func digit() -> Digit?
@@ -53,28 +56,30 @@ struct DigitSet
   func digits() -> [Digit]
   {
     var rval = [Digit]()
-    var mask : UInt16 = 1
     for d : Digit in 1...9 {
-      if digitBits & mask != 0 { rval.append(d) }
-      mask *= 2
+      if has(digit:d) { rval.append(d) }
     }
     return rval
   }
   
   func union(_ x:DigitSet) -> DigitSet
   {
-    var rval = self
-    rval.digitBits |= x.digitBits
-    rval.n = rval.countBits()
-    return rval
+    return DigitSet(self.digitBits | x.digitBits)
+  }
+  
+  func intersect(_ x:DigitSet) -> DigitSet
+  {
+    return DigitSet(self.digitBits & x.digitBits)
+  }
+  
+  func subtract(_ x:DigitSet) -> DigitSet
+  {
+    return DigitSet(self.digitBits & ~x.digitBits)
   }
   
   func complement() -> DigitSet
   {
-    var rval = DigitSet()
-    rval.digitBits = ~self.digitBits
-    rval.n = rval.countBits()
-    return rval
+    return DigitSet(~self.digitBits)
   }
   
   private func countBits() -> Int
@@ -86,5 +91,10 @@ struct DigitSet
       mask *= 2
     }
     return rval
+  }
+  
+  private func mask(_ digit:Digit) -> UInt16
+  {
+    return 1 << UInt16(digit-1)
   }
 }

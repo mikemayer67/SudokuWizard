@@ -9,11 +9,18 @@
 import Foundation
 
 typealias Digit        = UInt8
-typealias SudokuDigits = [Digit?]
 typealias SudokuGrid   = [[Digit?]]
 
+struct RowCol
+{
+  var row : Int
+  var col : Int
+  init(_ row:Int,_ col:Int) { self.row = row; self.col = col }
+  var box : Int { return 9*row + col }
+  mutating func transpose() { let t = row; row = col; col = t }
+}
+
 typealias RowColDigit = (row:Int, col:Int, digit:Digit)
-typealias RowCol      = (row:Int, col:Int)
 
 fileprivate let utf8_zero = Digit(UnicodeScalar("0").value)
 fileprivate let utf8_dot  = Digit(UnicodeScalar(".").value)

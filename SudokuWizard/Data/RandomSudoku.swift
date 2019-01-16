@@ -21,11 +21,11 @@ let links : [[RowCol]] = {
       let bc = 3*(c/3)
       
       var rc = [RowCol]()
-      for j in 0..<c { rc.append((r,j)) }
-      for j in 0..<r { rc.append((j,c)) }
+      for j in 0..<c { rc.append(RowCol(r,j)) }
+      for j in 0..<r { rc.append(RowCol(j,c)) }
       for j in br..<r {
         for k in 0..<3 {
-          if bc+k != c { rc.append((j,bc+k)) }
+          if bc+k != c { rc.append(RowCol(j,bc+k)) }
         }
       }
       
@@ -55,7 +55,7 @@ let hide4Candidates : [RowCol] = {
   var rval = [RowCol]()
   for r in 0...3 {
     for c in r..<(8-r) {
-      rval.append((r,c))
+      rval.append(RowCol(r,c))
     }
   }
   return rval
@@ -65,12 +65,12 @@ let hide2Candidates : [RowCol] = {
   var rval = [RowCol]()
   for r in 0...3 {
     for c in r...8 {
-      rval.append((r,c))
+      rval.append(RowCol(r,c))
     }
   }
   for r in 4...7 {
     for c in (r+1)...8 {
-      rval.append((r,c))
+      rval.append(RowCol(r,c))
     }
   }
   return rval
@@ -115,7 +115,7 @@ class RandomSudoku
       }
     }
     
-    let next : RowCol = col == 8 ? (row+1,0) : (row,col+1)
+    let next : RowCol = col == 8 ? RowCol(row+1,0) : RowCol(row,col+1)
     
     let pool = candidates.digits().shuffled()
     for digit in pool {
