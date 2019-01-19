@@ -8,8 +8,8 @@
 
 import Foundation
 
-typealias Digit        = UInt8
-typealias SudokuGrid   = [[Digit?]]
+typealias Digit        = DLXSudoku.Digit
+typealias SudokuGrid   = DLXSudoku.Grid
 
 struct RowCol
 {

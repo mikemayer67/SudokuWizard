@@ -82,15 +82,19 @@ class RandomSudoku
   var solution : SudokuGrid
   var puzzle   : SudokuGrid!
   
-  lazy var difficulty : Int  = {
-    return Int( SudokuGrader(puzzle,solution).difficulty )
-  }()
+  private(set) var difficulty = -1
   
   init() {
     solution = SudokuGrid(repeating: [Digit?](repeating: nil, count: 9), count: 9)
     
     generateSolution()
     generatePuzzle()
+    
+    guard let grader = SudokuGrader(puzzle,solution) else {
+      fatalError("Invalid puzzle generated")
+    }
+    
+    difficulty = Int(grader.difficulty)
   }
   
   private func generateSolution()
@@ -169,17 +173,8 @@ class RandomSudoku
   }
   
   private func validPuzzle() -> Bool
-  {
-    var givens = [(Int,Int,Int)]()
-    for r in 0...8 {
-      for c in 0...8 {
-        if let d = puzzle[r][c] {
-          givens.append((r,c,Int(d)))
-        }
-      }
-    }
-    
-    let dlx = try! DLXSudoku(givens)
+  {    
+    let dlx = try! DLXSudoku(puzzle)
     let status = dlx.evaluate()
     
     switch status

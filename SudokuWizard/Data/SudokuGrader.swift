@@ -23,6 +23,8 @@ class SudokuGrader
   private let hiddenPairWeight   = 6.0
   private let hiddenTripleWeight = 6.5
   private let pointingPairWeight = 7.0
+  private let guessWeight        = 12.0
+  private let insaneWeight       = 999.0
 
   private(set) var difficulty = 0.0
   
@@ -34,19 +36,20 @@ class SudokuGrader
   
   private var numComplete = 0
   
-  init(_ puzzle:SudokuGrid,_ truth:SudokuGrid)
+  init?(_ puzzle:SudokuGrid,_ truth:SudokuGrid)
   {
     for r in 0..<9 {
       for c in 0..<9 {
         if let d = puzzle[r][c] { add(row:r, col:c, digit:d) }
       }
     }
+
+    let dlx = try! DLXSudoku(puzzle)
+    let status = dlx.evaluate()
+    guard case DLXSolutionStatus.UniqueSolution = status else { return nil }
     
     while numComplete < 81
     {
-      dumpGrid()
-      dumpMarks()
-      
       if findHiddenSingles() { continue }
       if findNakedSingles()  { continue }
       if findNakedPairs()    { continue }
@@ -55,8 +58,13 @@ class SudokuGrader
       if findHiddenTriples() { continue }
       if findPointingPair()  { continue }
       
-      print("\nKeep Working on Grader scenarios\n")
-      difficulty = 999;
+      dumpGrid()
+      dumpMarks()
+      
+      if guess(truth:truth) { continue }
+      
+      print("\nGrader unable to find solution\n")
+      difficulty = insaneWeight;
       break
     }
   }
@@ -169,7 +177,7 @@ class SudokuGrader
           for rc in oc { u = u.union( marks[rc.row][rc.col]) }
           u = u.complement()
           if let d = u.digit() {
-            print(" HiddenSingle[\(e.rawValue)] (\(r),\(c),\(d))")
+//            print(" HiddenSingle[\(e.rawValue)] (\(r),\(c),\(d))")
             found.append((r,c,d));
             break  // out of e to next c
           }
@@ -207,7 +215,7 @@ class SudokuGrader
     
     for rcd in found {
       rval = true
-      print(" NakedSingle(\(rcd.row),\(rcd.col),\(rcd.digit))")
+//      print(" NakedSingle(\(rcd.row),\(rcd.col),\(rcd.digit))")
       add(row: rcd.row, col: rcd.col, digit: rcd.digit)
       difficulty += nakedSingleWeight
     }
@@ -299,7 +307,7 @@ class SudokuGrader
         }
       }
       if clearedSomething {
-        print("Naked pair found: (\(pair.rc1.row),\(pair.rc1.col)), (\(pair.rc2.row),\(pair.rc2.col)), \(pair.element.rawValue) : \(pair.digits)")
+//        print("Naked pair found: (\(pair.rc1.row),\(pair.rc1.col)), (\(pair.rc2.row),\(pair.rc2.col)), \(pair.element.rawValue) : \(pair.digits)")
       }
     }
     
@@ -402,7 +410,7 @@ class SudokuGrader
         }
       }
       if clearedSomething {
-        print("Naked triple found: (\(triple.rc1.row),\(triple.rc1.col)), (\(triple.rc2.row),\(triple.rc2.col)), (\(triple.rc3.row),\(triple.rc3.col)), \(triple.element.rawValue) : \(triple.digits)")
+//        print("Naked triple found: (\(triple.rc1.row),\(triple.rc1.col)), (\(triple.rc2.row),\(triple.rc2.col)), (\(triple.rc3.row),\(triple.rc3.col)), \(triple.element.rawValue) : \(triple.digits)")
       }
     }
     
@@ -455,7 +463,7 @@ class SudokuGrader
                 }
                 
                 if clearedSomthing {
-                  print("Hidden pair found: (\(rc1.row),\(rc1.col)), (\(rc2.row),\(rc2.col)), \(e.rawValue) : \(u.digits())")
+//                  print("Hidden pair found: (\(rc1.row),\(rc1.col)), (\(rc2.row),\(rc2.col)), \(e.rawValue) : \(u.digits())")
                 }
               }
             }
@@ -520,7 +528,7 @@ class SudokuGrader
                   }
                   
                   if clearedSomthing {
-                    print("Hidden pair found: (\(rc1.row),\(rc1.col)), (\(rc2.row),\(rc2.col)), (\(rc3.row),\(rc3.col)), \(e.rawValue) : \(u.digits())")
+//                    print("Hidden pair found: (\(rc1.row),\(rc1.col)), (\(rc2.row),\(rc2.col)), (\(rc3.row),\(rc3.col)), \(e.rawValue) : \(u.digits())")
                   }
                 }
               }
@@ -612,10 +620,10 @@ class SudokuGrader
                   ncleared += 1
                   marks[rc.row][rc.col] = marks[rc.row][rc.col].subtract(u)
                   
-                  var s : String = "\(e.rawValue) Pointing Pair:["
-                  for i in src { if digits[i.row][i.col] == nil { s.append("(\(i.row),\(i.col))") } }
-                  s.append("] Update:(\(rc.row),\(rc.col)) Drop: \(u.digits())")
-                  print(s)
+//                  var s : String = "\(e.rawValue) Pointing Pair:["
+//                  for i in src { if digits[i.row][i.col] == nil { s.append("(\(i.row),\(i.col))") } }
+//                  s.append("] Update:(\(rc.row),\(rc.col)) Drop: \(u.digits())")
+//                  print(s)
                 }
               }
             }
@@ -631,6 +639,63 @@ class SudokuGrader
     difficulty += fac * pointingPairWeight
     
     return true
+  }
+  
+  private func guess(truth:SudokuGrid) -> Bool
+  {
+    var rval = false
+    
+    var nMarks : Int!
+    var cand = [RowColDigit]()
+    for r in 0..<9 {
+      for c in 0..<9 {
+        if digits[r][c] == nil {
+          let n = marks[r][c].n
+          if nMarks == nil { nMarks = n }
+          if n < nMarks { cand.removeAll(); nMarks = n }
+          if n <= nMarks {
+            for d in marks[r][c].digits() {
+              cand.append(RowColDigit(r,c,d))
+            }
+          }
+        }
+      }
+    }
+    
+    var candDifficulties = [(Double,RowColDigit)]()
+    for rcd in cand
+    {
+      var trial = digits
+      trial[rcd.row][rcd.col] = rcd.digit
+      if let grader = SudokuGrader(trial,truth)
+      {
+        let cd = grader.difficulty
+        print("  Guess \(rcd.digit) at (\(rcd.row),\(rcd.col))  => difficulty: \(cd)")
+        if cd < insaneWeight {
+          rval = true
+          candDifficulties.append((cd,rcd))
+        }
+      }
+    }
+    
+    if rval {
+      var aveDifficulty = 0.0
+      var minDifficulty : Double!
+      var bestGuess     : RowColDigit!
+      let n = Double(candDifficulties.count)
+      for (diff,rcd) in candDifficulties {
+        aveDifficulty += diff/n
+        if minDifficulty == nil || diff < minDifficulty {
+          minDifficulty = diff
+          bestGuess = rcd
+        }
+      }
+    
+      difficulty += guessWeight + aveDifficulty
+      add(row:bestGuess.row, col:bestGuess.col, digit: bestGuess.digit)
+    }
+    
+    return rval
   }
     
 }
