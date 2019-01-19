@@ -20,10 +20,15 @@ class SudokuGrader
   private let nakedSingleWeight  = 0.2
   private let nakedPairWeight    = 1.0
   private let nakedTripleWeight  = 1.1
-  private let hiddenPairWeight   = 6.0
-  private let hiddenTripleWeight = 6.5
-  private let pointingPairWeight = 7.0
-  private let guessWeight        = 12.0
+  private let hiddenPairWeight   = 1.3
+  private let hiddenTripleWeight = 1.4
+  private let pointingPairWeight = 1.5
+  private let guessWeight        = 3.0
+  
+  private let difficultyMin      = 1.0
+  private let difficultyConst    = 4.0
+  private let difficultyFactor   = 1.0
+  
   private let insaneWeight       = 999.0
 
   private(set) var difficulty = 0.0
@@ -57,16 +62,16 @@ class SudokuGrader
       if findHiddenPairs()   { continue }
       if findHiddenTriples() { continue }
       if findPointingPair()  { continue }
-      
-      dumpGrid()
-      dumpMarks()
-      
-      if guess(truth:truth) { continue }
+      if guess(truth:truth)  { continue }
       
       print("\nGrader unable to find solution\n")
       difficulty = insaneWeight;
       break
     }
+    
+    difficulty *= difficultyFactor
+    difficulty -= difficultyConst
+    if difficulty < difficultyMin { difficulty = difficultyMin }
   }
   
   private func add(row:Int, col:Int, digit:Digit)
@@ -116,46 +121,6 @@ class SudokuGrader
     return rval
   }
   
-  func dumpGrid()
-  {
-    print("  +---+---+---+")
-    for r in 0..<9 {
-      var s = "  |"
-      for c in 0..<9 {
-        s.append( digits[r][c] == nil ? " " : String(format:"%d",digits[r][c]!) )
-        if c%3 == 2 { s.append("|") }
-      }
-      print(s)
-      if r%3 == 2 { print("  +---+---+---+") }
-    }
-  }
-  
-  func dumpMarks()
-  {
-    print("  +---+---+---+---+---+---+---+---+---+")
-    for r in 0..<9 {
-      for rr in 0...2 {
-        var s = "  |"
-        for c in 0..<9 {
-          for cc in 0...2 {
-            if digits[r][c] == nil {
-              s.append(marks[r][c].has(digit:Digit(3*rr+cc+1)) ? "©" : " ")
-            }
-            else
-            {
-              s.append( String(format:"%d", digits[r][c]!) )
-            }
-          }
-          if c%3==2, c<8 { s.append("|") }
-          else { s.append(":") }
-        }
-        print(s)
-      }
-      if r%3==2, r<8 { print("  +===+===+===+===+===+===+===+===+===+") }
-      else { print("  +---+---+---+---+---+---+---+---+---+") }
-    }
-  }
-  
   private func findHiddenSingles() -> Bool
   {
     var rval = false
@@ -177,7 +142,6 @@ class SudokuGrader
           for rc in oc { u = u.union( marks[rc.row][rc.col]) }
           u = u.complement()
           if let d = u.digit() {
-//            print(" HiddenSingle[\(e.rawValue)] (\(r),\(c),\(d))")
             found.append((r,c,d));
             break  // out of e to next c
           }
@@ -257,7 +221,6 @@ class SudokuGrader
       let rc1 = pair.rc1
       let rc2 = pair.rc2
       
-      var clearedSomething = false
       switch(pair.element)
       {
       case .Row:
@@ -267,7 +230,6 @@ class SudokuGrader
             for d in pair.digits {
               if marks[row][col].has(digit:d) {
                 marks[row][col].clear(d)
-                clearedSomething = true
                 ncleared += 1
               }
             }
@@ -280,7 +242,6 @@ class SudokuGrader
             for d in pair.digits {
               if marks[row][col].has(digit:d) {
                 marks[row][col].clear(d)
-                clearedSomething = true
                 ncleared += 1
               }
             }
@@ -299,15 +260,11 @@ class SudokuGrader
             for d in pair.digits {
               if marks[row][col].has(digit:d) {
                 marks[row][col].clear(d)
-                clearedSomething = true
                 ncleared += 1
               }
             }
           }
         }
-      }
-      if clearedSomething {
-//        print("Naked pair found: (\(pair.rc1.row),\(pair.rc1.col)), (\(pair.rc2.row),\(pair.rc2.col)), \(pair.element.rawValue) : \(pair.digits)")
       }
     }
     
@@ -359,7 +316,6 @@ class SudokuGrader
       let rc2 = triple.rc2
       let rc3 = triple.rc3
       
-      var clearedSomething = false
       switch(triple.element)
       {
       case .Row:
@@ -369,7 +325,6 @@ class SudokuGrader
             for d in triple.digits {
               if marks[row][col].has(digit:d) {
                 marks[row][col].clear(d)
-                clearedSomething = true
                 ncleared += 1
               }
             }
@@ -382,7 +337,6 @@ class SudokuGrader
             for d in triple.digits {
               if marks[row][col].has(digit:d) {
                 marks[row][col].clear(d)
-                clearedSomething = true
                 ncleared += 1
               }
             }
@@ -402,15 +356,11 @@ class SudokuGrader
             for d in triple.digits {
               if marks[row][col].has(digit:d) {
                 marks[row][col].clear(d)
-                clearedSomething = true
                 ncleared += 1
               }
             }
           }
         }
-      }
-      if clearedSomething {
-//        print("Naked triple found: (\(triple.rc1.row),\(triple.rc1.col)), (\(triple.rc2.row),\(triple.rc2.col)), (\(triple.rc3.row),\(triple.rc3.col)), \(triple.element.rawValue) : \(triple.digits)")
       }
     }
     
@@ -449,21 +399,13 @@ class SudokuGrader
                 }
               }
               if u.n == 2 {
-                var clearedSomthing = false
-                
                 if marks[rc1.row][rc1.col].subtract(u).isEmpty == false {
                   marks[rc1.row][rc1.col] = marks[rc1.row][rc1.col].subtract(u.complement())
-                  clearedSomthing = true
                   ncleared += 1
                 }
                 if marks[rc2.row][rc2.col].subtract(u).isEmpty == false {
                   marks[rc2.row][rc2.col] = marks[rc2.row][rc2.col].subtract(u.complement())
-                  clearedSomthing = true
                   ncleared += 1
-                }
-                
-                if clearedSomthing {
-//                  print("Hidden pair found: (\(rc1.row),\(rc1.col)), (\(rc2.row),\(rc2.col)), \(e.rawValue) : \(u.digits())")
                 }
               }
             }
@@ -509,26 +451,17 @@ class SudokuGrader
                   }
                 }
                 if u.n == 3 {
-                  var clearedSomthing = false
-                  
                   if marks[rc1.row][rc1.col].subtract(u).isEmpty == false {
                     marks[rc1.row][rc1.col] = marks[rc1.row][rc1.col].subtract(u.complement())
-                    clearedSomthing = true
                     ncleared += 1
                   }
                   if marks[rc2.row][rc2.col].subtract(u).isEmpty == false {
                     marks[rc2.row][rc2.col] = marks[rc2.row][rc2.col].subtract(u.complement())
-                    clearedSomthing = true
                     ncleared += 1
                   }
                   if marks[rc3.row][rc3.col].subtract(u).isEmpty == false {
                     marks[rc3.row][rc3.col] = marks[rc3.row][rc3.col].subtract(u.complement())
-                    clearedSomthing = true
                     ncleared += 1
-                  }
-                  
-                  if clearedSomthing {
-//                    print("Hidden pair found: (\(rc1.row),\(rc1.col)), (\(rc2.row),\(rc2.col)), (\(rc3.row),\(rc3.col)), \(e.rawValue) : \(u.digits())")
                   }
                 }
               }
@@ -619,11 +552,6 @@ class SudokuGrader
                   // clear them if found
                   ncleared += 1
                   marks[rc.row][rc.col] = marks[rc.row][rc.col].subtract(u)
-                  
-//                  var s : String = "\(e.rawValue) Pointing Pair:["
-//                  for i in src { if digits[i.row][i.col] == nil { s.append("(\(i.row),\(i.col))") } }
-//                  s.append("] Update:(\(rc.row),\(rc.col)) Drop: \(u.digits())")
-//                  print(s)
                 }
               }
             }
@@ -645,57 +573,41 @@ class SudokuGrader
   {
     var rval = false
     
-    var nMarks : Int!
-    var cand = [RowColDigit]()
+    var num = 0.0
+    var den = 0.0
+    
+    var nmarks = 10
+    var cell : RowCol?
+    
     for r in 0..<9 {
       for c in 0..<9 {
         if digits[r][c] == nil {
-          let n = marks[r][c].n
-          if nMarks == nil { nMarks = n }
-          if n < nMarks { cand.removeAll(); nMarks = n }
-          if n <= nMarks {
-            for d in marks[r][c].digits() {
-              cand.append(RowColDigit(r,c,d))
-            }
+          let m = marks[r][c]
+          if m.n < nmarks {
+            nmarks = m.n;
+            cell = RowCol(r, c)
           }
+          num += 1.0
+          den += Double(m.n)
         }
       }
     }
     
-    var candDifficulties = [(Double,RowColDigit)]()
-    for rcd in cand
+    if let rc = cell, let d = truth[rc.row][rc.col]
     {
-      var trial = digits
-      trial[rcd.row][rcd.col] = rcd.digit
-      if let grader = SudokuGrader(trial,truth)
-      {
-        let cd = grader.difficulty
-        print("  Guess \(rcd.digit) at (\(rcd.row),\(rcd.col))  => difficulty: \(cd)")
-        if cd < insaneWeight {
-          rval = true
-          candDifficulties.append((cd,rcd))
-        }
-      }
-    }
-    
-    if rval {
-      var aveDifficulty = 0.0
-      var minDifficulty : Double!
-      var bestGuess     : RowColDigit!
-      let n = Double(candDifficulties.count)
-      for (diff,rcd) in candDifficulties {
-        aveDifficulty += diff/n
-        if minDifficulty == nil || diff < minDifficulty {
-          minDifficulty = diff
-          bestGuess = rcd
-        }
-      }
-    
-      difficulty += guessWeight + aveDifficulty
-      add(row:bestGuess.row, col:bestGuess.col, digit: bestGuess.digit)
+      rval = true
+      
+      let prob_fail = 1.0 - num/den
+      let n_guess = log(0.10) / log(prob_fail)
+      
+      let fac = 1.0 + 0.1 * n_guess
+      
+      difficulty += fac * guessWeight
+      
+      add(row: rc.row, col: rc.col, digit: d)
     }
     
     return rval
   }
-    
+  
 }
