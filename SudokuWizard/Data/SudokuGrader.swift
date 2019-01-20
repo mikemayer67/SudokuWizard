@@ -51,6 +51,7 @@ class SudokuGrader
 
     let dlx = try! DLXSudoku(puzzle)
     let status = dlx.evaluate()
+
     guard case DLXSolutionStatus.UniqueSolution = status else { return nil }
     
     while numComplete < 81

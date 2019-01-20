@@ -83,6 +83,7 @@ class RandomSudoku
   var puzzle   : SudokuGrid!
   
   private(set) var difficulty = -1
+  private(set) var complexity = -1
   
   init() {
     solution = SudokuGrid(repeating: [Digit?](repeating: nil, count: 9), count: 9)
@@ -183,7 +184,8 @@ class RandomSudoku
       return false
     case .NoSolution:
       fatalError("Should never see this (\(#file):\(#line))")
-    case .UniqueSolution(_):
+    case let .UniqueSolution(_,complexity):
+      self.complexity = complexity
       return true
     }
   }

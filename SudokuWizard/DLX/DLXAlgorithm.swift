@@ -11,7 +11,7 @@ class DLXAlgorithm : Operation
 {
   let dlx : DLX!
   var auditStatus = DLXSolutionStatus.NoSolution
-  
+    
   init(_ dlx:DLX)
   {
     self.dlx = dlx
@@ -55,9 +55,9 @@ class DLXAlgorithm : Operation
       if audit {
         switch auditStatus {
         case .NoSolution:
-          auditStatus = .UniqueSolution(Q.sorted())
+          auditStatus = .UniqueSolution(solution:Q.sorted(),complexity:dlx.complexity)
           return
-        case .UniqueSolution(_):
+        case .UniqueSolution:
           auditStatus = .MultipleSolutions
           return
         case .MultipleSolutions:

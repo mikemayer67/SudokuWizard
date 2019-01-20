@@ -16,7 +16,7 @@ enum DLXError : Error
 enum DLXSolutionStatus
 {
   case NoSolution
-  case UniqueSolution([Int])
+  case UniqueSolution(solution:[Int],complexity:Int)
   case MultipleSolutions
 }
 
@@ -33,6 +33,9 @@ class DLX : DLXNode
   var isComplete = false  // have all solutions been found
     
   override var id : String { return " root"}
+  
+  private(set) var complexity = 0  // number of choices for forward steps
+
   
   // The init method converts the input coverage "matrix" into the
   //   double-linked mesh representing the matrix.  The actual format
@@ -78,12 +81,21 @@ class DLX : DLXNode
   {
     var c = self.right as? DLXColumnNode
     
+    var nCand = 0
+    
     var j = c?.right as? DLXColumnNode
     while j != nil
     {
-      if( j!.rows < c!.rows ) { c = j }
+      if( j!.rows < c!.rows )
+      {
+        c = j
+        nCand = 0
+      }
+      nCand += j!.rows
       j = j!.right as? DLXColumnNode
     }
+    
+    complexity += nCand
     
     return c;
   }
@@ -129,7 +141,10 @@ class DLX : DLXNode
   
   func resetSolutions()
   {
-    dataQueue.sync { solutions_.removeAll() }
+    complexity = 0
+    dataQueue.sync {
+      solutions_.removeAll()
+    }
   }
 
   

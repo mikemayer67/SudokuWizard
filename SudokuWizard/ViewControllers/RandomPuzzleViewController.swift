@@ -65,7 +65,7 @@ class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
     
     do {
       try gridView.loadPuzzle(rs.puzzle, solution: rs.solution)
-      difficultyLabel.text = String(format:"%d",rs.difficulty)
+      difficultyLabel.text = String(format:"%d / %d",rs.difficulty, rs.complexity)
     }
     catch {
       fatalError("Should never get here \(#file):\(#line)")
