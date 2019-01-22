@@ -16,12 +16,19 @@ class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
   @IBOutlet weak var difficultyView: UIView!
   @IBOutlet weak var difficultyLabel: UILabel!
   
+  let genQueue = DispatchQueue(label: "RandomPuzzleGenerator")
+  
   override func awakeFromNib() {
     super.awakeFromNib()
     gridView.delegateForCells = self
+    
+    startButton.setTitleColor(UIColor.gray, for: .disabled)
+    regenButton.setTitleColor(UIColor.gray, for: .disabled)
   }
   
-  override func viewWillAppear(_ animated: Bool) {
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    
     let r  = difficultyView.frame.height/4.0
     let dl = difficultyView.layer
     let dp = UIBezierPath(roundedRect: difficultyView.bounds, cornerRadius: r)
@@ -43,7 +50,10 @@ class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
     
     regenButton.layer.cornerRadius = regenButton.frame.height/2.0
     startButton.layer.cornerRadius = startButton.frame.height/2.0
-    
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
     generate()
   }
   
@@ -61,15 +71,46 @@ class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
   
   func generate()
   {
-    let rs = RandomSudoku()
+    gridView.clear()
+    regenButton.isEnabled = false
+    startButton.isEnabled = false
+    difficultyLabel.text = ""
     
-    do {
-      try gridView.loadPuzzle(rs.puzzle, solution: rs.solution)
-      difficultyLabel.text = String(format:"%d",rs.difficulty)
+    var flashErr = true
+    var flashIndex = Int.random(in: 0...80)
+    let timer = Timer.scheduledTimer(withTimeInterval: 0.04, repeats: true) { _ in
+      DispatchQueue.main.async {
+        if flashErr { self.gridView.cellViews[flashIndex].errant = false }
+        else        { self.gridView.cellViews[flashIndex].highlighted = false }
+        flashErr = Int.random(in:0...1) == 0
+        flashIndex = Int.random(in:0...80)
+          
+        if flashErr { self.gridView.cellViews[flashIndex].errant = true }
+        else        { self.gridView.cellViews[flashIndex].highlighted = true }
+      }
     }
-    catch {
-      fatalError("Should never get here \(#file):\(#line)")
+    
+    genQueue.async {
+      let rs = RandomSudoku()
+      
+      DispatchQueue.main.async {
+        do {
+          try self.gridView.loadPuzzle(rs.puzzle, solution: rs.solution)
+          self.difficultyLabel.text = String(format:"%d",rs.difficulty)
+        }
+        catch {
+          fatalError("Should never get here \(#file):\(#line)")
+        }
+        timer.invalidate()
+        self.regenButton.isEnabled = true
+        self.startButton.isEnabled = true
+        self.dirty = true
+        if flashErr { self.gridView.cellViews[flashIndex].errant = false }
+        else        { self.gridView.cellViews[flashIndex].highlighted = false }
+      }
     }
+    
+
   }
   
   // MARK: - Grid Delegate methods

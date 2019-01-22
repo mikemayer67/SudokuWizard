@@ -352,7 +352,69 @@
                     <view key="view" contentMode="scaleToFill" id="N19-mC-jdX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ih0-bD-Epb" customClass="SudokuWizardGridView" customModule="SudokuWizard" customModuleProvider="target">
+                                <rect key="frame" x="10" y="156" width="355" height="355"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Ih0-bD-Epb" secondAttribute="height" id="eXg-Rl-fYK"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80Y-mR-vpX">
+                                <rect key="frame" x="20" y="611" width="157.5" height="36"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <state key="normal" title="Clear All">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="handleRestart:" destination="Sw4-EA-bfS" eventType="touchUpInside" id="auR-Sm-bs1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rI5-ha-A4F">
+                                <rect key="frame" x="197.5" y="611" width="157.5" height="36"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <state key="normal" title="Play">
+                                    <color key="titleColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="handleStart:" destination="Sw4-EA-bfS" eventType="touchUpInside" id="k2a-hT-QLl"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BWf-sd-Qaa">
+                                <rect key="frame" x="144" y="531" width="87" height="41"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuz-az-B0k">
+                                        <rect key="frame" x="15" y="10" width="57" height="21"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="iuz-az-B0k" firstAttribute="leading" secondItem="BWf-sd-Qaa" secondAttribute="leading" constant="15" id="IYF-jW-wo8"/>
+                                    <constraint firstAttribute="trailing" secondItem="iuz-az-B0k" secondAttribute="trailing" constant="15" id="njo-FA-IO8"/>
+                                    <constraint firstItem="iuz-az-B0k" firstAttribute="top" secondItem="BWf-sd-Qaa" secondAttribute="top" constant="10" id="sXu-4r-xMP"/>
+                                    <constraint firstAttribute="bottom" secondItem="iuz-az-B0k" secondAttribute="bottom" constant="10" id="zo4-e5-6eM"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Ih0-bD-Epb" firstAttribute="centerY" secondItem="N19-mC-jdX" secondAttribute="centerY" id="1zb-V9-bD5"/>
+                            <constraint firstItem="ruK-G6-S1G" firstAttribute="bottom" secondItem="80Y-mR-vpX" secondAttribute="bottom" constant="20" id="2hE-ae-aeu"/>
+                            <constraint firstItem="Ih0-bD-Epb" firstAttribute="leading" secondItem="ruK-G6-S1G" secondAttribute="leading" constant="10" id="HCh-a1-j7h"/>
+                            <constraint firstItem="rI5-ha-A4F" firstAttribute="leading" secondItem="80Y-mR-vpX" secondAttribute="trailing" constant="20" id="Hos-ay-ZQY"/>
+                            <constraint firstItem="rI5-ha-A4F" firstAttribute="width" secondItem="80Y-mR-vpX" secondAttribute="width" id="Uaz-I8-afz"/>
+                            <constraint firstItem="rI5-ha-A4F" firstAttribute="centerY" secondItem="80Y-mR-vpX" secondAttribute="centerY" id="eCe-ee-3ra"/>
+                            <constraint firstItem="BWf-sd-Qaa" firstAttribute="top" secondItem="Ih0-bD-Epb" secondAttribute="bottom" constant="20" id="ifT-oj-JmR"/>
+                            <constraint firstItem="ruK-G6-S1G" firstAttribute="trailing" secondItem="rI5-ha-A4F" secondAttribute="trailing" constant="20" id="niO-Fc-J9W"/>
+                            <constraint firstItem="ruK-G6-S1G" firstAttribute="trailing" secondItem="Ih0-bD-Epb" secondAttribute="trailing" constant="10" id="orY-Qw-yDq"/>
+                            <constraint firstItem="80Y-mR-vpX" firstAttribute="leading" secondItem="ruK-G6-S1G" secondAttribute="leading" constant="20" id="v2b-1c-sGP"/>
+                            <constraint firstItem="BWf-sd-Qaa" firstAttribute="centerX" secondItem="N19-mC-jdX" secondAttribute="centerX" id="zu1-Td-Zft"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="ruK-G6-S1G"/>
                     </view>
                     <navigationItem key="navigationItem" title="Puzzle Editor" id="nO4-rC-ti9">
@@ -366,25 +428,18 @@
                                 </connections>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" id="xVR-Fq-ehi">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8Ux-7q-Ejt">
-                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <state key="normal" title="start"/>
-                                <connections>
-                                    <action selector="handleStart:" destination="Sw4-EA-bfS" eventType="touchUpInside" id="eSj-hS-JMW"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="startButton" destination="8Ux-7q-Ejt" id="J8g-Vo-qIq"/>
+                        <outlet property="gridView" destination="Ih0-bD-Epb" id="E8O-cq-8H8"/>
+                        <outlet property="restartButton" destination="80Y-mR-vpX" id="QSe-v5-UcG"/>
+                        <outlet property="startButton" destination="rI5-ha-A4F" id="vHF-eV-g8T"/>
+                        <outlet property="statusLabel" destination="iuz-az-B0k" id="PCU-dj-xCk"/>
+                        <outlet property="statusView" destination="BWf-sd-Qaa" id="IuI-Zt-xmL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e2l-sU-qEB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="258" y="1084"/>
+            <point key="canvasLocation" x="256.80000000000001" y="1083.5082458770617"/>
         </scene>
         <!--Puzzle Generator-->
         <scene sceneID="hHd-D8-OZx">
