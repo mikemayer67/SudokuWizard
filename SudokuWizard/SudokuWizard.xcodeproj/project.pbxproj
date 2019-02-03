@@ -13,7 +13,6 @@
 		27022B6221A7B6980078588D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27022B6121A7B6980078588D /* Assets.xcassets */; };
 		27022B6521A7B6980078588D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27022B6321A7B6980078588D /* LaunchScreen.storyboard */; };
 		270E7D5B21FC837300626223 /* SudokuWizardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270E7D5A21FC837300626223 /* SudokuWizardGridView.swift */; };
-		270E7D6521FCBD9500626223 /* SudokuWizardDigitPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270E7D6421FCBD9500626223 /* SudokuWizardDigitPicker.swift */; };
 		27161F0B21CD42AE006CDB71 /* SudokuWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27161F0A21CD42AE006CDB71 /* SudokuWizard.swift */; };
 		27161F1221CE1C43006CDB71 /* FactoryDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27161F1121CE1C43006CDB71 /* FactoryDefaults.plist */; };
 		27161F1321CEA928006CDB71 /* icons8-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 27161F1021CE1BE0006CDB71 /* icons8-settings.png */; };
@@ -51,7 +50,6 @@
 		27022B6421A7B6980078588D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27022B6621A7B6980078588D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		270E7D5A21FC837300626223 /* SudokuWizardGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuWizardGridView.swift; sourceTree = "<group>"; };
-		270E7D6421FCBD9500626223 /* SudokuWizardDigitPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuWizardDigitPicker.swift; sourceTree = "<group>"; };
 		27161F0A21CD42AE006CDB71 /* SudokuWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuWizard.swift; sourceTree = "<group>"; };
 		27161F1021CE1BE0006CDB71 /* icons8-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-settings.png"; sourceTree = "<group>"; };
 		27161F1121CE1C43006CDB71 /* FactoryDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = FactoryDefaults.plist; sourceTree = "<group>"; };
@@ -129,7 +127,6 @@
 				27A1D63A21BA25A7007AF213 /* SudokuWizardCellView.swift */,
 				270E7D5A21FC837300626223 /* SudokuWizardGridView.swift */,
 				27161F0A21CD42AE006CDB71 /* SudokuWizard.swift */,
-				270E7D6421FCBD9500626223 /* SudokuWizardDigitPicker.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -288,7 +285,6 @@
 				27B13BE621D52F9A00B4B81D /* NewPuzzleViewController.swift in Sources */,
 				27E94DAE21DBD76900D0C4EE /* RandomSudoku.swift in Sources */,
 				2734F55121CA0741005DA954 /* Settings.swift in Sources */,
-				270E7D6521FCBD9500626223 /* SudokuWizardDigitPicker.swift in Sources */,
 				27E94DA521DAADCA00D0C4EE /* DLX.swift in Sources */,
 				27E94DA821DAADCA00D0C4EE /* DLXNode.swift in Sources */,
 				27E94DA721DAADCA00D0C4EE /* DLXGridNode.swift in Sources */,

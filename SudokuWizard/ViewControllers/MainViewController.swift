@@ -126,7 +126,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   
   @IBAction func handleNewPuzzle(_ sender: UIBarButtonItem)
   {
-    if puzzle?.state == .Active
+    if puzzle?.state == .Populated
     {
       let alert = UIAlertController(title:"Discard Puzzle",
                                     message:"Replace active puzzle with new puzzle",

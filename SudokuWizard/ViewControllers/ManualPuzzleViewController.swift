@@ -18,7 +18,8 @@ class ManualPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    gridView.delegateForCells = self
+    
+    for cell in gridView.cellViews { cell.delegate = self }
   }
   
   override func viewDidLayoutSubviews() {
@@ -65,4 +66,12 @@ class ManualPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
   
   func sudokuWizard(changeMarksFor cell: SudokuWizardCellView) {}
   func sudokuWizard(selectionChangedTo cell: SudokuWizardCellView) { cell.selected = false }
+  
+  func sudokuWizardCellView(selected cell: SudokuWizardCellView)
+  {
+  }
+  
+  func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView)
+  {
+  }
 }

@@ -20,7 +20,8 @@ class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    gridView.delegateForCells = self
+    
+    for cell in gridView.cellViews { cell.delegate = self }
     
     startButton.setTitleColor(UIColor.gray, for: .disabled)
     regenButton.setTitleColor(UIColor.gray, for: .disabled)
@@ -96,7 +97,6 @@ class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
       DispatchQueue.main.async {
         do {
           try self.gridView.loadPuzzle(rs.puzzle, solution: rs.solution)
-          self.gridView.state = .Viewable
           self.difficultyLabel.text = String(format:"%d",rs.difficulty)
         }
         catch {
@@ -116,7 +116,7 @@ class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
   
   // MARK: - Grid Delegate methods
   
-  func sudokuWizard(changeValueFor     cell: SudokuWizardCellView) {}
-  func sudokuWizard(changeMarksFor     cell: SudokuWizardCellView) {}
-  func sudokuWizard(selectionChangedTo cell: SudokuWizardCellView) { cell.selected = false }
+  func sudokuWizardCellView(selected cell: SudokuWizardCellView) { cell.selected = false }
+  func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView) {}
+
 }

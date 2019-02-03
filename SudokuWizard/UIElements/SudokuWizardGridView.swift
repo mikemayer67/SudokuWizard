@@ -8,17 +8,6 @@
 
 import UIKit
 
-class SudokuWizardGridEntryView: SudokuWizardGridView
-{
-  override var isMarkable : Bool { return false }
-}
-
-class SudokuWizardGridLockedView: SudokuWizardGridView
-{
-  override var isEditable : Bool { return false }
-  override var isMarkable : Bool { return false }
-}
-
 class SudokuWizardGridView: UIView
 {
   @IBOutlet weak var viewController : UIViewController!
@@ -43,8 +32,6 @@ class SudokuWizardGridView: UIView
   // MARK: -
   
   private(set) var state = GridState.Empty
-  var isEditable : Bool { return true }
-  var isMarkable : Bool { return true }
   
   var bgView : UIView!
   var cellViews = [SudokuWizardCellView]()
