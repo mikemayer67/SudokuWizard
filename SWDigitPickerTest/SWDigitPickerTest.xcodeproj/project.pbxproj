@@ -7,31 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		27022B7921A7B9740078588D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27022B7821A7B9740078588D /* AppDelegate.swift */; };
-		27022B7B21A7B9740078588D /* CellTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27022B7A21A7B9740078588D /* CellTestViewController.swift */; };
-		27022B7E21A7B9740078588D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27022B7C21A7B9740078588D /* Main.storyboard */; };
-		27022B8021A7B9750078588D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27022B7F21A7B9750078588D /* Assets.xcassets */; };
-		27022B8321A7B9750078588D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27022B8121A7B9750078588D /* LaunchScreen.storyboard */; };
-		270E7D69220395F800626223 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270E7D68220395F800626223 /* BackgroundView.swift */; };
-		27161F0D21CD4386006CDB71 /* SudokuWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27161F0C21CD4385006CDB71 /* SudokuWizard.swift */; };
-		27A1D63D21BA25C2007AF213 /* SudokuWizardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D63C21BA25C2007AF213 /* SudokuWizardCellView.swift */; };
+		270E7D4321FC823100626223 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270E7D4221FC823100626223 /* AppDelegate.swift */; };
+		270E7D4521FC823100626223 /* DigitPickerTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270E7D4421FC823100626223 /* DigitPickerTestViewController.swift */; };
+		270E7D4821FC823100626223 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 270E7D4621FC823100626223 /* Main.storyboard */; };
+		270E7D4A21FC823200626223 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 270E7D4921FC823200626223 /* Assets.xcassets */; };
+		270E7D4D21FC823200626223 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 270E7D4B21FC823200626223 /* LaunchScreen.storyboard */; };
+		270E7D5D21FC83D700626223 /* SudokuWizardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270E7D5C21FC83D700626223 /* SudokuWizardGridView.swift */; };
+		270E7D5F21FC851500626223 /* SudokuWizardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270E7D5E21FC851500626223 /* SudokuWizardCellView.swift */; };
+		270E7D6121FC85FC00626223 /* SudokuWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270E7D6021FC85FC00626223 /* SudokuWizard.swift */; };
+		270E7D6721FCC0AB00626223 /* SudokuWizardDigitPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270E7D6621FCC0AB00626223 /* SudokuWizardDigitPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		27022B7521A7B9740078588D /* SWCellViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWCellViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		27022B7821A7B9740078588D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		27022B7A21A7B9740078588D /* CellTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellTestViewController.swift; sourceTree = "<group>"; };
-		27022B7D21A7B9740078588D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		27022B7F21A7B9750078588D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		27022B8221A7B9750078588D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		27022B8421A7B9750078588D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		270E7D68220395F800626223 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
-		27161F0C21CD4385006CDB71 /* SudokuWizard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizard.swift; path = ../../SudokuWizard/UIElements/SudokuWizard.swift; sourceTree = "<group>"; };
-		27A1D63C21BA25C2007AF213 /* SudokuWizardCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizardCellView.swift; path = ../../SudokuWizard/UIElements/SudokuWizardCellView.swift; sourceTree = "<group>"; };
+		270E7D3F21FC823100626223 /* SWDigitPickerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWDigitPickerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		270E7D4221FC823100626223 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		270E7D4421FC823100626223 /* DigitPickerTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitPickerTestViewController.swift; sourceTree = "<group>"; };
+		270E7D4721FC823100626223 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		270E7D4921FC823200626223 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		270E7D4C21FC823200626223 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		270E7D4E21FC823200626223 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		270E7D5C21FC83D700626223 /* SudokuWizardGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizardGridView.swift; path = ../../SudokuWizard/UIElements/SudokuWizardGridView.swift; sourceTree = "<group>"; };
+		270E7D5E21FC851500626223 /* SudokuWizardCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizardCellView.swift; path = ../../SudokuWizard/UIElements/SudokuWizardCellView.swift; sourceTree = "<group>"; };
+		270E7D6021FC85FC00626223 /* SudokuWizard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizard.swift; path = ../../SudokuWizard/UIElements/SudokuWizard.swift; sourceTree = "<group>"; };
+		270E7D6621FCC0AB00626223 /* SudokuWizardDigitPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizardDigitPicker.swift; path = ../../SudokuWizard/UIElements/SudokuWizardDigitPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		27022B7221A7B9740078588D /* Frameworks */ = {
+		270E7D3C21FC823100626223 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -41,74 +43,75 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		27022B6C21A7B9740078588D = {
+		270E7D3621FC823100626223 = {
 			isa = PBXGroup;
 			children = (
-				27022B7721A7B9740078588D /* SWCellViewTest */,
-				27022B7621A7B9740078588D /* Products */,
+				270E7D4121FC823100626223 /* SWDigitPickerTest */,
+				270E7D4021FC823100626223 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		27022B7621A7B9740078588D /* Products */ = {
+		270E7D4021FC823100626223 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				27022B7521A7B9740078588D /* SWCellViewTest.app */,
+				270E7D3F21FC823100626223 /* SWDigitPickerTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		27022B7721A7B9740078588D /* SWCellViewTest */ = {
+		270E7D4121FC823100626223 /* SWDigitPickerTest */ = {
 			isa = PBXGroup;
 			children = (
-				27161F0C21CD4385006CDB71 /* SudokuWizard.swift */,
-				27A1D63C21BA25C2007AF213 /* SudokuWizardCellView.swift */,
-				270E7D68220395F800626223 /* BackgroundView.swift */,
-				27022B7821A7B9740078588D /* AppDelegate.swift */,
-				27022B7A21A7B9740078588D /* CellTestViewController.swift */,
-				27022B7C21A7B9740078588D /* Main.storyboard */,
-				27022B7F21A7B9750078588D /* Assets.xcassets */,
-				27022B8121A7B9750078588D /* LaunchScreen.storyboard */,
-				27022B8421A7B9750078588D /* Info.plist */,
+				270E7D6021FC85FC00626223 /* SudokuWizard.swift */,
+				270E7D5E21FC851500626223 /* SudokuWizardCellView.swift */,
+				270E7D5C21FC83D700626223 /* SudokuWizardGridView.swift */,
+				270E7D6621FCC0AB00626223 /* SudokuWizardDigitPicker.swift */,
+				270E7D4221FC823100626223 /* AppDelegate.swift */,
+				270E7D4421FC823100626223 /* DigitPickerTestViewController.swift */,
+				270E7D4621FC823100626223 /* Main.storyboard */,
+				270E7D4921FC823200626223 /* Assets.xcassets */,
+				270E7D4B21FC823200626223 /* LaunchScreen.storyboard */,
+				270E7D4E21FC823200626223 /* Info.plist */,
 			);
-			path = SWCellViewTest;
+			path = SWDigitPickerTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		27022B7421A7B9740078588D /* SWCellViewTest */ = {
+		270E7D3E21FC823100626223 /* SWDigitPickerTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 27022B8721A7B9750078588D /* Build configuration list for PBXNativeTarget "SWCellViewTest" */;
+			buildConfigurationList = 270E7D5121FC823200626223 /* Build configuration list for PBXNativeTarget "SWDigitPickerTest" */;
 			buildPhases = (
-				27022B7121A7B9740078588D /* Sources */,
-				27022B7221A7B9740078588D /* Frameworks */,
-				27022B7321A7B9740078588D /* Resources */,
+				270E7D3B21FC823100626223 /* Sources */,
+				270E7D3C21FC823100626223 /* Frameworks */,
+				270E7D3D21FC823100626223 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = SWCellViewTest;
-			productName = SWCellViewTest;
-			productReference = 27022B7521A7B9740078588D /* SWCellViewTest.app */;
+			name = SWDigitPickerTest;
+			productName = SWDigitPickerTest;
+			productReference = 270E7D3F21FC823100626223 /* SWDigitPickerTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		27022B6D21A7B9740078588D /* Project object */ = {
+		270E7D3721FC823100626223 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = VMWishes;
 				TargetAttributes = {
-					27022B7421A7B9740078588D = {
+					270E7D3E21FC823100626223 = {
 						CreatedOnToolsVersion = 10.1;
 					};
 				};
 			};
-			buildConfigurationList = 27022B7021A7B9740078588D /* Build configuration list for PBXProject "SWCellViewTest" */;
+			buildConfigurationList = 270E7D3A21FC823100626223 /* Build configuration list for PBXProject "SWDigitPickerTest" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -116,57 +119,58 @@
 				en,
 				Base,
 			);
-			mainGroup = 27022B6C21A7B9740078588D;
-			productRefGroup = 27022B7621A7B9740078588D /* Products */;
+			mainGroup = 270E7D3621FC823100626223;
+			productRefGroup = 270E7D4021FC823100626223 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				27022B7421A7B9740078588D /* SWCellViewTest */,
+				270E7D3E21FC823100626223 /* SWDigitPickerTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		27022B7321A7B9740078588D /* Resources */ = {
+		270E7D3D21FC823100626223 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27022B8321A7B9750078588D /* LaunchScreen.storyboard in Resources */,
-				27022B8021A7B9750078588D /* Assets.xcassets in Resources */,
-				27022B7E21A7B9740078588D /* Main.storyboard in Resources */,
+				270E7D4D21FC823200626223 /* LaunchScreen.storyboard in Resources */,
+				270E7D4A21FC823200626223 /* Assets.xcassets in Resources */,
+				270E7D4821FC823100626223 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		27022B7121A7B9740078588D /* Sources */ = {
+		270E7D3B21FC823100626223 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				270E7D69220395F800626223 /* BackgroundView.swift in Sources */,
-				27022B7B21A7B9740078588D /* CellTestViewController.swift in Sources */,
-				27161F0D21CD4386006CDB71 /* SudokuWizard.swift in Sources */,
-				27022B7921A7B9740078588D /* AppDelegate.swift in Sources */,
-				27A1D63D21BA25C2007AF213 /* SudokuWizardCellView.swift in Sources */,
+				270E7D6121FC85FC00626223 /* SudokuWizard.swift in Sources */,
+				270E7D5F21FC851500626223 /* SudokuWizardCellView.swift in Sources */,
+				270E7D5D21FC83D700626223 /* SudokuWizardGridView.swift in Sources */,
+				270E7D4521FC823100626223 /* DigitPickerTestViewController.swift in Sources */,
+				270E7D4321FC823100626223 /* AppDelegate.swift in Sources */,
+				270E7D6721FCC0AB00626223 /* SudokuWizardDigitPicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		27022B7C21A7B9740078588D /* Main.storyboard */ = {
+		270E7D4621FC823100626223 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				27022B7D21A7B9740078588D /* Base */,
+				270E7D4721FC823100626223 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		27022B8121A7B9750078588D /* LaunchScreen.storyboard */ = {
+		270E7D4B21FC823200626223 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				27022B8221A7B9750078588D /* Base */,
+				270E7D4C21FC823200626223 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -174,7 +178,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		27022B8521A7B9750078588D /* Debug */ = {
+		270E7D4F21FC823200626223 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -235,7 +239,7 @@
 			};
 			name = Debug;
 		};
-		27022B8621A7B9750078588D /* Release */ = {
+		270E7D5021FC823200626223 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -290,66 +294,64 @@
 			};
 			name = Release;
 		};
-		27022B8821A7B9750078588D /* Debug */ = {
+		270E7D5221FC823200626223 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 642SNV9NK2;
-				INFOPLIST_FILE = SWCellViewTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				INFOPLIST_FILE = SWDigitPickerTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vmwishes.SWCellViewTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmwishes.SWDigitPickerTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		27022B8921A7B9750078588D /* Release */ = {
+		270E7D5321FC823200626223 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 642SNV9NK2;
-				INFOPLIST_FILE = SWCellViewTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				INFOPLIST_FILE = SWDigitPickerTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vmwishes.SWCellViewTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vmwishes.SWDigitPickerTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		27022B7021A7B9740078588D /* Build configuration list for PBXProject "SWCellViewTest" */ = {
+		270E7D3A21FC823100626223 /* Build configuration list for PBXProject "SWDigitPickerTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				27022B8521A7B9750078588D /* Debug */,
-				27022B8621A7B9750078588D /* Release */,
+				270E7D4F21FC823200626223 /* Debug */,
+				270E7D5021FC823200626223 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		27022B8721A7B9750078588D /* Build configuration list for PBXNativeTarget "SWCellViewTest" */ = {
+		270E7D5121FC823200626223 /* Build configuration list for PBXNativeTarget "SWDigitPickerTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				27022B8821A7B9750078588D /* Debug */,
-				27022B8921A7B9750078588D /* Release */,
+				270E7D5221FC823200626223 /* Debug */,
+				270E7D5321FC823200626223 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 27022B6D21A7B9740078588D /* Project object */;
+	rootObject = 270E7D3721FC823100626223 /* Project object */;
 }

@@ -8,9 +8,15 @@
 
 import UIKit
 
-enum SudokuWizardError : Error
+class SudokuWizardGridEntryView: SudokuWizardGridView
 {
-  case InvalidPuzzle(String)
+  override var isMarkable : Bool { return false }
+}
+
+class SudokuWizardGridLockedView: SudokuWizardGridView
+{
+  override var isEditable : Bool { return false }
+  override var isMarkable : Bool { return false }
 }
 
 class SudokuWizardGridView: UIView
@@ -21,8 +27,8 @@ class SudokuWizardGridView: UIView
   
   enum GridState
   {
-    case Unset
-    case Active
+    case Empty
+    case Populated
     case Solved
   }
   
@@ -36,16 +42,48 @@ class SudokuWizardGridView: UIView
   
   // MARK: -
   
-  private(set) var state = GridState.Unset
+  private(set) var state = GridState.Empty
+  var isEditable : Bool { return true }
+  var isMarkable : Bool { return true }
   
   var bgView : UIView!
   var cellViews = [SudokuWizardCellView]()
+  
+  var highlightActiveDigit = true
+  {
+    didSet { updateHighlights() }
+  }
   
   var selectedCell : SudokuWizardCellView?
   {
     didSet
     {
-      cellViews.forEach { c in if c !== selectedCell { c.selected = false } }
+      for c in cellViews {
+        if c != selectedCell { c.selected = false }
+      }
+      updateHighlights()
+    }
+  }
+  
+  func updateHighlights()
+  {
+    if highlightActiveDigit, let d = selectedCell?.digit
+    {
+      for c in cellViews { c.highlighted = ( c != selectedCell && c.digit == d ) }
+    }
+    else
+    {
+      for c in cellViews { c.highlighted = false }
+    }
+  }
+  
+  func track(touch:UITouch)
+  {
+    for cell in cellViews {
+      if cell.bounds.contains(touch.location(in: cell)) {
+        cell.selected = true
+        break
+      }
     }
   }
   
@@ -62,11 +100,6 @@ class SudokuWizardGridView: UIView
   var errorFeedback : SudokuWizard.ErrorFeedback = .conflict
   {
     didSet { if errorFeedback != oldValue { findAllErrors() } }
-  }
-  
-  var delegateForCells : SudokuWizardCellViewDelegate?
-  {
-    didSet { cellViews.forEach { c in c.delegate = delegateForCells } }
   }
   
   // MARK: -
@@ -156,10 +189,10 @@ class SudokuWizardGridView: UIView
       cell.errant = false
       cell.highlighted = false
       cell.clearAllMarks()
-      cell.correctValue = nil
+      cell.correctDigit = nil
     }
     
-    state = .Unset
+    state = .Empty
     selectedCell = nil
   }
   
@@ -184,14 +217,14 @@ class SudokuWizardGridView: UIView
         guard let d = s[i/9][i%9] else {
           throw SudokuWizardError.InvalidPuzzle("Puzzle solution must contiain only digits 1-9")
         }
-        cellViews[i].correctValue = d
+        cellViews[i].correctDigit = d
       }
     }
     
     computeAllMarks()
     findAllErrors()
     
-    state = .Active
+    state = .Populated
   }
   
   // MARK: -
@@ -216,7 +249,7 @@ class SudokuWizardGridView: UIView
       
       let r = cell.row!
       let c = cell.col!
-      let v = Int(cell.value!)
+      let d = Int(cell.digit!)
       
       let br = 3*(r/3)  // row index of NW corner of current box
       let bc = 3*(c/3)  // col index of NW corner of current box
@@ -224,13 +257,13 @@ class SudokuWizardGridView: UIView
       for i in 0...8 {
         marks[9*r + c][i] = false  // clear all marks in current cell
         
-        marks[9*r + i][v-1] = false  // clear v-mark in current column
-        marks[9*i + c][v-1] = false  // clear v-mark in current row
+        marks[9*r + i][d-1] = false  // clear v-mark in current column
+        marks[9*i + c][d-1] = false  // clear v-mark in current row
         
         let ri = i/3  // ith row offset in current box
         let ci = i%3  // ith col offset in current box
         
-        marks[9*(br+ri) + (bc+ci)][v-1] = false // clear v-mark in current box
+        marks[9*(br+ri) + (bc+ci)][d-1] = false // clear v-mark in current box
       }
     }
     
@@ -279,7 +312,7 @@ class SudokuWizardGridView: UIView
     
     if errorFeedback == .error
     {
-      if let v = cell.value, let cv = cell.correctValue, v != cv
+      if let d = cell.digit, let cd = cell.correctDigit, d != cd
       {
         cell.errant = true
         return
@@ -289,7 +322,7 @@ class SudokuWizardGridView: UIView
     let r = cell.row!
     let c = cell.col!
     
-    guard let v = cell.value else { return }
+    guard let d = cell.digit else { return }
     
     let br = 3*(r/3)  // row index of NW corner of current box
     let bc = 3*(c/3)  // col index of NW corner of current box
@@ -304,7 +337,7 @@ class SudokuWizardGridView: UIView
       let boxCell = cellViews[9*(br+ri)+(bc+ci)]
       
       for tc in [rowCell,colCell,boxCell] {
-        if tc !== cell, tc.value == v { cell.errant = true; return }
+        if tc !== cell, tc.digit == d { cell.errant = true; return }
       }
     }
   }
@@ -324,12 +357,12 @@ class SudokuWizardGridView: UIView
     for m : Digit in 1...9 {
       let j = Int(m)-1
       for i in 0...8 {
-        if cellViews[9*r + i].value == m { marks[j] = false; break }
-        if cellViews[9*i + c].value == m { marks[j] = false; break }
+        if cellViews[9*r + i].digit == m { marks[j] = false; break }
+        if cellViews[9*i + c].digit == m { marks[j] = false; break }
         
         let ri = i/3  // ith row offset in current box
         let ci = i%3  // ith col offset in current box
-        if cellViews[9*(br+ri)+(bc+ci)].value == m { marks[j] = false; break }
+        if cellViews[9*(br+ri)+(bc+ci)].digit == m { marks[j] = false; break }
       }
     }
     if markStrategy == .conflicted {

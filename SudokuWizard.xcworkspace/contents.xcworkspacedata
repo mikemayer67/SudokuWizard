@@ -10,4 +10,7 @@
    <FileRef
       location = "group:SWGridViewTest/SWGridViewTest.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:SWDigitPickerTest/SWDigitPickerTest.xcodeproj">
+   </FileRef>
 </Workspace>

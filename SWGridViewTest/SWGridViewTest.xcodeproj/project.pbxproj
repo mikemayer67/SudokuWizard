@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270E7D5921FC836A00626223 /* SudokuWizardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270E7D5821FC836A00626223 /* SudokuWizardGridView.swift */; };
 		27161F0921CD3E08006CDB71 /* icons8-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 27161F0821CD3DD2006CDB71 /* icons8-settings.png */; };
 		27161F0F21CD43FC006CDB71 /* SudokuWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27161F0E21CD43FC006CDB71 /* SudokuWizard.swift */; };
-		2785C43021B1CCA600AAD7D1 /* SudokuWizardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2785C42E21B1CCA600AAD7D1 /* SudokuWizardGridView.swift */; };
 		27A1D63F21BA25D4007AF213 /* SudokuWizardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D63E21BA25D4007AF213 /* SudokuWizardCellView.swift */; };
 		27AA194D21B1CB47002BCC5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA194C21B1CB47002BCC5A /* AppDelegate.swift */; };
 		27AA194F21B1CB47002BCC5A /* GridTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA194E21B1CB47002BCC5A /* GridTestViewController.swift */; };
@@ -23,9 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		270E7D5821FC836A00626223 /* SudokuWizardGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizardGridView.swift; path = ../../SudokuWizard/UIElements/SudokuWizardGridView.swift; sourceTree = "<group>"; };
 		27161F0821CD3DD2006CDB71 /* icons8-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-settings.png"; path = "../../SudokuWizard/images/icons8-settings.png"; sourceTree = "<group>"; };
 		27161F0E21CD43FC006CDB71 /* SudokuWizard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizard.swift; path = ../../SudokuWizard/UIElements/SudokuWizard.swift; sourceTree = "<group>"; };
-		2785C42E21B1CCA600AAD7D1 /* SudokuWizardGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizardGridView.swift; path = ../../SudokuWizard/UIElements/SudokuWizardGridView.swift; sourceTree = "<group>"; };
 		27A1D63E21BA25D4007AF213 /* SudokuWizardCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudokuWizardCellView.swift; path = ../../SudokuWizard/UIElements/SudokuWizardCellView.swift; sourceTree = "<group>"; };
 		27AA194921B1CB47002BCC5A /* SWGridViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWGridViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27AA194C21B1CB47002BCC5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,7 +72,7 @@
 			children = (
 				27161F0E21CD43FC006CDB71 /* SudokuWizard.swift */,
 				27A1D63E21BA25D4007AF213 /* SudokuWizardCellView.swift */,
-				2785C42E21B1CCA600AAD7D1 /* SudokuWizardGridView.swift */,
+				270E7D5821FC836A00626223 /* SudokuWizardGridView.swift */,
 				27AA194E21B1CB47002BCC5A /* GridTestViewController.swift */,
 				27AA194C21B1CB47002BCC5A /* AppDelegate.swift */,
 				27AA195021B1CB47002BCC5A /* Main.storyboard */,
@@ -164,11 +164,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				270E7D5921FC836A00626223 /* SudokuWizardGridView.swift in Sources */,
 				27A1D63F21BA25D4007AF213 /* SudokuWizardCellView.swift in Sources */,
 				27AA194F21B1CB47002BCC5A /* GridTestViewController.swift in Sources */,
 				27161F0F21CD43FC006CDB71 /* SudokuWizard.swift in Sources */,
 				27AA194D21B1CB47002BCC5A /* AppDelegate.swift in Sources */,
-				2785C43021B1CCA600AAD7D1 /* SudokuWizardGridView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

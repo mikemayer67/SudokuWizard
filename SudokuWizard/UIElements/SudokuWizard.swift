@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import UIKit
 
-typealias Digit        = DLXSudoku.Digit
-typealias SudokuGrid   = DLXSudoku.Grid
+typealias Digit        = UInt8
+typealias SudokuGrid   = [[Digit?]]
 
 struct RowCol
 {
@@ -24,6 +25,11 @@ typealias RowColDigit = (row:Int, col:Int, digit:Digit)
 
 fileprivate let utf8_zero = Digit(UnicodeScalar("0").value)
 fileprivate let utf8_dot  = Digit(UnicodeScalar(".").value)
+
+enum SudokuWizardError : Error
+{
+  case InvalidPuzzle(String)
+}
 
 class SudokuWizard
 {
@@ -64,23 +70,61 @@ extension String
     }
   }
   
-  func sudokuGrid() -> SudokuGrid
+  func sudokuGrid() throws -> SudokuGrid
   {
     var rval = SudokuGrid(repeating: [Digit?](repeating: nil, count: 9), count: 9)
     
     var i = 0
     for c in self.utf8 {
-      guard i < 81 else { fatalError("Puzzle length too long") }
+      guard i < 81 else { throw SudokuWizardError.InvalidPuzzle("Puzzle length too long") }
       let d = Digit(c)
       switch d {
       case utf8_zero, utf8_dot:           rval[i/9][i%9] = nil
       case (utf8_zero+1)...(utf8_zero+9): rval[i/9][i%9] = d-utf8_zero
-      default: fatalError("digits must each be in range 0-9 or '.'")
+      default: throw SudokuWizardError.InvalidPuzzle("digits must each be in range 0-9 or '.'")
       }
       i += 1
     }
-    guard i == 81 else { fatalError("Puzzle length too short") }
+    guard i == 81 else { throw SudokuWizardError.InvalidPuzzle("Puzzle length too short") }
     
     return rval
   }
+  
+  func fontSizeToFit(rect:CGRect, fontName:String) -> CGFloat
+  {
+    let refSize = CGFloat(12)
+    
+    var attr = [NSAttributedString.Key : Any]()
+    attr[.font] = UIFont(name:fontName, size:refSize)
+    
+    let bounds = self.size(withAttributes: attr)
+    let frac = min( rect.width/bounds.width, rect.height/bounds.height )
+    
+    return frac * refSize
+  }
+  
+  func draw(in rect:CGRect, fontName:String, color:UIColor = .black)
+  {
+    let size = self.fontSizeToFit(rect: rect, fontName: fontName)
+    self.draw(in:rect, fontName:fontName, color:color, size:size )
+  }
+  
+  func draw(in rect:CGRect, fontName:String, size:CGFloat)
+  {
+    self.draw(in:rect, fontName:fontName, color:.black, size:size)
+  }
+  
+  func draw(in rect:CGRect, fontName:String, color:UIColor = .black, size:CGFloat)
+  {
+    var attr = [NSAttributedString.Key : Any]()
+    attr[.font] = UIFont(name:fontName, size:size)
+    attr[.foregroundColor] = color
+    
+    let bounds = self.size(withAttributes: attr)
+    let xo = rect.origin.x + (rect.width - bounds.width)/2.0
+    let yo = rect.origin.y + (rect.height - bounds.height)/2.0
+    
+    self.draw( at:CGPoint(x: xo, y: yo), withAttributes:attr )
+  }
+
 }

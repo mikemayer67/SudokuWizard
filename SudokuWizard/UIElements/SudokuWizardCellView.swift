@@ -22,31 +22,31 @@
 //    ------  --------   ------   -----------        ---   ---   ----
 //
 //    locked                                          -     L      L
-//    locked               X                          C     C      L
+//    locked               X                          E     E      L
 //    locked                          X               H     L      L
-//    locked               X          X               H     C      L
+//    locked               X          X               H     E      L
 //
 //    empty                                           -     -      -
 //    empty        X                                  S     -      -
 //
 //    filled       X                                  S     -      -
-//    filled       X       X                          S     C      -
+//    filled       X       X                          S     E      -
 //    filled       X                  X               S     -      -
-//    filled       X       X          X               S     C      -
+//    filled       X       X          X               S     E      -
 //
 //    filled                                          -     -      -
-//    filled               X                          C     C      -
+//    filled               X                          C     E      -
 //    filled                          X               H     -      -
-//    filled               X          X               H     C      -
+//    filled               X          X               H     E      -
 
 import UIKit
 
+// MARK: -
 
 protocol SudokuWizardCellViewDelegate
 {
-  func sudokuWizard(changeValueFor cell:SudokuWizardCellView)
-  func sudokuWizard(changeMarksFor cell:SudokuWizardCellView)
-  func sudokuWizard(selectionChangedTo cell:SudokuWizardCellView)
+  func sudokuWizardCellView(selected cell:SudokuWizardCellView)
+  func sudokuWizardCellView(touch:UITouch, outside cell:SudokuWizardCellView)
 }
 
 // MARK: -
@@ -61,13 +61,15 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   
   static var maximumTapPressDelay : TimeInterval = 0.5
   
+  var delegate : SudokuWizardCellViewDelegate?
+  
   // MARK: -
   
   let defaultBackgroundColor   = UIColor.white
   let selectedBackgroundColor  = UIColor(red: 0.85, green: 0.9, blue: 0.95, alpha: 1.0)
   let errantBackgroundColor    = UIColor(red: 1.0, green: 0.7, blue: 0.8, alpha: 1.0)
   let highlightBackgroundColor = UIColor(red: 1.0, green: 0.9, blue: 0.7, alpha: 1.0)
-
+  
   let defaultDigitColor        = UIColor(red:0.0, green: 0.0, blue: 0.75, alpha: 1.0)
   let lockedDigitColor         = UIColor.black
   let errantDigitColor         = UIColor(red:0.5, green: 0.0, blue: 0.0, alpha: 1.0)
@@ -84,9 +86,9 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   var highlighted = false            { didSet { setNeedsDisplay() } }
   var errant      = false            { didSet { setNeedsDisplay() } }
   
-  var correctValue : Digit?
+  var correctDigit : Digit?
   
-  var value : Digit?
+  var digit : Digit?
   {
     switch state {
     case let .locked(v): return v
@@ -98,58 +100,55 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   var selected = false {
     didSet {
       setNeedsDisplay()
-      if selected { delegate?.sudokuWizard(selectionChangedTo: self) }
+      if selected { delegate?.sudokuWizardCellView(selected:self) }
     }
   }
   
-  var markStyle   = SudokuWizard.MarkStyle.digits { didSet { setNeedsDisplay() } }
+  var markStyle = SudokuWizard.MarkStyle.digits { didSet { setNeedsDisplay() } }
   
   override var bounds : CGRect  { didSet { setNeedsDisplay() } }
   
+  
   // MARK: -
-  
-  var delegate      : SudokuWizardCellViewDelegate?
-  
-  var tapRecognizer      : UITapGestureRecognizer!
-  var pressRecognizer    : UILongPressGestureRecognizer!
   
   var row : Int?
   var col : Int?
   
-  private(set) var marks = [Bool]()  // Note that these are offset by 1 from digit they represent
+  var editable : Bool
+  {
+    didSet {
+      if editable != oldValue {
+        if markable { markable = false }
+      }
+    }
+  }
   
-  init(row:Int, col:Int)
+  var markable : Bool
+  {
+    didSet {
+      if markable != oldValue {
+        if markable { if editable == false { markable = false } }
+        else { clearAllMarks() }
+      }
+    }
+  }
+  
+  private(set) var marks = [Bool](repeating: false, count: 9)  // Note that these are offset by 1 from digit they represent
+  
+  init(row:Int, col:Int, editable:Bool=true, markable:Bool=true)
   {
     self.row = row
     self.col = col
-    
+    self.markable = markable && editable
+    self.editable = editable
     super.init(frame:CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0))
-    
-    completeSetup()
   }
   
-  required init?(coder aDecoder: NSCoder) {
+  required init?(coder aDecoder: NSCoder)
+  {
+    self.markable = true
+    self.editable = true
     super.init(coder:aDecoder)
-  }
-  
-  override func awakeFromNib()
-  {
-    super.awakeFromNib()
-    completeSetup()
-  }
-  
-  func completeSetup()
-  {
-    for _ in 0..<9 { marks.append(false) }
-    
-    tapRecognizer = UITapGestureRecognizer( target:self, action:#selector(handleTap(_:)) )
-    tapRecognizer.delegate = self
-    
-    pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handlePress(_:)) )
-    pressRecognizer.delegate = self
-    
-    addGestureRecognizer(tapRecognizer)
-    addGestureRecognizer(pressRecognizer)
   }
   
   // MARK: -
@@ -195,47 +194,40 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
     return marks[mark-1]
   }
   
-  // MARK: -
-  
-  private(set) var tapPressTimer : Timer?
-  
-  @objc func handleTap(_ sender:UITapGestureRecognizer)
-  {
-    if !selected { selected = true }
-
-    switch state
-    {
-    case .empty,.filled(_):
-      let tapPressTimeout = SudokuWizardCellView.maximumTapPressDelay + pressRecognizer.minimumPressDuration
-      tapPressTimer?.invalidate()
-      tapPressTimer = Timer.scheduledTimer(withTimeInterval: tapPressTimeout, repeats: false) { _ in
-        self.tapPressTimer = nil
-      }
-      
-    case .locked(_):
-      break
+  func hasSomeMark() -> Bool {
+    for i in 0..<9 {
+      if marks[i] { return true }
     }
+    return false
   }
   
-  @objc func handlePress(_ sender:UILongPressGestureRecognizer)
+  // MARK:
+  
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
   {
-    guard sender.state == .began else { return }
-    
-    let afterTap = tapPressTimer != nil
-    tapPressTimer?.invalidate()
-    tapPressTimer = nil
-
-    if !selected { selected = true }
-
-    switch state
+    if selected == false { selected = true }
+  }
+  
+  override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?)
+  {
+    if let t = touches.first { track(touch:t) }
+  }
+  
+  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
+  {
+    if let t = touches.first { track(touch:t) }
+  }
+  
+  func track(touch:UITouch)
+  {
+    if self.bounds.contains(touch.location(in: self))
     {
-    case .empty:
-      if afterTap  { delegate?.sudokuWizard(changeMarksFor: self) }
-      else         { delegate?.sudokuWizard(changeValueFor: self) }
-    case .filled(_):
-      if !afterTap { delegate?.sudokuWizard(changeValueFor: self) }
-    case .locked(_):
-      break
+      if !selected { selected = true }
+    }
+    else
+    {
+      if selected { selected = false }
+      delegate?.sudokuWizardCellView(touch: touch, outside: self)
     }
   }
   
@@ -253,98 +245,67 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
     else if errant      { errantBackgroundColor.setFill()  }
     else                { defaultBackgroundColor.setFill()   }
     path.fill()
-
-    var fontName : String!
-    var fgColor  : UIColor?
-    var digit    : String?
     
     switch state
     {
     case let .locked(d):
-      fontName = lockedDigitFont
-      fgColor  = errant ? errantDigitColor : lockedDigitColor
-      digit    = d.description
+      d.description.draw(in: self.bounds.insetBy(dx: 0.1*bounds.width, dy: 0.1*bounds.height),
+                         fontName: lockedDigitFont,
+                         color: errant ? errantDigitColor : lockedDigitColor)
       
     case let .filled(d):
-      fontName = defaultDigitFont
-      fgColor  = errant ? errantDigitColor : defaultDigitColor
-      digit    = d.description
+      d.description.draw(in: self.bounds.insetBy(dx: 0.1*bounds.width, dy: 0.1*bounds.height),
+                         fontName: defaultDigitFont,
+                         color: errant ? errantDigitColor : defaultDigitColor)
       
     case .empty:
-      fgColor  = markColor
-    }
-    
-    if let d = digit
-    {
-      var attr = [NSAttributedString.Key : Any]()
-      
-      attr[.font] = UIFont(name:fontName, size:12.0)
-      attr[.foregroundColor] = fgColor
-      
-      let unscaledBounds = d.size(withAttributes: attr)
-      let frac = max( unscaledBounds.width / cw, unscaledBounds.height / ch )
-      
-      attr[.font] = UIFont(name:fontName, size: 9.0 / frac)
-      
-      let scaledBounds = d.size(withAttributes: attr)
-      let pt = CGPoint(x: (cw - scaledBounds.width)/2, y: (ch-scaledBounds.height)/2)
-      
-      d.draw(at:pt, withAttributes:attr)
-    }
-    else if markStyle == .digits
-    {
-      var attr = [NSAttributedString.Key : Any]()
-      
-      attr[.font] = UIFont(name: markDigitFont, size: 12.0)
-      attr[.foregroundColor] = markColor
-      
-      let unscaledBounds = "0".size(withAttributes: attr)
-      let frac = max( unscaledBounds.width / cw, unscaledBounds.height / ch )
-      
-      attr[.font ] = UIFont(name: markDigitFont, size: 4.5/frac)
-      
-      let xo = cw / 6.0
-      let yo = ch / 6.0
-      let dx = cw / 3.0
-      let dy = ch / 3.0
-      
-      var row = 0
-      var col = 0
-      for d in 1...9 {
-        if marks[d-1] {
-          let scaledBounds = d.description.size(withAttributes: attr)
-          let pt = CGPoint(x:xo + CGFloat(col)*dx - scaledBounds.width/2 ,
-                           y:yo + CGFloat(row)*dy - scaledBounds.height/2 )
-          
-          d.description.draw(at:pt, withAttributes:attr)
-          col += 1
-          if col > 2 { col = 0; row += 1 }
+      switch markStyle
+      {
+      case .digits:
+        var box = CGRect(x: 0.0, y: 0.0, width: 0.25*bounds.width, height: 0.25*bounds.height)
+        
+        let fontSize = "0".fontSizeToFit(rect:box, fontName:markDigitFont);
+        
+        let xo = cw / 24.0
+        let yo = ch / 24.0
+        let dx = cw / 3.0
+        let dy = ch / 3.0
+        
+        var row = 0
+        var col = 0
+        for d in 1...9 {
+          if marks[d-1] {
+            box.origin.x = xo + CGFloat(col)*dx
+            box.origin.y = yo + CGFloat(row)*dy
+            d.description.draw(in: box, fontName: markDigitFont, size:fontSize)
+            
+            col += 1
+            if col == 3 { col = 0; row += 1 }
+          }
         }
-      }
-    }
-    else
-    {
-      let xo = cw / 6.0
-      let yo = ch / 6.0
-      let dx = cw / 3.0
-      let dy = ch / 3.0
-      let sx = dx / 3.0
-      let sy = dy / 3.0
-      
-      markColor.setFill()
-
-      for i in 0...8 {
-        if marks[i] {
-          let row = i / 3
-          let col = i % 3
-          let path = UIBezierPath(ovalIn:CGRect(x: xo + CGFloat(col)*dx - sx/2,
-                                                y: yo + CGFloat(row)*dy - sy/2,
-                                                width: sx,
-                                                height: sy))
-          path.fill()
+        
+      case .dots:
+        let xo = cw / 6.0
+        let yo = ch / 6.0
+        let dx = cw / 3.0
+        let dy = ch / 3.0
+        let sx = dx / 3.0
+        let sy = dy / 3.0
+        
+        markColor.setFill()
+        
+        for i in 0...8 {
+          if marks[i] {
+            let row = i / 3
+            let col = i % 3
+            let path = UIBezierPath(ovalIn:CGRect(x: xo + CGFloat(col)*dx - sx/2,
+                                                  y: yo + CGFloat(row)*dy - sy/2,
+                                                  width: sx,
+                                                  height: sy))
+            path.fill()
+          }
         }
       }
     }
   }
-  
 }

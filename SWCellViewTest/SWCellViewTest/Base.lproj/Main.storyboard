@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fva-5f-1F1">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fva-5f-1F1" customClass="BackgroundView" customModule="SWCellViewTest" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="123" width="375" height="370"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="izr-og-2bS" customClass="SudokuWizardCellView" customModule="SWCellViewTest" customModuleProvider="target">
@@ -34,6 +34,9 @@
                                     <constraint firstItem="izr-og-2bS" firstAttribute="top" secondItem="fva-5f-1F1" secondAttribute="top" constant="66" id="2Dq-Bh-dE0"/>
                                     <constraint firstItem="izr-og-2bS" firstAttribute="leading" secondItem="fva-5f-1F1" secondAttribute="leading" constant="87" id="l9L-aa-tJf"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="cellView" destination="izr-og-2bS" id="2Hp-I5-FKi"/>
+                                </connections>
                             </view>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="fid-eQ-INl">
                                 <rect key="frame" x="13" y="40" width="349" height="31"/>
@@ -168,13 +171,14 @@
                                 </connections>
                             </segmentedControl>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="QXM-FV-zq3">
-                                <rect key="frame" x="77" y="581" width="97" height="21"/>
+                                <rect key="frame" x="30" y="581" width="146" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="4Bd-LS-SbK"/>
                                 </constraints>
                                 <segments>
                                     <segment title="digits"/>
                                     <segment title="dots"/>
+                                    <segment title="none"/>
                                 </segments>
                                 <connections>
                                     <action selector="handleMarkType:" destination="BYZ-38-t0r" eventType="valueChanged" id="5i0-cb-xhD"/>
@@ -206,7 +210,6 @@
                             <constraint firstItem="gqQ-NP-seQ" firstAttribute="leading" secondItem="Vli-6f-zs9" secondAttribute="trailing" id="4Kc-tq-5lW"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fid-eQ-INl" secondAttribute="trailing" constant="15" id="5hS-vL-Il5"/>
                             <constraint firstItem="COR-sx-UUc" firstAttribute="centerY" secondItem="ccn-vY-Kvu" secondAttribute="centerY" id="63G-pu-bJf"/>
-                            <constraint firstItem="QXM-FV-zq3" firstAttribute="leading" secondItem="eJE-5n-whX" secondAttribute="leading" id="79v-cY-ggT"/>
                             <constraint firstItem="hzj-jB-p36" firstAttribute="width" secondItem="ThQ-H2-yVb" secondAttribute="width" id="7ZN-pL-Iqc"/>
                             <constraint firstItem="oxM-dR-o7e" firstAttribute="leading" secondItem="Hfb-AI-OBQ" secondAttribute="trailing" constant="15" id="7hi-7E-r5k"/>
                             <constraint firstItem="98z-4a-jCG" firstAttribute="trailing" secondItem="ccn-vY-Kvu" secondAttribute="trailing" id="8Hi-Od-wHd"/>
@@ -259,6 +262,7 @@
                             <constraint firstItem="SLW-Ag-vom" firstAttribute="leading" secondItem="hzj-jB-p36" secondAttribute="trailing" id="tuE-79-CPg"/>
                             <constraint firstItem="Hfb-AI-OBQ" firstAttribute="width" secondItem="oxM-dR-o7e" secondAttribute="width" id="weV-OX-Uj0"/>
                             <constraint firstItem="hKL-zf-fOd" firstAttribute="leading" secondItem="wYb-sN-JTc" secondAttribute="trailing" constant="10" id="xUs-uY-9mN"/>
+                            <constraint firstItem="QXM-FV-zq3" firstAttribute="leading" secondItem="ccn-vY-Kvu" secondAttribute="leading" constant="15" id="xZ7-7c-9EA"/>
                             <constraint firstItem="hzj-jB-p36" firstAttribute="centerY" secondItem="ThQ-H2-yVb" secondAttribute="centerY" id="z1Y-UR-aJE"/>
                             <constraint firstItem="fid-eQ-INl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="zK5-7d-VDe"/>
                             <constraint firstItem="KNh-6s-m0c" firstAttribute="trailing" secondItem="wYb-sN-JTc" secondAttribute="trailing" id="zOC-YI-zeT"/>
@@ -267,6 +271,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="bgView" destination="fva-5f-1F1" id="APh-EO-0Jd"/>
                         <outlet property="cellView" destination="izr-og-2bS" id="fam-Ba-zbF"/>
                         <outlet property="errantSwitch" destination="hKL-zf-fOd" id="jRO-Oz-0ty"/>
                         <outlet property="highlightedSwitch" destination="m33-Rl-uIe" id="rTB-U1-Gcs"/>

@@ -96,6 +96,7 @@ class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
       DispatchQueue.main.async {
         do {
           try self.gridView.loadPuzzle(rs.puzzle, solution: rs.solution)
+          self.gridView.state = .Viewable
           self.difficultyLabel.text = String(format:"%d",rs.difficulty)
         }
         catch {

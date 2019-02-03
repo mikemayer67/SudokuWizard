@@ -31,6 +31,7 @@ class GridTestViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   @IBOutlet weak var markStyleControl: UISegmentedControl!
   @IBOutlet weak var autoMarkControl: UISegmentedControl!
   @IBOutlet weak var errorSegmentedControl: UISegmentedControl!
+  @IBOutlet weak var hightlightSwitch: UISwitch!
   
   var markButtons = [UIButton]()
   
@@ -41,6 +42,9 @@ class GridTestViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     dataPickerView.selectRow(0, inComponent: 0, animated: true)
     markStyleControl.selectedSegmentIndex = 0
     autoMarkControl.selectedSegmentIndex = 1
+    
+    hightlightSwitch.isOn = sudokuGrid.highlightActiveDigit
+    hightlightSwitch.layer.transform = CATransform3DMakeScale(0.75, 0.75, 1.0)
     
     var last : UIButton!
     for i in 1...9
@@ -100,15 +104,18 @@ class GridTestViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
   {
-    var key = puzzleKeys[row]
+    guard firstSelectionMade || row > 0 else { return }
     
-    if firstSelectionMade == false {
-      if row > 0 {
-        firstSelectionMade = true
-        dataPickerView.reloadAllComponents()
-        dataPickerView.selectRow(row-1, inComponent: 0, animated: false)
-        key = puzzleKeys[row-1]
-      }
+    var key : String!
+    
+    if firstSelectionMade {
+      key = puzzleKeys[row]
+    }
+    else {
+      firstSelectionMade = true
+      dataPickerView.reloadAllComponents()
+      dataPickerView.selectRow(row-1, inComponent: 0, animated: false)
+      key = puzzleKeys[row-1]
     }
     
     valueSegmentedControl.selectedSegmentIndex = 0
@@ -136,35 +143,26 @@ class GridTestViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
   
   // MARK: -
   
-  func sudokuWizard(changeValueFor cell: SudokuWizardCellView) {
-    guard sudokuGrid.state == .Active else { return }
-    print("Popup value picker")
-  }
-  
-  func sudokuWizard(changeMarksFor cell: SudokuWizardCellView) {
-    guard sudokuGrid.state == .Active else { return }
-    print("Popup marks picker")
-  }
-  
-  func sudokuWizard(selectionChangedTo cell: SudokuWizardCellView)
+  func sudokuWizardCellView(selected cell: SudokuWizardCellView)
   {
     sudokuGrid.selectedCell = cell
     
-    if let cell = sudokuGrid.selectedCell
+    switch cell.state
     {
-      switch cell.state
-      {
-      case .empty:
-        for d in 1...9 { markButtons[d-1].isSelected = cell.hasMark(d) }
-        valueSegmentedControl.selectedSegmentIndex = 0
-      case let .filled(v):
-        for d in 1...9 { markButtons[d-1].isSelected = false }
-        valueSegmentedControl.selectedSegmentIndex = Int(v)
-      case let .locked(v):
-        for d in 1...9 { markButtons[d-1].isSelected = false }
-        valueSegmentedControl.selectedSegmentIndex = Int(v)
-      }
+    case .empty:
+      for d in 1...9 { markButtons[d-1].isSelected = cell.hasMark(d) }
+      valueSegmentedControl.selectedSegmentIndex = 0
+    case let .filled(v):
+      for d in 1...9 { markButtons[d-1].isSelected = false }
+      valueSegmentedControl.selectedSegmentIndex = Int(v)
+    case let .locked(v):
+      for d in 1...9 { markButtons[d-1].isSelected = false }
+      valueSegmentedControl.selectedSegmentIndex = Int(v)
     }
+  }
+  
+  func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView) {
+    sudokuGrid.track(touch:touch)
   }
   
   @IBAction func handleValueControl(_ sender: UISegmentedControl)
@@ -223,6 +221,12 @@ class GridTestViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     default:
       sudokuGrid.errorFeedback = .none
     }
+  }
+  
+  @IBAction func handleHighlightSwitch(_ sender: UISwitch)
+  {
+    print("Highlight Switch: \(sender.isOn)")
+    sudokuGrid.highlightActiveDigit = sender.isOn
   }
   
   @IBAction func handleMarkStyle(_ sender: UISegmentedControl)

@@ -14,6 +14,7 @@ class CellTestViewController: UIViewController, SudokuWizardCellViewDelegate
   @IBOutlet weak var xSlider: UISlider!
   @IBOutlet weak var ySlider: UISlider!
   @IBOutlet weak var cellView: SudokuWizardCellView!
+  @IBOutlet weak var bgView: BackgroundView!
   @IBOutlet weak var viewWidth: NSLayoutConstraint!
   @IBOutlet weak var viewHeight: NSLayoutConstraint!
   @IBOutlet weak var viewTop: NSLayoutConstraint!
@@ -32,6 +33,8 @@ class CellTestViewController: UIViewController, SudokuWizardCellViewDelegate
   @IBOutlet weak var markSeven: UIButton!
   @IBOutlet weak var markEight: UIButton!
   @IBOutlet weak var markNine: UIButton!
+  
+  var markButtons = [UIButton]()
   
   override func viewDidLoad()
   {
@@ -85,6 +88,8 @@ class CellTestViewController: UIViewController, SudokuWizardCellViewDelegate
     
     cellView.delegate = self
     cellView.selected = false
+    
+    markButtons = [markOne, markTwo, markThree, markFour, markFive, markSix, markSeven, markEight, markNine]
   }
   
   @IBAction func handleSlider(_ sender: UISlider)
@@ -187,37 +192,47 @@ class CellTestViewController: UIViewController, SudokuWizardCellViewDelegate
       cellView.set(mark: sender.tag)
     }
     
-    markOne.isSelected = cellView.hasMark(1)
-    markTwo.isSelected = cellView.hasMark(2)
-    markThree.isSelected = cellView.hasMark(3)
-    markFour.isSelected = cellView.hasMark(4)
-    markFive.isSelected = cellView.hasMark(5)
-    markSix.isSelected = cellView.hasMark(6)
-    markSeven.isSelected = cellView.hasMark(7)
-    markEight.isSelected = cellView.hasMark(8)
-    markNine.isSelected = cellView.hasMark(9)
+    for i in 1...9 {
+      markButtons[i-1].isSelected = cellView.hasMark(i)
+    }
+  }
+  
+  var isMarkable = true
+  {
+    didSet {
+      cellView.markable = isMarkable
+      
+      if isMarkable {
+        for i in 1...9 {
+          markButtons[i-1].isEnabled = true
+        }
+      }
+      else {
+        for i in 1...9 {
+          markButtons[i-1].isSelected = false
+          markButtons[i-1].isEnabled = false
+        }
+      }
+    }
   }
   
   @IBAction func handleMarkType(_ sender: UISegmentedControl)
   {
-    cellView.markStyle = SudokuWizard.MarkStyle(rawValue: sender.selectedSegmentIndex)!
-  }
-  
-  
-  func sudokuWizard(changeValueFor cell: SudokuWizardCellView) {
-    print("Change Value")
-    Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { _ in
-      cell.selected = false
+    switch sender.selectedSegmentIndex
+    {
+    case 0:
+      cellView.markStyle = .digits
+      isMarkable = true
+    case 1:
+      cellView.markStyle = .dots
+      isMarkable = true
+    default:
+      isMarkable = false
     }
   }
   
-  func sudokuWizard(changeMarksFor cell: SudokuWizardCellView) {
-    print("Change Marks")
-  }
-  
-  func sudokuWizard(selectionChangedTo cell: SudokuWizardCellView) {
-    print("Handle Selection")
-  }
+  func sudokuWizardCellView(selected cell: SudokuWizardCellView) { }
+  func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView) { }
 }
 
 
