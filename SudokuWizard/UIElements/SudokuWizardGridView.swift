@@ -45,8 +45,13 @@ class SudokuWizardGridView: UIView
   {
     didSet
     {
-      for c in cellViews {
-        if c != selectedCell { c.selected = false }
+      if selectedCell == nil {
+        oldValue?.selected = false
+      }
+      else {
+        for c in cellViews {
+          if c != selectedCell { c.selected = false }
+        }
       }
       updateHighlights()
     }

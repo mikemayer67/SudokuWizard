@@ -8,49 +8,18 @@
 
 import UIKit
 
-class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewDelegate
+class RandomPuzzleViewController: NewPuzzleViewController
 {
-  @IBOutlet weak var gridView: SudokuWizardGridView!
   @IBOutlet weak var regenButton: UIButton!
   @IBOutlet weak var startButton: UIButton!
-  @IBOutlet weak var difficultyView: UIView!
-  @IBOutlet weak var difficultyLabel: UILabel!
   
   let genQueue = DispatchQueue(label: "RandomPuzzleGenerator")
   
-  override func awakeFromNib() {
+  override func awakeFromNib()
+  {
     super.awakeFromNib()
-    
-    for cell in gridView.cellViews { cell.delegate = self }
-    
-    startButton.setTitleColor(UIColor.gray, for: .disabled)
-    regenButton.setTitleColor(UIColor.gray, for: .disabled)
-  }
-  
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    
-    let r  = difficultyView.frame.height/4.0
-    let dl = difficultyView.layer
-    let dp = UIBezierPath(roundedRect: difficultyView.bounds, cornerRadius: r)
-    dl.cornerRadius = r
-    dl.shadowPath = dp.cgPath
-    dl.shadowColor = UIColor.black.cgColor
-    dl.shadowOpacity = 0.5
-    dl.shadowOffset = CGSize(width:3.0,height:3.0)
-    dl.shadowRadius = 5.0
-    dl.masksToBounds = false
-    
-    let gl = gridView.layer
-    gl.shadowPath = UIBezierPath(rect: gridView.bounds).cgPath
-    gl.shadowColor = UIColor.black.cgColor
-    gl.shadowOpacity = 0.5
-    gl.shadowOffset = CGSize(width:3.0,height:3.0)
-    gl.shadowRadius = 5.0
-    gl.masksToBounds = false
-    
-    regenButton.layer.cornerRadius = regenButton.frame.height/2.0
-    startButton.layer.cornerRadius = startButton.frame.height/2.0
+    add(button:regenButton)
+    add(button:startButton)
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -75,7 +44,7 @@ class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
     gridView.clear()
     regenButton.isEnabled = false
     startButton.isEnabled = false
-    difficultyLabel.text = ""
+    statusLabel!.text = ""
     
     var flashErr = true
     var flashIndex = Int.random(in: 0...80)
@@ -97,7 +66,7 @@ class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
       DispatchQueue.main.async {
         do {
           try self.gridView.loadPuzzle(rs.puzzle, solution: rs.solution)
-          self.difficultyLabel.text = String(format:"%d",rs.difficulty)
+          self.statusLabel!.text = String(format:"%d",rs.difficulty)
         }
         catch {
           fatalError("Should never get here \(#file):\(#line)")
@@ -110,13 +79,6 @@ class RandomPuzzleViewController: NewPuzzleViewController, SudokuWizardCellViewD
         else        { self.gridView.cellViews[flashIndex].highlighted = false }
       }
     }
-    
-
   }
   
-  // MARK: - Grid Delegate methods
-  
-  func sudokuWizardCellView(selected cell: SudokuWizardCellView) { cell.selected = false }
-  func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView) {}
-
 }

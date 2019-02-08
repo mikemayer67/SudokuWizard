@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fva-5f-1F1" customClass="BackgroundView" customModule="SWCellViewTest" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fva-5f-1F1" customClass="PuzzleBackgroundView" customModule="SWCellViewTest" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="123" width="375" height="370"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="izr-og-2bS" customClass="SudokuWizardCellView" customModule="SWCellViewTest" customModuleProvider="target">

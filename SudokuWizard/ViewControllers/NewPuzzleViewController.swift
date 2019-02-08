@@ -8,8 +8,19 @@
 
 import UIKit
 
-class NewPuzzleViewController: UIViewController
+class NewPuzzleViewController: UIViewController, SudokuWizardCellViewDelegate
 {
+  @IBOutlet weak var gridView: SudokuWizardGridView!
+  @IBOutlet weak var statusView: UIView?
+  @IBOutlet weak var statusLabel: UILabel?
+    
+  private var buttons = [UIButton]()
+  
+  func add(button:UIButton)
+  {
+    buttons.append(button)
+  }
+
   var dirty = false
   
   override func awakeFromNib() {
@@ -17,11 +28,39 @@ class NewPuzzleViewController: UIViewController
     if let bg = UIImage(named:"SudokuBackground") {
       view.backgroundColor = UIColor(patternImage: bg)
     }
+    
+    for cell in gridView.cellViews { cell.delegate = self }
   }
-
-  override func viewDidLoad()
-  {
-    super.viewDidLoad()
+  
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    
+    if let sv = statusView
+    {
+      let r  = sv.frame.height/4.0
+      let sl = sv.layer
+      let sp = UIBezierPath(roundedRect: sv.bounds, cornerRadius: r)
+      sl.cornerRadius = r
+      sl.shadowPath = sp.cgPath
+      sl.shadowColor = UIColor.black.cgColor
+      sl.shadowOpacity = 0.5
+      sl.shadowOffset = CGSize(width:3.0,height:3.0)
+      sl.shadowRadius = 5.0
+      sl.masksToBounds = false
+    }
+    
+    let gl = gridView.layer
+    gl.shadowPath = UIBezierPath(rect: gridView.bounds).cgPath
+    gl.shadowColor = UIColor.black.cgColor
+    gl.shadowOpacity = 0.5
+    gl.shadowOffset = CGSize(width:3.0,height:3.0)
+    gl.shadowRadius = 5.0
+    gl.masksToBounds = false
+    
+    for b in buttons
+    {
+      b.layer.cornerRadius = b.frame.height/2.0
+    }
   }
   
   @IBAction func handleCancel(_ sender: UIButton) {
@@ -45,4 +84,14 @@ class NewPuzzleViewController: UIViewController
   {
     self.navigationController?.popViewController(animated: true)
   }
+  
+  
+  func sudokuWizardCellView(selected cell: SudokuWizardCellView) { cell.selected = false }
+  func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView) { }
+  
+  func handleBackgroundTap()
+  {
+    gridView.selectedCell = nil
+  }
+
 }

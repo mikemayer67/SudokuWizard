@@ -30,6 +30,7 @@
 		27B13BC421D4278900B4B81D /* icons8-squared_menu_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B13BC321D4278900B4B81D /* icons8-squared_menu_filled.png */; };
 		27B13BE621D52F9A00B4B81D /* NewPuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B13BE521D52F9A00B4B81D /* NewPuzzleViewController.swift */; };
 		27C118B821D66D94001CC6CD /* ManualPuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C118B721D66D94001CC6CD /* ManualPuzzleViewController.swift */; };
+		27D1E930220DCE29001A1565 /* PuzzleBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1E92F220DCE29001A1565 /* PuzzleBackgroundView.swift */; };
 		27E94DA421DAADCA00D0C4EE /* DLXAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94D9F21DAADCA00D0C4EE /* DLXAlgorithm.swift */; };
 		27E94DA521DAADCA00D0C4EE /* DLX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DA021DAADCA00D0C4EE /* DLX.swift */; };
 		27E94DA621DAADCA00D0C4EE /* DLXColumnNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DA121DAADCA00D0C4EE /* DLXColumnNode.swift */; };
@@ -67,6 +68,7 @@
 		27B13BC321D4278900B4B81D /* icons8-squared_menu_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-squared_menu_filled.png"; sourceTree = "<group>"; };
 		27B13BE521D52F9A00B4B81D /* NewPuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPuzzleViewController.swift; sourceTree = "<group>"; };
 		27C118B721D66D94001CC6CD /* ManualPuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualPuzzleViewController.swift; sourceTree = "<group>"; };
+		27D1E92F220DCE29001A1565 /* PuzzleBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleBackgroundView.swift; sourceTree = "<group>"; };
 		27E94D9F21DAADCA00D0C4EE /* DLXAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLXAlgorithm.swift; sourceTree = "<group>"; };
 		27E94DA021DAADCA00D0C4EE /* DLX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLX.swift; sourceTree = "<group>"; };
 		27E94DA121DAADCA00D0C4EE /* DLXColumnNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLXColumnNode.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				27A1D63A21BA25A7007AF213 /* SudokuWizardCellView.swift */,
 				270E7D5A21FC837300626223 /* SudokuWizardGridView.swift */,
 				27161F0A21CD42AE006CDB71 /* SudokuWizard.swift */,
+				27D1E92F220DCE29001A1565 /* PuzzleBackgroundView.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 			files = (
 				270E7D5B21FC837300626223 /* SudokuWizardGridView.swift in Sources */,
 				27E94DB021E946C900D0C4EE /* SudokuGrader.swift in Sources */,
+				27D1E930220DCE29001A1565 /* PuzzleBackgroundView.swift in Sources */,
 				27A1D63B21BA25A8007AF213 /* SudokuWizardCellView.swift in Sources */,
 				2734F55621CBBCC5005DA954 /* Transitions.swift in Sources */,
 				27022B5D21A7B6970078588D /* MainViewController.swift in Sources */,
