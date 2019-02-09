@@ -95,7 +95,8 @@ class ManualPuzzleViewController: NewPuzzleViewController
   {
     // startButton
 
-    startButton.isEnabled = false
+    if case .good = state { startButton.isEnabled = true  }
+    else                  { startButton.isEnabled = false }
     
     // restartButton
     
