@@ -218,6 +218,19 @@ class SudokuWizardGridView: UIView
     state = .Populated
   }
   
+  var puzzle : SudokuGrid {
+    var rval = SudokuGrid()
+    var row = Digits()
+    for cell in cellViews {
+      row.append(cell.digit)
+      if row.count == 9 {
+        rval.append(row)
+        row.removeAll()
+      }
+    }
+    return rval
+  }
+  
   // MARK: -
   
   func clearAllMarks()

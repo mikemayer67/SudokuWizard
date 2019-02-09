@@ -65,9 +65,9 @@ class DLXSudoku : DLX
     try self.init(grid)
   }
   
-  func sudokuSolution(_ n:Int) -> [(row:Int,col:Int,digit:Int)]?
+  func sudokuSolution(_ n:Int) -> SudokuGrid
   {
-    var rval = [(row:Int,col:Int,digit:Int)]()
+    var rval = SudokuGrid(repeating: Digits(repeating: nil, count: 9), count: 9)
     
     if n < solutions.count {
       let rows = solutions[n]
@@ -75,7 +75,7 @@ class DLXSudoku : DLX
         let r = row/81
         let c = (row%81)/9
         let d = row%9 + 1
-        rval.append( (r,c,d) )
+        rval[r][c] = Digit(d)
       }
     }
     return rval

@@ -16,11 +16,22 @@ class ManualPuzzleViewController: NewPuzzleViewController
   @IBOutlet weak var digitsViewHeight : NSLayoutConstraint!
   @IBOutlet weak var statusLabel : StatusView!
   
-  private var digitButtons = [UIButton]()
+  private var digitButtons = [DigitButton]()
   private let digitButtonSep : CGFloat = 0.25
   
   private var tint = UIColor.black
-  private var puzzle : DLXSudoku.Grid!
+  
+  enum PuzzleState
+  {
+    case empty
+    case evaluating
+    case good(difficulty:Int)
+    case conflicted
+    case notUnique
+    case noSolution
+  }
+  
+  private var state = PuzzleState.empty
   
   override func awakeFromNib()
   {
@@ -31,15 +42,9 @@ class ManualPuzzleViewController: NewPuzzleViewController
     
     tint = startButton.titleColor(for: .normal) ?? .black
     
-    for i in 1...9 {
-      let btn = UIButton(type:.custom)
-      
-      btn.setTitle(i.description, for: .normal)
-      btn.tag = i
-      btn.setTitleColor(tint, for: .normal)
-      btn.setTitleColor(UIColor.white, for: .selected)
-      btn.setTitleColor(UIColor.gray, for: .disabled)
-      btn.backgroundColor = UIColor.white
+    for d : Digit in 1...9 {
+      let btn = DigitButton(d)
+      btn.tint = tint
       btn.isEnabled = false
       
       btn.addTarget(self, action: #selector(handleDigitButton(_:)), for: .touchUpInside)
@@ -66,23 +71,11 @@ class ManualPuzzleViewController: NewPuzzleViewController
       
       digitsViewHeight.constant = buttonSize
       
-      var box = CGRect(x: buttonSep, y: 0.0, width: buttonSize, height: buttonSize)
+      var xo = buttonSep;
       for btn in digitButtons
       {
-        btn.frame = box
-        
-        let bl = btn.layer
-        
-        bl.cornerRadius = 0.5*buttonSize
-        bl.borderWidth = 0.0
-        bl.borderColor = tint.cgColor
-        bl.shadowPath = UIBezierPath(rect: btn.bounds).cgPath
-        bl.shadowOpacity = 0.0
-        bl.shadowOffset = CGSize(width:2.0,height:2.0)
-        bl.shadowRadius = 6.0
-        bl.masksToBounds = false
-        
-        box = box.offsetBy(dx: buttonSep + buttonSize, dy: 0.0)
+        btn.frame = CGRect(x:xo, y:0.0, width: buttonSize, height:buttonSize)
+        xo += buttonSep + buttonSize
       }
       
     }
@@ -92,29 +85,22 @@ class ManualPuzzleViewController: NewPuzzleViewController
   
   func resetPuzzle()
   {
-    puzzle = SudokuGrid(repeating: Digits(repeating:nil, count:9), count: 9)
     gridView.clear()
     selectButton(nil)
+    state = .empty
     updateUI()
   }
   
   func updateUI()
   {
     // startButton
-    
+
     startButton.isEnabled = false
     
     // restartButton
     
-    var empty = true
-    for r in 0..<9 {
-      for c in 0..<9 {
-        if puzzle[r][c] != nil {
-          empty = false
-        }
-      }
-    }
-    restartButton.isEnabled = !empty
+    if case .empty = state { restartButton.isEnabled = false }
+    else                   { restartButton.isEnabled = true  }
     
     // digitButtonsEnabled
     
@@ -122,21 +108,24 @@ class ManualPuzzleViewController: NewPuzzleViewController
     
     // status
     
-    if empty {
-      statusLabel?.text = "Empty"
-    }
-    else {
-      statusLabel?.text = "..."
+    switch state
+    {
+    case .empty:       statusLabel?.text = "Empty"
+    case .conflicted:  statusLabel?.text = "Conflicts Found"
+    case .evaluating:  statusLabel?.text = "Evaluating..."
+    case .notUnique:   statusLabel?.text = "Multiple Solutions"
+    case .noSolution:  statusLabel?.text = "No Solutions"
+    case .good(let d): statusLabel?.text = String(format:"Difficulty: %d",d)
     }
   }
   
   var digitButtonsEnabled = false
   {
     didSet {
-      for btn in digitButtons {
-        btn.isEnabled = digitButtonsEnabled
-        btn.layer.borderWidth = digitButtonsEnabled ? 1.0 : 0.0
-        btn.layer.shadowOpacity = digitButtonsEnabled ? 0.25 : 0.0
+      if digitButtonsEnabled != oldValue {
+        for btn in digitButtons {
+          btn.isEnabled = digitButtonsEnabled
+        }
       }
     }
   }
@@ -147,40 +136,73 @@ class ManualPuzzleViewController: NewPuzzleViewController
     digitButtonsEnabled = false
   }
   
-  @objc func handleDigitButton(_ sender:UIButton)
+  @objc func handleDigitButton(_ sender:DigitButton)
   {
-    if let cell = gridView.selectedCell
-    {
-      var digit : Digit?
-      if sender.isSelected {
-        selectButton(nil)
-        cell.state = .empty
-      }
-      else
-      {
-        selectButton(sender.tag)
-        digit = Digit(sender.tag)
-        cell.state = .filled(digit!)
-      }
-      puzzle[cell.row!][cell.col!] = digit
+    guard let cell = gridView.selectedCell else { return }
+    
+    if sender.isSelected {
+      selectButton(nil)
+      cell.state = .empty
     }
+    else
+    {
+      selectButton(sender.digit)
+      cell.state = .filled(sender.digit)
+    }
+    
     gridView.findAllErrors()
     gridView.updateHighlights()
+    
+    var empty = true
+    var conflicted = false
+    for c in gridView.cellViews {
+      if case .empty = c.state { continue }
+      empty = false
+      if c.errant {
+        conflicted = true
+        break
+      }
+    }
+    
+    if empty {
+      state = .empty
+    }
+    else if conflicted {
+      state = .conflicted
+    }
+    else {
+      do {
+        let puzzle = gridView.puzzle
+        let dlx = try DLXSudoku(puzzle)
+        let status = dlx.evaluate()
+        switch status
+        {
+        case .MultipleSolutions: state = .notUnique
+        case .NoSolution:        state = .noSolution
+        case .UniqueSolution(_):
+          let solution = dlx.sudokuSolution(0)
+          if let grader = SudokuGrader(puzzle,solution)
+          {
+            let difficulty = Int(grader.difficulty)
+            state = .good(difficulty: difficulty)
+          }
+          else
+          {
+            state = .noSolution
+          }
+        }
+      } catch {
+        fatalError("Should never get here \(#file):\(#line)")
+      }
+    }
+    
     updateUI()
   }
   
-  func selectButton(_ tag:Int?)
+  func selectButton(_ digit:Digit?)
   {
     for btn in digitButtons {
-      if btn.tag == tag {
-        btn.isSelected = true
-        btn.backgroundColor = tint
-      }
-      else
-      {
-        btn.isSelected = false
-        btn.backgroundColor = .white
-      }
+      btn.isSelected = (btn.digit == digit)
     }
   }
     
@@ -207,8 +229,7 @@ class ManualPuzzleViewController: NewPuzzleViewController
     case .empty: digit = nil
     }
     
-    selectButton( digit == nil ? nil : Int(digit!) )
-    
+    selectButton(digit)
     updateUI()
   }
   
