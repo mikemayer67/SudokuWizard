@@ -20,6 +20,8 @@
 		2734F54721C86C62005DA954 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734F54621C86C62005DA954 /* SettingsViewController.swift */; };
 		2734F55121CA0741005DA954 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734F55021CA0741005DA954 /* Settings.swift */; };
 		2734F55621CBBCC5005DA954 /* Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2734F55521CBBCC5005DA954 /* Transitions.swift */; };
+		27382553220E4C700067A6D7 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27382552220E4C700067A6D7 /* StatusView.swift */; };
+		27382555220E8FE80067A6D7 /* DigitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27382554220E8FE80067A6D7 /* DigitButton.swift */; };
 		2744C0AE21D5418A009DB55A /* icons8-left_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744C0AD21D5418A009DB55A /* icons8-left_4.png */; };
 		2744C0B021D541F3009DB55A /* icons8-squared_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744C0AF21D541F3009DB55A /* icons8-squared_menu.png */; };
 		2744C0B221D544BE009DB55A /* ScanPuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2744C0B121D544BE009DB55A /* ScanPuzzleViewController.swift */; };
@@ -58,6 +60,8 @@
 		2734F54621C86C62005DA954 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2734F55021CA0741005DA954 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		2734F55521CBBCC5005DA954 /* Transitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transitions.swift; sourceTree = "<group>"; };
+		27382552220E4C700067A6D7 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
+		27382554220E8FE80067A6D7 /* DigitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitButton.swift; sourceTree = "<group>"; };
 		2744C0AD21D5418A009DB55A /* icons8-left_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-left_4.png"; path = "../../../../Documents/com.visualpharm.Icons8/ios/Arrows/25/ffffff/icons8-left_4.png"; sourceTree = "<group>"; };
 		2744C0AF21D541F3009DB55A /* icons8-squared_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-squared_menu.png"; sourceTree = "<group>"; };
 		2744C0B121D544BE009DB55A /* ScanPuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanPuzzleViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +134,8 @@
 				270E7D5A21FC837300626223 /* SudokuWizardGridView.swift */,
 				27161F0A21CD42AE006CDB71 /* SudokuWizard.swift */,
 				27D1E92F220DCE29001A1565 /* PuzzleBackgroundView.swift */,
+				27382552220E4C700067A6D7 /* StatusView.swift */,
+				27382554220E8FE80067A6D7 /* DigitButton.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -283,6 +289,7 @@
 				27022B5D21A7B6970078588D /* MainViewController.swift in Sources */,
 				27C118B821D66D94001CC6CD /* ManualPuzzleViewController.swift in Sources */,
 				27E94DAA21DAADE900D0C4EE /* DLXSudoku.swift in Sources */,
+				27382553220E4C700067A6D7 /* StatusView.swift in Sources */,
 				27E94DB621ECD3E800D0C4EE /* DigitSet.swift in Sources */,
 				27022B5B21A7B6970078588D /* AppDelegate.swift in Sources */,
 				27E94DA421DAADCA00D0C4EE /* DLXAlgorithm.swift in Sources */,
@@ -291,6 +298,7 @@
 				2734F55121CA0741005DA954 /* Settings.swift in Sources */,
 				27E94DA521DAADCA00D0C4EE /* DLX.swift in Sources */,
 				27E94DA821DAADCA00D0C4EE /* DLXNode.swift in Sources */,
+				27382555220E8FE80067A6D7 /* DigitButton.swift in Sources */,
 				27E94DA721DAADCA00D0C4EE /* DLXGridNode.swift in Sources */,
 				27E94DA621DAADCA00D0C4EE /* DLXColumnNode.swift in Sources */,
 				27161F0B21CD42AE006CDB71 /* SudokuWizard.swift in Sources */,

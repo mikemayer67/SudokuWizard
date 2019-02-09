@@ -393,36 +393,30 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3nA-No-Tnr" userLabel="Grid Status View">
                                 <rect key="frame" x="0.0" y="64" width="375" height="527"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="xCT-xg-5G0">
-                                        <rect key="frame" x="0.0" y="16" width="375" height="495"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="xCT-xg-5G0">
+                                        <rect key="frame" x="0.0" y="51" width="375" height="573"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BWf-sd-Qaa">
-                                                <rect key="frame" x="144" y="0.0" width="87" height="50"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuz-az-B0k">
-                                                        <rect key="frame" x="15" y="10" width="57" height="30"/>
-                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="05X-I8-TiL" customClass="StatusView" customModule="SudokuWizard" customModuleProvider="target">
+                                                <rect key="frame" x="67.5" y="0.0" width="240" height="128"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstItem="iuz-az-B0k" firstAttribute="leading" secondItem="BWf-sd-Qaa" secondAttribute="leading" constant="15" id="IYF-jW-wo8"/>
-                                                    <constraint firstAttribute="trailing" secondItem="iuz-az-B0k" secondAttribute="trailing" constant="15" id="njo-FA-IO8"/>
-                                                    <constraint firstItem="iuz-az-B0k" firstAttribute="top" secondItem="BWf-sd-Qaa" secondAttribute="top" constant="10" id="sXu-4r-xMP"/>
-                                                    <constraint firstAttribute="bottom" secondItem="iuz-az-B0k" secondAttribute="bottom" constant="10" id="zo4-e5-6eM"/>
-                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="widthPad">
+                                                        <real key="value" value="12"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="heightPad">
+                                                        <real key="value" value="7"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ih0-bD-Epb" customClass="SudokuWizardGridView" customModule="SudokuWizard" customModuleProvider="target">
-                                                <rect key="frame" x="10" y="70" width="355" height="355"/>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ih0-bD-Epb" customClass="SudokuWizardGridView" customModule="SudokuWizard" customModuleProvider="target">
+                                                <rect key="frame" x="10" y="148" width="355" height="355"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="Ih0-bD-Epb" secondAttribute="height" id="eXg-Rl-fYK"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Of-qf-cRQ">
-                                                <rect key="frame" x="10" y="445" width="355" height="50"/>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Of-qf-cRQ">
+                                                <rect key="frame" x="10" y="523" width="355" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="Nix-L9-wzG"/>
@@ -473,19 +467,13 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="digitViewFrac">
-                            <real key="value" value="0.0"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="digitsView" destination="2Of-qf-cRQ" id="UEy-cs-wSP"/>
                         <outlet property="digitsViewHeight" destination="Nix-L9-wzG" id="ERf-HZ-JDY"/>
                         <outlet property="gridView" destination="Ih0-bD-Epb" id="E8O-cq-8H8"/>
                         <outlet property="restartButton" destination="80Y-mR-vpX" id="QSe-v5-UcG"/>
                         <outlet property="startButton" destination="rI5-ha-A4F" id="vHF-eV-g8T"/>
-                        <outlet property="statusLabel" destination="iuz-az-B0k" id="tKY-NG-yrr"/>
-                        <outlet property="statusView" destination="BWf-sd-Qaa" id="KuE-n4-9Bq"/>
+                        <outlet property="statusLabel" destination="05X-I8-TiL" id="dVq-7g-EnE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e2l-sU-qEB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -503,40 +491,25 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zad-af-Xw4" userLabel="WorkingLayoutView">
                                 <rect key="frame" x="0.0" y="64" width="375" height="527"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="aPb-EE-eK7" userLabel="GridStatusContainer">
-                                        <rect key="frame" x="10" y="51" width="355" height="425"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="aPb-EE-eK7" userLabel="GridStatusContainer">
+                                        <rect key="frame" x="10" y="86" width="355" height="503"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrz-r8-K8r">
-                                                <rect key="frame" x="101.5" y="0.0" width="152" height="50"/>
-                                                <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fg1-8g-CQ0">
-                                                        <rect key="frame" x="15" y="10" width="122" height="30"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Difficulty:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sSz-yh-dcr">
-                                                                <rect key="frame" x="0.0" y="0.0" width="85.5" height="30"/>
-                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="???" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ViA-xC-Ivh">
-                                                                <rect key="frame" x="95.5" y="0.0" width="26.5" height="30"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                        </subviews>
-                                                    </stackView>
-                                                </subviews>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lwU-7v-aKr" customClass="StatusView" customModule="SudokuWizard" customModuleProvider="target">
+                                                <rect key="frame" x="57.5" y="0.0" width="240" height="128"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="fg1-8g-CQ0" secondAttribute="trailing" constant="15" id="J4v-ww-D0P"/>
-                                                    <constraint firstItem="fg1-8g-CQ0" firstAttribute="top" secondItem="xrz-r8-K8r" secondAttribute="top" constant="10" id="Te8-Xu-SHl"/>
-                                                    <constraint firstAttribute="bottom" secondItem="fg1-8g-CQ0" secondAttribute="bottom" constant="10" id="bhw-gz-6bN"/>
-                                                    <constraint firstItem="fg1-8g-CQ0" firstAttribute="leading" secondItem="xrz-r8-K8r" secondAttribute="leading" constant="15" id="hLh-yw-7Fg"/>
-                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="prefix" value="Difficulty"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="text" value="???"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="widthPad">
+                                                        <real key="value" value="12"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="heightPad">
+                                                        <real key="value" value="7"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sde-gA-cXF" customClass="SudokuWizardGridView" customModule="SudokuWizard" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="70" width="355" height="355"/>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sde-gA-cXF" customClass="SudokuWizardGridView" customModule="SudokuWizard" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="148" width="355" height="355"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="sde-gA-cXF" secondAttribute="height" id="BGa-We-MsF"/>
@@ -620,11 +593,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="difficultyView" destination="lwU-7v-aKr" id="Wd3-TN-nIG"/>
                         <outlet property="gridView" destination="sde-gA-cXF" id="eV5-HM-EZS"/>
                         <outlet property="regenButton" destination="liC-a4-dOk" id="1ho-YU-nVC"/>
                         <outlet property="startButton" destination="uMh-Ir-Em4" id="O69-gR-J41"/>
-                        <outlet property="statusLabel" destination="ViA-xC-Ivh" id="loC-8G-gPR"/>
-                        <outlet property="statusView" destination="xrz-r8-K8r" id="cQr-xk-t5s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mPU-fZ-Rca" userLabel="First Responder" sceneMemberID="firstResponder"/>

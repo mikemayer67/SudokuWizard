@@ -109,7 +109,6 @@ class SudokuWizardGridView: UIView
     
     let bgw = self.bounds.width
     let bgh = self.bounds.height
-    print("bgw:\(bgw) bgh:\(bgh))")
     if bgw < bgh {
       bgView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
       bgView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true

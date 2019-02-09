@@ -14,15 +14,18 @@ class ManualPuzzleViewController: NewPuzzleViewController
   @IBOutlet weak var restartButton : UIButton!
   @IBOutlet weak var digitsView : UIView!
   @IBOutlet weak var digitsViewHeight : NSLayoutConstraint!
+  @IBOutlet weak var statusLabel : StatusView!
   
   private var digitButtons = [UIButton]()
   private let digitButtonSep : CGFloat = 0.25
   
   private var tint = UIColor.black
+  private var puzzle : DLXSudoku.Grid!
   
   override func awakeFromNib()
   {
     super.awakeFromNib()
+    
     add(button:startButton)
     add(button:restartButton)
     
@@ -47,6 +50,8 @@ class ManualPuzzleViewController: NewPuzzleViewController
     }
     
     gridView.errorFeedback = .conflict
+    
+    resetPuzzle()
   }
     
   override func viewDidLayoutSubviews()
@@ -59,7 +64,7 @@ class ManualPuzzleViewController: NewPuzzleViewController
       let buttonSize = boxWidth / (9.0 + 10.0*digitButtonSep)
       let buttonSep  = digitButtonSep * buttonSize
       
-      digitsView.bounds = CGRect(x: 0.0, y: 0.0, width: boxWidth, height: buttonSize)
+      digitsViewHeight.constant = buttonSize
       
       var box = CGRect(x: buttonSep, y: 0.0, width: buttonSize, height: buttonSize)
       for btn in digitButtons
@@ -82,8 +87,47 @@ class ManualPuzzleViewController: NewPuzzleViewController
       
     }
     
+    updateUI()
+  }
+  
+  func resetPuzzle()
+  {
+    puzzle = SudokuGrid(repeating: Digits(repeating:nil, count:9), count: 9)
+    gridView.clear()
+    selectButton(nil)
+    updateUI()
+  }
+  
+  func updateUI()
+  {
+    // startButton
+    
     startButton.isEnabled = false
-    restartButton.isEnabled = false
+    
+    // restartButton
+    
+    var empty = true
+    for r in 0..<9 {
+      for c in 0..<9 {
+        if puzzle[r][c] != nil {
+          empty = false
+        }
+      }
+    }
+    restartButton.isEnabled = !empty
+    
+    // digitButtonsEnabled
+    
+    digitButtonsEnabled = gridView.selectedCell != nil
+    
+    // status
+    
+    if empty {
+      statusLabel?.text = "Empty"
+    }
+    else {
+      statusLabel?.text = "..."
+    }
   }
   
   var digitButtonsEnabled = false
@@ -107,6 +151,7 @@ class ManualPuzzleViewController: NewPuzzleViewController
   {
     if let cell = gridView.selectedCell
     {
+      var digit : Digit?
       if sender.isSelected {
         selectButton(nil)
         cell.state = .empty
@@ -114,11 +159,14 @@ class ManualPuzzleViewController: NewPuzzleViewController
       else
       {
         selectButton(sender.tag)
-        cell.state = .filled(Digit(sender.tag))
+        digit = Digit(sender.tag)
+        cell.state = .filled(digit!)
       }
+      puzzle[cell.row!][cell.col!] = digit
     }
     gridView.findAllErrors()
     gridView.updateHighlights()
+    updateUI()
   }
   
   func selectButton(_ tag:Int?)
@@ -141,10 +189,11 @@ class ManualPuzzleViewController: NewPuzzleViewController
     dismiss()
   }
   
-  @IBAction func handleRestart(_ sender: UIButton) {
+  @IBAction func handleRestart(_ sender: UIButton)
+  {
     print("MPVC: handle restart")
+    resetPuzzle()
   }
-  
   
   override func sudokuWizardCellView(selected cell: SudokuWizardCellView)
   {
@@ -158,9 +207,9 @@ class ManualPuzzleViewController: NewPuzzleViewController
     case .empty: digit = nil
     }
     
-    digitButtonsEnabled = true
-  
     selectButton( digit == nil ? nil : Int(digit!) )
+    
+    updateUI()
   }
   
   override func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView)

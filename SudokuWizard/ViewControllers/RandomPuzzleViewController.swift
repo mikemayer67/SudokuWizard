@@ -12,6 +12,7 @@ class RandomPuzzleViewController: NewPuzzleViewController
 {
   @IBOutlet weak var regenButton: UIButton!
   @IBOutlet weak var startButton: UIButton!
+  @IBOutlet weak var difficultyView: StatusView!
   
   let genQueue = DispatchQueue(label: "RandomPuzzleGenerator")
   
@@ -44,7 +45,7 @@ class RandomPuzzleViewController: NewPuzzleViewController
     gridView.clear()
     regenButton.isEnabled = false
     startButton.isEnabled = false
-    statusLabel!.text = ""
+    difficultyView.text = "???"
     
     var flashErr = true
     var flashIndex = Int.random(in: 0...80)
@@ -66,7 +67,7 @@ class RandomPuzzleViewController: NewPuzzleViewController
       DispatchQueue.main.async {
         do {
           try self.gridView.loadPuzzle(rs.puzzle, solution: rs.solution)
-          self.statusLabel!.text = String(format:"%d",rs.difficulty)
+          self.difficultyView.text = String(format: "%d", rs.difficulty)
         }
         catch {
           fatalError("Should never get here \(#file):\(#line)")

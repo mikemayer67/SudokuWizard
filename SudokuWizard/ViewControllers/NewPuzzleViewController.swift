@@ -11,8 +11,6 @@ import UIKit
 class NewPuzzleViewController: UIViewController, SudokuWizardCellViewDelegate
 {
   @IBOutlet weak var gridView: SudokuWizardGridView!
-  @IBOutlet weak var statusView: UIView?
-  @IBOutlet weak var statusLabel: UILabel?
     
   private var buttons = [UIButton]()
   
@@ -34,21 +32,7 @@ class NewPuzzleViewController: UIViewController, SudokuWizardCellViewDelegate
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    
-    if let sv = statusView
-    {
-      let r  = sv.frame.height/4.0
-      let sl = sv.layer
-      let sp = UIBezierPath(roundedRect: sv.bounds, cornerRadius: r)
-      sl.cornerRadius = r
-      sl.shadowPath = sp.cgPath
-      sl.shadowColor = UIColor.black.cgColor
-      sl.shadowOpacity = 0.5
-      sl.shadowOffset = CGSize(width:3.0,height:3.0)
-      sl.shadowRadius = 5.0
-      sl.masksToBounds = false
-    }
-    
+        
     let gl = gridView.layer
     gl.shadowPath = UIBezierPath(rect: gridView.bounds).cgPath
     gl.shadowColor = UIColor.black.cgColor

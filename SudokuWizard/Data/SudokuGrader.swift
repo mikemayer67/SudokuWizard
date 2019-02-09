@@ -179,7 +179,6 @@ class SudokuGrader
     
     for rcd in found {
       rval = true
-//      print(" NakedSingle(\(rcd.row),\(rcd.col),\(rcd.digit))")
       add(row: rcd.row, col: rcd.col, digit: rcd.digit)
       difficulty += nakedSingleWeight
     }

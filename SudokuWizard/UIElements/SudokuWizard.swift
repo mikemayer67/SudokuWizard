@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 
 typealias Digit        = UInt8
-typealias SudokuGrid   = [[Digit?]]
+typealias Digits       = [Digit?]
+typealias SudokuGrid   = [Digits]
 
 struct RowCol
 {
