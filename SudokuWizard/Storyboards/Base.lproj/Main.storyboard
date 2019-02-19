@@ -17,75 +17,7 @@
                     <view key="view" contentMode="TopLeft" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XCt-Fo-qaX">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <color key="backgroundColor" red="0.78431372549019607" green="0.68627450980392157" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Je6-l6-LdM">
-                                <rect key="frame" x="47" y="561" width="281" height="36"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="Scan Puzzle">
-                                    <color key="titleColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="handlePuzzleSelection:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6Yw-nY-9uI"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="koR-0J-CF9">
-                                <rect key="frame" x="47" y="511" width="281" height="36"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="Create Random Puzzle">
-                                    <color key="titleColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="handlePuzzleSelection:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bIs-59-GIe"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Mm-uU-9py">
-                                <rect key="frame" x="47" y="461" width="281" height="36"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="Enter New Puzzle">
-                                    <color key="titleColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="handlePuzzleSelection:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a8N-ds-lWh"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwc-QU-8Yu">
-                                <rect key="frame" x="0.0" y="631" width="375" height="36"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="cancel">
-                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="handlePuzzleSelection:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NF8-Px-xK0"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="0.8865986508" green="0.73571463910000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="mwc-QU-8Yu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3HR-Ei-Iic"/>
-                            <constraint firstItem="XCt-Fo-qaX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="KU1-kG-Q49"/>
-                            <constraint firstItem="koR-0J-CF9" firstAttribute="width" secondItem="Je6-l6-LdM" secondAttribute="width" id="LNr-cE-K3h"/>
-                            <constraint firstItem="Je6-l6-LdM" firstAttribute="bottom" secondItem="XCt-Fo-qaX" secondAttribute="bottom" constant="-70" id="OC5-dw-PJK"/>
-                            <constraint firstItem="mwc-QU-8Yu" firstAttribute="width" secondItem="XCt-Fo-qaX" secondAttribute="width" id="SIV-Oa-cEw"/>
-                            <constraint firstItem="koR-0J-CF9" firstAttribute="bottom" secondItem="Je6-l6-LdM" secondAttribute="bottom" constant="-50" id="Ul1-5y-rVS"/>
-                            <constraint firstItem="koR-0J-CF9" firstAttribute="centerX" secondItem="Je6-l6-LdM" secondAttribute="centerX" id="cKD-hF-mdf"/>
-                            <constraint firstItem="4Mm-uU-9py" firstAttribute="bottom" secondItem="koR-0J-CF9" secondAttribute="bottom" constant="-50" id="cxQ-i8-FFn"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="XCt-Fo-qaX" secondAttribute="bottom" id="hL2-XR-4fE"/>
-                            <constraint firstItem="4Mm-uU-9py" firstAttribute="centerX" secondItem="koR-0J-CF9" secondAttribute="centerX" id="luc-5V-cb3"/>
-                            <constraint firstItem="Je6-l6-LdM" firstAttribute="centerX" secondItem="XCt-Fo-qaX" secondAttribute="centerX" id="tcq-is-uhU"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="XCt-Fo-qaX" secondAttribute="trailing" id="tm2-y0-tKu"/>
-                            <constraint firstItem="mwc-QU-8Yu" firstAttribute="bottom" secondItem="XCt-Fo-qaX" secondAttribute="bottom" id="wfo-DW-QWf"/>
-                            <constraint firstItem="XCt-Fo-qaX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xqO-us-Ejo"/>
-                            <constraint firstItem="4Mm-uU-9py" firstAttribute="width" secondItem="koR-0J-CF9" secondAttribute="width" id="xxG-3Q-GKl"/>
-                            <constraint firstItem="Je6-l6-LdM" firstAttribute="width" secondItem="XCt-Fo-qaX" secondAttribute="width" multiplier="0.75" id="zXg-90-dk5"/>
-                        </constraints>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="OEC-JU-PJA">
@@ -103,16 +35,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="cancelNewPuzzleButton" destination="mwc-QU-8Yu" id="yuU-OD-y2F"/>
-                        <outlet property="enterButtonBottomConstraint" destination="cxQ-i8-FFn" id="xht-19-8MY"/>
-                        <outlet property="enterPuzzleButton" destination="4Mm-uU-9py" id="x2m-zF-B91"/>
-                        <outlet property="newPuzzleBackgroundView" destination="XCt-Fo-qaX" id="lfC-mH-e15"/>
                         <outlet property="newPuzzleButton" destination="vzw-Y0-QVQ" id="TZ2-VQ-oEi"/>
                         <outlet property="puzzleSettingsButton" destination="vsN-Q1-QrK" id="dhQ-c5-ajW"/>
-                        <outlet property="randomButtonBottomConstraint" destination="Ul1-5y-rVS" id="773-Ib-ZnF"/>
-                        <outlet property="randomPuzzleButton" destination="koR-0J-CF9" id="p7Z-b2-RhC"/>
-                        <outlet property="scanButtonBottomConstraint" destination="OC5-dw-PJK" id="ZkT-OX-9e1"/>
-                        <outlet property="scanPuzzleButton" destination="Je6-l6-LdM" id="WGT-Yc-UuF"/>
                         <segue destination="Sw4-EA-bfS" kind="show" identifier="showNewPuzzle" id="Ml1-Zw-KAI"/>
                         <segue destination="Mrr-Mm-ygk" kind="show" identifier="showScanPuzzle" id="WhI-5f-UZn"/>
                         <segue destination="9Tc-y0-J2h" kind="show" identifier="showRandomPuzzle" id="72l-BF-TIo"/>

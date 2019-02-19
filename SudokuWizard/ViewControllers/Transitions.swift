@@ -108,27 +108,18 @@ class NewPuzzleTransition : CustomTransition
       else { return false }
     
     let containerView = transitionContext.containerView
-    
-    let midView = UIView(frame: containerView.frame)
-    midView.backgroundColor = fromVC.navigationController?.navigationBar.barTintColor ?? UIColor.red
-    containerView.insertSubview(midView, at: 0)
 
     if operation == .push { containerView.addSubview(toView) }
     else                  { containerView.insertSubview(toView, at: 1) }
 
-    let f = 0.6
     toView.alpha = 0.0
-    UIView.animateKeyframes(withDuration: duration, delay: 0.0, options: .calculationModeCubic, animations: {
-      UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: f, animations: {
-        fromView.alpha = 0.0
-      })
-      UIView.addKeyframe(withRelativeStartTime: 1.0-f, relativeDuration: f, animations: {
-        toView.alpha = 1.0
-      })
+
+    UIView.animate(withDuration: duration, animations: {
+      fromView.alpha = 0.0
+      toView.alpha = 1.0
     }) { (_) in
       fromView.alpha = 1.0
       transitionContext.completeTransition(true)
-      midView.removeFromSuperview()
     }
     
     return true
