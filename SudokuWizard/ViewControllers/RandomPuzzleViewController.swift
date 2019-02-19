@@ -16,9 +16,9 @@ class RandomPuzzleViewController: NewPuzzleViewController
   
   let genQueue = DispatchQueue(label: "RandomPuzzleGenerator")
   
-  override func awakeFromNib()
+  override func viewDidLoad()
   {
-    super.awakeFromNib()
+    super.viewDidLoad()
     add(button:regenButton)
     add(button:startButton)
   }

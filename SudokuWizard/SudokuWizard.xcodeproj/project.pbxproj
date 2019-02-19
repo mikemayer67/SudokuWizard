@@ -27,7 +27,6 @@
 		2744C0B221D544BE009DB55A /* ScanPuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2744C0B121D544BE009DB55A /* ScanPuzzleViewController.swift */; };
 		2744C0B421D54584009DB55A /* icons8-under_construction_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744C0B321D54584009DB55A /* icons8-under_construction_filled.png */; };
 		2744C0B621D54B22009DB55A /* RandomPuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2744C0B521D54B22009DB55A /* RandomPuzzleViewController.swift */; };
-		2744C0B821D56375009DB55A /* SudokuBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744C0B721D56375009DB55A /* SudokuBackground.png */; };
 		27A1D63B21BA25A8007AF213 /* SudokuWizardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1D63A21BA25A7007AF213 /* SudokuWizardCellView.swift */; };
 		27B13BC421D4278900B4B81D /* icons8-squared_menu_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B13BC321D4278900B4B81D /* icons8-squared_menu_filled.png */; };
 		27B13BE621D52F9A00B4B81D /* NewPuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B13BE521D52F9A00B4B81D /* NewPuzzleViewController.swift */; };
@@ -67,7 +66,6 @@
 		2744C0B121D544BE009DB55A /* ScanPuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanPuzzleViewController.swift; sourceTree = "<group>"; };
 		2744C0B321D54584009DB55A /* icons8-under_construction_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-under_construction_filled.png"; sourceTree = "<group>"; };
 		2744C0B521D54B22009DB55A /* RandomPuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPuzzleViewController.swift; sourceTree = "<group>"; };
-		2744C0B721D56375009DB55A /* SudokuBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SudokuBackground.png; sourceTree = "<group>"; };
 		27A1D63A21BA25A7007AF213 /* SudokuWizardCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuWizardCellView.swift; sourceTree = "<group>"; };
 		27B13BC321D4278900B4B81D /* icons8-squared_menu_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-squared_menu_filled.png"; sourceTree = "<group>"; };
 		27B13BE521D52F9A00B4B81D /* NewPuzzleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPuzzleViewController.swift; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 		2734F54321C86BA1005DA954 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				2744C0B721D56375009DB55A /* SudokuBackground.png */,
 				2734F53F21C7589A005DA954 /* SudokuWizardSplash.png */,
 				2744C0AD21D5418A009DB55A /* icons8-left_4.png */,
 				27161F1021CE1BE0006CDB71 /* icons8-settings.png */,
@@ -262,7 +259,6 @@
 			files = (
 				27161F1321CEA928006CDB71 /* icons8-settings.png in Resources */,
 				2734F54021C7589A005DA954 /* SudokuWizardSplash.png in Resources */,
-				2744C0B821D56375009DB55A /* SudokuBackground.png in Resources */,
 				27B13BC421D4278900B4B81D /* icons8-squared_menu_filled.png in Resources */,
 				2744C0B421D54584009DB55A /* icons8-under_construction_filled.png in Resources */,
 				27022B6521A7B6980078588D /* LaunchScreen.storyboard in Resources */,

@@ -19,14 +19,18 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     case scan
   }
   
-  override func awakeFromNib() {
-    if let bg = UIImage(named:"SudokuBackground") {
-      view.backgroundColor = UIColor(patternImage: bg)
-    }
+  override func awakeFromNib()
+  {
+    super.awakeFromNib()
+    
     self.navigationController?.delegate = self
     self.modalPresentationStyle = .overCurrentContext
-    
-    newPuzzleBackgroundAlpha = newPuzzleBackgroundView.alpha
+  }
+  
+  override func viewDidLoad()
+  {
+    super.viewDidLoad()
+        
     enterButtonOffset  = enterButtonBottomConstraint.constant
     randomButtonOffset = randomButtonBottomConstraint.constant
     scanButtonOffset   = scanButtonBottomConstraint.constant
@@ -35,13 +39,15 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     randomPuzzleButton.layer.cornerRadius = randomPuzzleButton.frame.height/2.0
     scanPuzzleButton.layer.cornerRadius = scanPuzzleButton.frame.height/2.0
     
+    newPuzzleBackgroundAlpha = newPuzzleBackgroundView.alpha
+    
     hideNewPuzzleInput()
   }
   
   override func viewDidAppear(_ animated: Bool)
   {
     print("Put this into an if condition once loading old puzzles is implemented: ",#file,":",#line)
-    startNewPuzzle(required:true)
+    startNewPuzzle(required:false)
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)

@@ -21,12 +21,14 @@ class NewPuzzleViewController: UIViewController, SudokuWizardCellViewDelegate
 
   var dirty = false
   
-  override func awakeFromNib() {
+  override func awakeFromNib()
+  {
     super.awakeFromNib()
-    if let bg = UIImage(named:"SudokuBackground") {
-      view.backgroundColor = UIColor(patternImage: bg)
-    }
-    
+  }
+  
+  override func viewDidLoad()
+  {
+    super.viewDidLoad()
     for cell in gridView.cellViews { cell.delegate = self }
   }
   

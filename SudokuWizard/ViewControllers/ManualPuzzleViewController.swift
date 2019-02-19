@@ -33,9 +33,9 @@ class ManualPuzzleViewController: NewPuzzleViewController
   
   private var state = PuzzleState.empty
   
-  override func awakeFromNib()
+  override func viewDidLoad()
   {
-    super.awakeFromNib()
+    super.viewDidLoad()
     
     add(button:startButton)
     add(button:restartButton)
