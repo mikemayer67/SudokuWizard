@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ManualPuzzleViewController: NewPuzzleViewController
+class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewDelegate
 {
   @IBOutlet weak var startButton : UIButton!
   @IBOutlet weak var restartButton : UIButton!
@@ -17,7 +17,7 @@ class ManualPuzzleViewController: NewPuzzleViewController
   @IBOutlet weak var statusLabel : StatusView!
   
   private var digitButtons = [DigitButton]()
-  private let digitButtonSep : CGFloat = 0.25
+  private let digitButtonSep : CGFloat = 0.1
   
   private var tint = UIColor.black
   
@@ -32,6 +32,14 @@ class ManualPuzzleViewController: NewPuzzleViewController
   }
   
   private var state = PuzzleState.empty
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    if let v = view as? EditorBackgroundView
+    {
+      v.delegate = self
+    }
+  }
   
   override func viewDidLoad()
   {
@@ -131,8 +139,9 @@ class ManualPuzzleViewController: NewPuzzleViewController
     }
   }
   
-  override func handleBackgroundTap() {
-    super.handleBackgroundTap()
+  func handleBackgroundTap()
+  {
+    gridView.selectedCell = nil
     selectButton(nil)
     digitButtonsEnabled = false
   }

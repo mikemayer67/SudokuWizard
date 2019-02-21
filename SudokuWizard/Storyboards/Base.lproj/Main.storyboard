@@ -273,7 +273,7 @@
         <scene sceneID="4j5-FI-BuP">
             <objects>
                 <viewController id="Sw4-EA-bfS" userLabel="Puzzle Editor Controller" customClass="ManualPuzzleViewController" customModule="SudokuWizard" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="N19-mC-jdX" customClass="PuzzleBackgroundView" customModule="SudokuWizard" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="N19-mC-jdX" customClass="EditorBackgroundView" customModule="SudokuWizard" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -364,7 +364,6 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.78431372549019607" green="0.68627450980392157" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="3nA-No-Tnr" firstAttribute="top" secondItem="ruK-G6-S1G" secondAttribute="top" id="Dws-BQ-kpW"/>
                             <constraint firstItem="3nA-No-Tnr" firstAttribute="leading" secondItem="ruK-G6-S1G" secondAttribute="leading" id="KoT-k5-LCq"/>
@@ -375,9 +374,14 @@
                             <constraint firstItem="ruK-G6-S1G" firstAttribute="trailing" secondItem="c83-WN-RwN" secondAttribute="trailing" constant="20" id="s1M-Ga-Cmh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ruK-G6-S1G"/>
-                        <connections>
-                            <outlet property="controller" destination="Sw4-EA-bfS" id="0QQ-i5-oAc"/>
-                        </connections>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="bottomColor">
+                                <color key="value" red="0.33333333329999998" green="0.098039215690000001" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="topColor">
+                                <color key="value" red="0.8865986508" green="0.73571463910000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="Puzzle Editor" id="nO4-rC-ti9">
                         <barButtonItem key="leftBarButtonItem" id="Aha-4t-0Ea">
@@ -408,7 +412,7 @@
         <scene sceneID="hHd-D8-OZx">
             <objects>
                 <viewController id="9Tc-y0-J2h" customClass="RandomPuzzleViewController" customModule="SudokuWizard" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="f6l-w6-Ww0">
+                    <view key="view" contentMode="scaleToFill" id="f6l-w6-Ww0" customClass="EditorBackgroundView" customModule="SudokuWizard" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -492,7 +496,6 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.78431372549019607" green="0.68627450980392157" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="3Cr-tV-zbi" firstAttribute="leading" secondItem="uUp-FJ-Uzm" secondAttribute="leading" constant="20" id="6Vv-aD-8Uk"/>
                             <constraint firstItem="zad-af-Xw4" firstAttribute="leading" secondItem="f6l-w6-Ww0" secondAttribute="leading" id="73t-zv-37w"/>
@@ -503,6 +506,14 @@
                             <constraint firstItem="uUp-FJ-Uzm" firstAttribute="trailing" secondItem="3Cr-tV-zbi" secondAttribute="trailing" constant="20" id="YAA-gu-KWi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uUp-FJ-Uzm"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="bottomColor">
+                                <color key="value" red="0.33333333329999998" green="0.098039215690000001" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="topColor">
+                                <color key="value" red="0.7843137255" green="0.68627450980000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="Puzzle Generator" id="E79-ZO-5mv">
                         <barButtonItem key="leftBarButtonItem" id="Ree-HS-ukr">
@@ -531,7 +542,7 @@
         <scene sceneID="LMz-IF-NYN">
             <objects>
                 <viewController id="Mrr-Mm-ygk" customClass="ScanPuzzleViewController" customModule="SudokuWizard" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="xGq-S7-abM">
+                    <view key="view" contentMode="scaleToFill" id="xGq-S7-abM" customClass="EditorBackgroundView" customModule="SudokuWizard" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -564,13 +575,20 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.7843137255" green="0.68627450980000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="MaX-8K-f2h" firstAttribute="leading" secondItem="ril-80-9Cg" secondAttribute="leading" id="CWP-we-Ugn"/>
                             <constraint firstItem="ril-80-9Cg" firstAttribute="trailing" secondItem="MaX-8K-f2h" secondAttribute="trailing" id="Pqe-fS-eqv"/>
                             <constraint firstItem="MaX-8K-f2h" firstAttribute="centerY" secondItem="ril-80-9Cg" secondAttribute="centerY" id="SIj-Za-wZV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ril-80-9Cg"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="bottomColor">
+                                <color key="value" red="0.33333333329999998" green="0.098039215690000001" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="topColor">
+                                <color key="value" red="0.7843137255" green="0.68627450980000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="Puzzle Scanner" id="zmc-Xx-bkk">
                         <barButtonItem key="leftBarButtonItem" id="k7l-vE-c6L">
@@ -612,7 +630,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="9Je-w7-Ypr">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.33333333333333331" green="0.098039215686274508" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

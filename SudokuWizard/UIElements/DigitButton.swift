@@ -71,18 +71,27 @@ class DigitButton: UIButton
     let center = CGPoint(x: rect.origin.x + 0.5*rect.width, y: rect.origin.y + 0.5*rect.height)
     let radius = 0.5 * min( rect.width, rect.height )
     
-    borderPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0.0, endAngle: 2*CGFloat.pi, clockwise: true)
+    let buttonBox = CGRect(x: center.x - radius, y: center.y - radius, width: 2.0*radius, height: 2.0*radius)
     
-    ( isHighlighted ? highlightTint : isSelected ? tint : UIColor.white ).setFill()
+    if borderPath == nil
+    {
+      borderPath = UIBezierPath(roundedRect: buttonBox, cornerRadius: 0.3*radius)
+    }
+    
+    let bg = isHighlighted ? highlightTint : isSelected ? tint : UIColor.white
+    let fg = isEnabled ? isSelected ? UIColor.white : tint : UIColor.gray
+
+    bg.setFill()
     borderPath?.fill()
     
-    if isEnabled {
-      tint.setStroke()
+    if isEnabled
+    {
+      let bc = isSelected ? UIColor.gray : tint
+      bc.setStroke()
       borderPath?.stroke()
     }
     
-    let digitColor = ( isEnabled ? (isSelected ? UIColor.white : tint) : UIColor.gray )
     let inset : CGFloat = (isEnabled ? 3.0 : 5.0)
-    digit.description.draw(in: rect.insetBy(dx: inset, dy: inset), fontName: fontName, color: digitColor)
+    digit.description.draw(in: rect.insetBy(dx: inset, dy: inset), fontName: fontName, color: fg)
   }
 }

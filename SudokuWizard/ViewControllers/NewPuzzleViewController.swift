@@ -74,10 +74,5 @@ class NewPuzzleViewController: UIViewController, SudokuWizardCellViewDelegate
   
   func sudokuWizardCellView(selected cell: SudokuWizardCellView) { cell.selected = false }
   func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView) { }
-  
-  func handleBackgroundTap()
-  {
-    gridView.selectedCell = nil
-  }
 
 }
