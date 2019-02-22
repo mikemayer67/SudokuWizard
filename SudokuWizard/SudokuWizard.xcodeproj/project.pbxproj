@@ -41,6 +41,7 @@
 		27E94DAE21DBD76900D0C4EE /* RandomSudoku.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DAD21DBD76900D0C4EE /* RandomSudoku.swift */; };
 		27E94DB021E946C900D0C4EE /* SudokuGrader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DAF21E946C900D0C4EE /* SudokuGrader.swift */; };
 		27E94DB621ECD3E800D0C4EE /* DigitSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E94DB521ECD3E700D0C4EE /* DigitSet.swift */; };
+		27F3FBC92220376E00AA1B79 /* DigitButtonBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F3FBC82220376E00AA1B79 /* DigitButtonBox.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		27E94DAD21DBD76900D0C4EE /* RandomSudoku.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSudoku.swift; sourceTree = "<group>"; };
 		27E94DAF21E946C900D0C4EE /* SudokuGrader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGrader.swift; sourceTree = "<group>"; };
 		27E94DB521ECD3E700D0C4EE /* DigitSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitSet.swift; sourceTree = "<group>"; };
+		27F3FBC82220376E00AA1B79 /* DigitButtonBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitButtonBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 				27D1E92F220DCE29001A1565 /* EditorBackgroundView.swift */,
 				27382552220E4C700067A6D7 /* StatusView.swift */,
 				27382554220E8FE80067A6D7 /* DigitButton.swift */,
+				27F3FBC82220376E00AA1B79 /* DigitButtonBox.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27F3FBC92220376E00AA1B79 /* DigitButtonBox.swift in Sources */,
 				270E7D5B21FC837300626223 /* SudokuWizardGridView.swift in Sources */,
 				27E94DB021E946C900D0C4EE /* SudokuGrader.swift in Sources */,
 				27D1E930220DCE29001A1565 /* EditorBackgroundView.swift in Sources */,

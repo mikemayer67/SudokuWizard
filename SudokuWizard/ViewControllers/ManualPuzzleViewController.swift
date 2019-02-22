@@ -8,18 +8,13 @@
 
 import UIKit
 
-class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewDelegate
+class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewDelegate, DigitButtonBoxDelegate
 {
   @IBOutlet weak var startButton : UIButton!
   @IBOutlet weak var restartButton : UIButton!
-  @IBOutlet weak var digitsView : UIView!
-  @IBOutlet weak var digitsViewHeight : NSLayoutConstraint!
+  @IBOutlet weak var digitBox : DigitButtonBox!
+  @IBOutlet weak var digitBoxHeight : NSLayoutConstraint!
   @IBOutlet weak var statusLabel : StatusView!
-  
-  private var digitButtons = [DigitButton]()
-  private let digitButtonSep : CGFloat = 0.1
-  
-  private var tint = UIColor.black
   
   enum PuzzleState
   {
@@ -48,19 +43,8 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
     add(button:startButton)
     add(button:restartButton)
     
-    tint = startButton.titleColor(for: .normal) ?? .black
-    
-    for d : Digit in 1...9 {
-      let btn = DigitButton(d)
-      btn.tint = tint
-      btn.isEnabled = false
-      
-      btn.addTarget(self, action: #selector(handleDigitButton(_:)), for: .touchUpInside)
-      
-      digitsView.addSubview(btn)
-      
-      digitButtons.append(btn)
-    }
+    digitBox.addButtons()
+    digitBox.delegate = self
     
     gridView.errorFeedback = .conflict
     
@@ -70,23 +54,8 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
   override func viewDidLayoutSubviews()
   {
     super.viewDidLayoutSubviews()
-  
-    let boxWidth = digitsView.bounds.width
-
-    if boxWidth > 0.0 {
-      let buttonSize = boxWidth / (9.0 + 10.0*digitButtonSep)
-      let buttonSep  = digitButtonSep * buttonSize
-      
-      digitsViewHeight.constant = buttonSize
-      
-      var xo = buttonSep;
-      for btn in digitButtons
-      {
-        btn.frame = CGRect(x:xo, y:0.0, width: buttonSize, height:buttonSize)
-        xo += buttonSep + buttonSize
-      }
-      
-    }
+    
+    digitBox.layoutButtons()
     
     updateUI()
   }
@@ -94,7 +63,7 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
   func resetPuzzle()
   {
     gridView.clear()
-    selectButton(nil)
+    digitBox.deselectAll()
     state = .empty
     updateUI()
   }
@@ -113,7 +82,7 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
     
     // digitButtonsEnabled
     
-    digitButtonsEnabled = gridView.selectedCell != nil
+    digitBox.enabled = gridView.selectedCell != nil
     
     // status
     
@@ -128,38 +97,29 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
     }
   }
   
-  var digitButtonsEnabled = false
-  {
-    didSet {
-      if digitButtonsEnabled != oldValue {
-        for btn in digitButtons {
-          btn.isEnabled = digitButtonsEnabled
-        }
-      }
-    }
-  }
-  
   func handleBackgroundTap()
   {
     gridView.selectedCell = nil
-    selectButton(nil)
-    digitButtonsEnabled = false
+    digitBox.deselectAll()
+    digitBox.enabled = false
   }
   
-  @objc func handleDigitButton(_ sender:DigitButton)
+  func digitButtonBox(selected digit: Digit)
   {
     guard let cell = gridView.selectedCell else { return }
-    
-    if sender.isSelected {
-      selectButton(nil)
-      cell.state = .empty
-    }
-    else
-    {
-      selectButton(sender.digit)
-      cell.state = .filled(sender.digit)
-    }
-    
+    cell.state = .filled(digit)
+    updateState()
+  }
+  
+  func digitButtonBox(unselected digit: Digit)
+  {
+    guard let cell = gridView.selectedCell else { return }
+    cell.state = .empty
+    updateState()
+  }
+  
+  func updateState()
+  {
     gridView.findAllErrors()
     gridView.updateHighlights()
     
@@ -208,13 +168,6 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
     
     updateUI()
   }
-  
-  func selectButton(_ digit:Digit?)
-  {
-    for btn in digitButtons {
-      btn.isSelected = (btn.digit == digit)
-    }
-  }
     
   @IBAction func handleStart(_ sender: UIButton) {
     print("MPVC: handle start")
@@ -239,7 +192,7 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
     case .empty: digit = nil
     }
     
-    selectButton(digit)
+    digitBox.select(digit: digit)
     updateUI()
   }
   

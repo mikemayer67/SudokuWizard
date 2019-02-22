@@ -339,12 +339,29 @@
                                                     <constraint firstAttribute="width" secondItem="Ih0-bD-Epb" secondAttribute="height" id="eXg-Rl-fYK"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Of-qf-cRQ">
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Of-qf-cRQ" customClass="DigitButtonBox" customModule="SudokuWizard" customModuleProvider="target">
                                                 <rect key="frame" x="10" y="523" width="355" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="Nix-L9-wzG"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="tint">
+                                                        <color key="value" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="highlightColor">
+                                                        <color key="value" red="0.7843137255" green="0.68627450980000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="inactiveColor">
+                                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <outlet property="heightConstraint" destination="Nix-L9-wzG" id="V7M-Lp-Yfp"/>
+                                                </connections>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" red="0.8865986508" green="0.73571463910000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -396,8 +413,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="digitsView" destination="2Of-qf-cRQ" id="UEy-cs-wSP"/>
-                        <outlet property="digitsViewHeight" destination="Nix-L9-wzG" id="ERf-HZ-JDY"/>
+                        <outlet property="digitBox" destination="2Of-qf-cRQ" id="OcO-CP-nSc"/>
                         <outlet property="gridView" destination="Ih0-bD-Epb" id="E8O-cq-8H8"/>
                         <outlet property="restartButton" destination="80Y-mR-vpX" id="QSe-v5-UcG"/>
                         <outlet property="startButton" destination="rI5-ha-A4F" id="vHF-eV-g8T"/>

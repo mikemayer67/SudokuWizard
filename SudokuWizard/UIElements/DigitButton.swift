@@ -14,20 +14,14 @@ class DigitButton: UIButton
   
   let fontName = UIFont.systemFont(ofSize: 12.0).fontName
   
-  var borderPath : UIBezierPath?
+  var borderPath : UIBezierPath!
   
-  var tint = UIColor.black {
-    didSet { self.setNeedsDisplay() }
-  }
+  var tint           = UIColor.black  { didSet { self.setNeedsDisplay() } }
+  var baseColor      = UIColor.white  { didSet { self.setNeedsDisplay() } }
+  var highlightColor = UIColor.yellow { didSet { self.setNeedsDisplay() } }
+  var inactiveColor  = UIColor.gray   { didSet { self.setNeedsDisplay() } }
   
-  var highlightTint : UIColor {
-    var red = CGFloat(0.0)
-    var green = CGFloat(0.0)
-    var blue = CGFloat(0.0)
-    var alpha = CGFloat(0.0)
-    tint.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-    return UIColor(red: 0.5*(1.0+red), green: 0.5*(1.0+green), blue: 0.5*(1.0+blue), alpha: alpha)
-  }
+  override var isSelected : Bool      { didSet { self.setNeedsDisplay() } }
   
   required init(_ digit:Digit)
   {
@@ -69,29 +63,36 @@ class DigitButton: UIButton
     super.draw(rect)
     
     let center = CGPoint(x: rect.origin.x + 0.5*rect.width, y: rect.origin.y + 0.5*rect.height)
-    let radius = 0.5 * min( rect.width, rect.height )
+    let radius = 0.5 * min( rect.width, rect.height ) - 1.0
     
     let buttonBox = CGRect(x: center.x - radius, y: center.y - radius, width: 2.0*radius, height: 2.0*radius)
     
     if borderPath == nil
     {
-      borderPath = UIBezierPath(roundedRect: buttonBox, cornerRadius: 0.3*radius)
+      borderPath = UIBezierPath(roundedRect: buttonBox, cornerRadius: 0.5*radius)
     }
     
-    let bg = isHighlighted ? highlightTint : isSelected ? tint : UIColor.white
-    let fg = isEnabled ? isSelected ? UIColor.white : tint : UIColor.gray
+    var fontColor = inactiveColor
+    var bgColor = baseColor
+    var fgColor = tint
 
-    bg.setFill()
-    borderPath?.fill()
+    if isEnabled
+    {
+      if isHighlighted { bgColor = highlightColor }
+      if isSelected { (bgColor,fgColor) = (fgColor,bgColor) }
+      fontColor = fgColor
+    }
+    
+    bgColor.setFill()
+    borderPath.fill()
     
     if isEnabled
     {
-      let bc = isSelected ? UIColor.gray : tint
-      bc.setStroke()
-      borderPath?.stroke()
+      highlightColor.setStroke()
+      borderPath.stroke()
     }
     
     let inset : CGFloat = (isEnabled ? 3.0 : 5.0)
-    digit.description.draw(in: rect.insetBy(dx: inset, dy: inset), fontName: fontName, color: fg)
+    digit.description.draw(in: rect.insetBy(dx: inset, dy: inset), fontName: fontName, color: fontColor)
   }
 }

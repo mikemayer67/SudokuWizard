@@ -207,7 +207,7 @@ class SudokuGrader
           for rc2 in oc
           {
             let u = marks[rc1.row][rc1.col].union( marks[rc2.row][rc2.col] )
-            if u.n == 2 {
+            if u.count == 2 {
               found.append( (rc1,rc2,e,u.digits()) )
             }
           }
@@ -300,7 +300,7 @@ class SudokuGrader
             for rc3 in soc
             {
               let u = marks[rc1.row][rc1.col].union(marks[rc2.row][rc2.col]).union(marks[rc3.row][rc3.col])
-              if u.n == 3 {
+              if u.count == 3 {
                 found.append( (rc1,rc2,rc3,e,u.digits()) )
               }
             }
@@ -397,7 +397,7 @@ class SudokuGrader
                   u = u.subtract(marks[rc.row][rc.col])
                 }
               }
-              if u.n == 2 {
+              if u.count == 2 {
                 if marks[rc1.row][rc1.col].subtract(u).isEmpty == false {
                   marks[rc1.row][rc1.col] = marks[rc1.row][rc1.col].subtract(u.complement())
                   ncleared += 1
@@ -449,7 +449,7 @@ class SudokuGrader
                     u = u.subtract(marks[rc.row][rc.col])
                   }
                 }
-                if u.n == 3 {
+                if u.count == 3 {
                   if marks[rc1.row][rc1.col].subtract(u).isEmpty == false {
                     marks[rc1.row][rc1.col] = marks[rc1.row][rc1.col].subtract(u.complement())
                     ncleared += 1
@@ -542,11 +542,11 @@ class SudokuGrader
             }
 
             // pointing pair if number of unique marks equals number of cells in the intersection
-            if n > 1, n == u.n {
+            if n > 1, n == u.count {
               // look for target cells that contain one of the marks unique to the intersection
               for rc in tgt2 {
                 if digits[rc.row][rc.col] == nil,
-                  marks[rc.row][rc.col].intersect(u).n > 0
+                  marks[rc.row][rc.col].intersect(u).count > 0
                 {
                   // clear them if found
                   ncleared += 1
@@ -582,12 +582,12 @@ class SudokuGrader
       for c in 0..<9 {
         if digits[r][c] == nil {
           let m = marks[r][c]
-          if m.n < nmarks {
-            nmarks = m.n;
+          if m.count < nmarks {
+            nmarks = m.count;
             cell = RowCol(r, c)
           }
           num += 1.0
-          den += Double(m.n)
+          den += Double(m.count)
         }
       }
     }

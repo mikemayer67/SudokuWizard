@@ -13,30 +13,37 @@ fileprivate let DigitMasks : Dictionary<Digit,UInt16> = [1:0x001, 2:0x002, 3:0x0
 
 struct DigitSet
 {
-  private(set) var n : Int = 0
+  private(set) var count : Int = 0
   
   private var digitBits : UInt16 = 0
   
   init(_ on:Bool = false) {
-    if on { n = 9; digitBits = 0b111111111 }
+    if on { count = 9; digitBits = 0b111111111 }
+    else  { count = 0; digitBits = 0b000000000 }
   }
   
   init(_ bits:UInt16) {
     digitBits = bits
-    n = countBits()
+
+    count = 0
+    var mask : UInt16 = 1
+    for _ in 0..<9 {
+      if ( digitBits & mask ) != 0 { count += 1 }
+      mask *= 2
+    }
   }
   
   mutating func set(_ digit:Digit) {
     let m = mask(digit)
-    if digitBits & m == 0 { n += 1; digitBits |= m }
+    if digitBits & m == 0 { count += 1; digitBits |= m }
   }
   
   mutating func clear(_ digit:Digit) {
     let m = mask(digit)
-    if digitBits & m != 0 { n -= 1; digitBits &= ~m }
+    if digitBits & m != 0 { count -= 1; digitBits &= ~m }
   }
   
-  var isEmpty : Bool { return n==0 }
+  var isEmpty : Bool { return count==0 }
   
   func has(digit:Digit) -> Bool
   {
@@ -80,17 +87,6 @@ struct DigitSet
   func complement() -> DigitSet
   {
     return DigitSet(~self.digitBits)
-  }
-  
-  private func countBits() -> Int
-  {
-    var rval : Int  = 0
-    var mask : UInt16 = 1
-    for _ in 0..<9 {
-      if ( digitBits & mask ) != 0 { rval += 1 }
-      mask *= 2
-    }
-    return rval
   }
   
   private func mask(_ digit:Digit) -> UInt16
