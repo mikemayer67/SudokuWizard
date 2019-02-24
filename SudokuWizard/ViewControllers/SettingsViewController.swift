@@ -15,8 +15,8 @@ protocol SettingsViewControllerDelegate
 
 class SettingsViewController: UITableViewController
 {
-  @IBOutlet weak var updateButton: UIButton!
-  @IBOutlet weak var cancelButton: UIButton!
+  @IBOutlet weak var updateButton: UIBarButtonItem!
+  @IBOutlet weak var cancelButton: UIBarButtonItem!
   @IBOutlet weak var styleSegmentedControl: UISegmentedControl!
   @IBOutlet weak var autoMarkSwitch: UISwitch!
   @IBOutlet weak var autoMarkPolicy: UISegmentedControl!
@@ -67,7 +67,7 @@ class SettingsViewController: UITableViewController
     checkState()
   }
   
-  @IBAction func handleButton(_ sender: UIButton)
+  @IBAction func handleButton(_ sender: UIBarButtonItem)
   {
     if sender == updateButton
     {
@@ -115,7 +115,7 @@ class SettingsViewController: UITableViewController
     let dirty = delegate != nil && settings.differ(from: Settings.shared)
     
     updateButton.isEnabled = dirty
-    updateButton.isHidden  = (dirty == false)
+//    updateButton.isHidden  = (dirty == false)
   }
   
 }

@@ -13,7 +13,6 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
   @IBOutlet weak var startButton : UIButton!
   @IBOutlet weak var restartButton : UIButton!
   @IBOutlet weak var digitBox : DigitButtonBox!
-  @IBOutlet weak var digitBoxHeight : NSLayoutConstraint!
   @IBOutlet weak var statusLabel : StatusView!
   
   enum PuzzleState
@@ -42,10 +41,7 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
     
     add(button:startButton)
     add(button:restartButton)
-    
-    digitBox.addButtons()
-    digitBox.delegate = self
-    
+        
     gridView.errorFeedback = .conflict
     
     resetPuzzle()
@@ -54,8 +50,6 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
   override func viewDidLayoutSubviews()
   {
     super.viewDidLayoutSubviews()
-    
-    digitBox.layoutButtons()
     
     updateUI()
   }

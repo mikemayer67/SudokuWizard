@@ -9,7 +9,7 @@
 import UIKit
 
 class MainViewController: UIViewController, UINavigationControllerDelegate, SettingsViewControllerDelegate
-{
+{  
   var puzzle : SudokuWizardGridView? = nil
   
   enum NewPuzzleMethod
@@ -30,7 +30,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   override func viewDidAppear(_ animated: Bool)
   {
     print("Put this into an if condition once loading old puzzles is implemented: ",#file,":",#line)
-    startNewPuzzle(required:true)
+    startNewPuzzle(required:false)
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)

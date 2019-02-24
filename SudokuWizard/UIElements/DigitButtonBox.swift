@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol DigitButtonBoxDelegate
+@objc protocol DigitButtonBoxDelegate
 {
   func digitButtonBox(selected digit:Digit)
   func digitButtonBox(unselected digit:Digit)
@@ -37,9 +37,9 @@ class DigitButtonBox: UIView
   
   @IBOutlet weak var heightConstraint : NSLayoutConstraint!
   
-  private(set) var buttons = [DigitButton]()
+  @IBOutlet weak var delegate : DigitButtonBoxDelegate?
   
-  var delegate : DigitButtonBoxDelegate?
+  private(set) var buttons = [DigitButton]()
   
   var digits = DigitSet()
   
@@ -65,9 +65,11 @@ class DigitButtonBox: UIView
       if digits.count > 1 { deselectAll() }
     }
   }
-
-  func addButtons()
+  
+  override func awakeFromNib()
   {
+    super.awakeFromNib()
+    
     for d : Digit in 1...9
     {
       let btn = DigitButton(d)
@@ -87,6 +89,11 @@ class DigitButtonBox: UIView
     }
   }
   
+  override func didMoveToWindow() {
+    super.didMoveToWindow()
+    layoutButtons()
+  }
+  
   func layoutButtons()
   {
     let width = bounds.width
@@ -94,9 +101,9 @@ class DigitButtonBox: UIView
     
     let size = width / (9.0 + 10.0*buttonSep)
     let sep  = buttonSep * size
-      
-    heightConstraint.constant = size
-      
+    
+//    heightConstraint.constant = size
+    
     var xo = sep;
     for btn in buttons
     {

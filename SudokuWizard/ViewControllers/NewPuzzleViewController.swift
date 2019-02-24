@@ -49,7 +49,7 @@ class NewPuzzleViewController: UIViewController, SudokuWizardCellViewDelegate
     }
   }
   
-  @IBAction func handleCancel(_ sender: UIButton) {
+  @IBAction func handleCancel(_ sender: UIBarButtonItem) {
     if dirty {
       let alert = UIAlertController(title:"Discard Puzzle",
                                     message:"This will throw away this new puzzle",
