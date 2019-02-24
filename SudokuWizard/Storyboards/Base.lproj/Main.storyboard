@@ -124,7 +124,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="548"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TmA-gC-CBQ">
-                                        <rect key="frame" x="0.0" y="61.5" width="375" height="425"/>
+                                        <rect key="frame" x="0.0" y="70" width="375" height="408.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qAd-33-fs5" customClass="SudokuWizardGridView" customModule="SudokuWizard" customModuleProvider="target">
                                                 <rect key="frame" x="10" y="0.0" width="355" height="355"/>
@@ -134,10 +134,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Wl-Gl-E3E" customClass="DigitButtonBox" customModule="SudokuWizard" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="375" width="335" height="50"/>
+                                                <rect key="frame" x="20" y="375" width="335" height="33.5"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="kJb-fy-RFB"/>
+                                                    <constraint firstAttribute="width" secondItem="2Wl-Gl-E3E" secondAttribute="height" multiplier="10:1" id="1Up-B5-PR9"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="inactiveColor">
@@ -153,9 +153,6 @@
                                                         <color key="value" red="0.33333333329999998" green="0.098039215690000001" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <outlet property="heightConstraint" destination="kJb-fy-RFB" id="2kJ-Vh-Pqk"/>
-                                                </connections>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -484,7 +481,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="527"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z20-xu-WzW" userLabel="AlignmentBox">
-                                        <rect key="frame" x="0.0" y="23.5" width="375" height="480"/>
+                                        <rect key="frame" x="0.0" y="32" width="375" height="463.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ih0-bD-Epb" customClass="SudokuWizardGridView" customModule="SudokuWizard" customModuleProvider="target">
                                                 <rect key="frame" x="10" y="55" width="355" height="355"/>
@@ -494,10 +491,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Of-qf-cRQ" customClass="DigitButtonBox" customModule="SudokuWizard" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="430" width="335" height="50"/>
+                                                <rect key="frame" x="20" y="430" width="335" height="33.5"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="Nix-L9-wzG"/>
+                                                    <constraint firstAttribute="width" secondItem="2Of-qf-cRQ" secondAttribute="height" multiplier="10:1" id="hSp-lZ-DWK"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="tint">
@@ -515,7 +512,6 @@
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <outlet property="delegate" destination="Sw4-EA-bfS" id="RMi-42-pHY"/>
-                                                    <outlet property="heightConstraint" destination="Nix-L9-wzG" id="I0m-j3-zzn"/>
                                                 </connections>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="05X-I8-TiL" customClass="StatusView" customModule="SudokuWizard" customModuleProvider="target">

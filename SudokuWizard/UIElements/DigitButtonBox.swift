@@ -17,8 +17,6 @@ import UIKit
 @IBDesignable
 class DigitButtonBox: UIView
 {
-  let buttonSep = CGFloat(0.1)
-  
   @IBInspectable var tint : UIColor = UIColor.black {
     didSet { for b in buttons { b.tint = tint } }
   }
@@ -34,8 +32,6 @@ class DigitButtonBox: UIView
   @IBInspectable var inactiveColor : UIColor = UIColor.gray {
     didSet { for b in buttons { b.inactiveColor = inactiveColor } }
   }
-  
-  @IBOutlet weak var heightConstraint : NSLayoutConstraint!
   
   @IBOutlet weak var delegate : DigitButtonBoxDelegate?
   
@@ -89,26 +85,21 @@ class DigitButtonBox: UIView
     }
   }
   
-  override func didMoveToWindow() {
-    super.didMoveToWindow()
-    layoutButtons()
-  }
-  
-  func layoutButtons()
-  {
-    let width = bounds.width
-    guard width > 0.0 else { return }
+  override func layoutSubviews() {
+    super.layoutSubviews()
     
-    let size = width / (9.0 + 10.0*buttonSep)
-    let sep  = buttonSep * size
+    guard bounds.width > 0.0 else { return }
+    guard bounds.height > 0.0 else { return }
     
-//    heightConstraint.constant = size
+    let size = bounds.height
     
-    var xo = sep;
+    let buttonSep = ( bounds.width - 9.0 * size ) / 10.0
+    
+    var xo = buttonSep;
     for btn in buttons
     {
       btn.frame = CGRect(x:xo, y:0.0, width: size, height:size)
-      xo += sep + size
+      xo += buttonSep + size
     }
   }
   
