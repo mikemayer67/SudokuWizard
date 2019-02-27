@@ -14,8 +14,6 @@ class DigitButton: UIButton
   
   let fontName = UIFont.systemFont(ofSize: 12.0).fontName
   
-  var borderPath : UIBezierPath!
-  
   var tint           = UIColor.black  { didSet { self.setNeedsDisplay() } }
   var baseColor      = UIColor.white  { didSet { self.setNeedsDisplay() } }
   var highlightColor = UIColor.yellow { didSet { self.setNeedsDisplay() } }
@@ -35,19 +33,18 @@ class DigitButton: UIButton
   
   override var isEnabled : Bool {
     didSet {
-      if isEnabled != oldValue {
+      guard isEnabled != oldValue else { return }
       
-        if let bp = borderPath, isEnabled {
-          layer.shadowPath = bp.cgPath
-          layer.shadowOpacity = 0.5
-          layer.shadowOffset = CGSize(width:2.0, height:2.0)
-          layer.shadowRadius = 6.0
-          layer.masksToBounds = false
-        }
-        else
-        {
-          layer.shadowOpacity = 0.0
-        }
+      if isEnabled {
+        layer.shadowPath = borderPath.cgPath
+        layer.shadowOpacity = 0.5
+        layer.shadowOffset = CGSize(width:2.0, height:2.0)
+        layer.shadowRadius = 6.0
+        layer.masksToBounds = false
+      }
+      else
+      {
+        layer.shadowOpacity = 0.0
       }
     }
   }
@@ -58,19 +55,20 @@ class DigitButton: UIButton
     }
   }
   
-  override func draw(_ rect: CGRect)
-  {
-    super.draw(rect)
-    
-    let center = CGPoint(x: rect.origin.x + 0.5*rect.width, y: rect.origin.y + 0.5*rect.height)
-    let radius = 0.5 * min( rect.width, rect.height ) - 1.0
+  lazy var borderPath : UIBezierPath = {
+    let center = CGPoint(x: 0.5*bounds.width, y: 0.5*bounds.height)
+    let radius = 0.5 * min( bounds.width, bounds.height ) - 1.0
     
     let buttonBox = CGRect(x: center.x - radius, y: center.y - radius, width: 2.0*radius, height: 2.0*radius)
     
-    if borderPath == nil
-    {
-      borderPath = UIBezierPath(roundedRect: buttonBox, cornerRadius: 0.5*radius)
-    }
+    return UIBezierPath(roundedRect: buttonBox, cornerRadius: 0.5*radius)
+  } ()
+  
+
+  
+  override func draw(_ rect: CGRect)
+  {
+    super.draw(rect)
     
     var fontColor = inactiveColor
     var bgColor = baseColor

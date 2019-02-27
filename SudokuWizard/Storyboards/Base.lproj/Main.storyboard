@@ -25,35 +25,77 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZLD-1v-DS7" userLabel="RedoButtons">
                                         <rect key="frame" x="0.0" y="0.0" width="135" height="35"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CGf-Sm-nrl" userLabel="Undo">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CGf-Sm-nrl" customClass="IconButton" customModule="SudokuWizard" customModuleProvider="target">
                                                 <rect key="frame" x="5" y="0.0" width="35" height="35"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="lE5-cF-HfI"/>
                                                     <constraint firstAttribute="width" secondItem="CGf-Sm-nrl" secondAttribute="height" id="lyr-xf-Ecy"/>
                                                     <constraint firstAttribute="width" constant="35" id="m9j-z7-gA2"/>
                                                 </constraints>
                                                 <state key="normal" image="icons8-undo.png"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="numSegments">
+                                                        <integer key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="segment">
+                                                        <integer key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="handleUndoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g5u-Gw-1Wh"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WQx-aj-ePo" userLabel="UndoRedo">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WQx-aj-ePo" customClass="IconButton" customModule="SudokuWizard" customModuleProvider="target">
                                                 <rect key="frame" x="50" y="0.0" width="35" height="35"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="3i4-S5-MJB"/>
                                                     <constraint firstAttribute="height" constant="35" id="sze-PH-LHA"/>
                                                     <constraint firstAttribute="width" secondItem="WQx-aj-ePo" secondAttribute="height" id="wz0-57-l1y"/>
                                                 </constraints>
                                                 <state key="normal" image="icons8-undo-redo.png"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="numSegments">
+                                                        <integer key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="segment">
+                                                        <integer key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="handleHistoryButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ym0-r9-drN"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gWz-yC-jRF" userLabel="Redo">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gWz-yC-jRF" customClass="IconButton" customModule="SudokuWizard" customModuleProvider="target">
                                                 <rect key="frame" x="95" y="0.0" width="35" height="35"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="JU3-vZ-SEV"/>
                                                     <constraint firstAttribute="width" secondItem="gWz-yC-jRF" secondAttribute="height" id="Wfp-vg-vSH"/>
                                                     <constraint firstAttribute="height" constant="35" id="lCl-hK-DR0"/>
                                                 </constraints>
                                                 <state key="normal" image="icons8-redo.png"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="numSegments">
+                                                        <integer key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="segment">
+                                                        <integer key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="handleRedoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0N3-6H-Fht"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -73,9 +115,9 @@
                                             <constraint firstItem="gWz-yC-jRF" firstAttribute="top" secondItem="ZLD-1v-DS7" secondAttribute="top" id="ziY-Hh-iuH"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ufv-Ox-maj" userLabel="MarkActions">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ufv-Ox-maj" customClass="IconButton" customModule="SudokuWizard" customModuleProvider="target">
                                         <rect key="frame" x="172.5" y="0.0" width="35" height="35"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ufv-Ox-maj" secondAttribute="height" id="Jxa-ql-zKL"/>
                                             <constraint firstAttribute="width" constant="35" id="ZeZ-lo-HHm"/>
@@ -83,30 +125,74 @@
                                         </constraints>
                                         <color key="tintColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="icons8-squared_menu_filled.png"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="numSegments">
+                                                <integer key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="segment">
+                                                <integer key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="handleActionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xgf-Ld-VT8"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ixs-Kg-BNf" userLabel="PenPencilButtons">
                                         <rect key="frame" x="245" y="0.0" width="90" height="35"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juC-xX-EAi" userLabel="Pencil">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juC-xX-EAi" customClass="IconButton" customModule="SudokuWizard" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="45" height="35"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="glN-SS-XOa"/>
                                                     <constraint firstAttribute="width" constant="45" id="gxw-PS-nCf"/>
                                                 </constraints>
                                                 <color key="tintColor" red="0.33333333329999998" green="0.098039215690000001" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" image="icons8-pencil_tip.png"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="numSegments">
+                                                        <integer key="value" value="2"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="segment">
+                                                        <integer key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="handlePencilButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="N7Q-cO-NuN"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CBW-op-frp" userLabel="Pen">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CBW-op-frp" customClass="IconButton" customModule="SudokuWizard" customModuleProvider="target">
                                                 <rect key="frame" x="45" y="0.0" width="45" height="35"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="bpY-7R-78q"/>
                                                     <constraint firstAttribute="width" constant="45" id="tQd-Le-dZ2"/>
                                                 </constraints>
                                                 <color key="tintColor" red="0.33333333329999998" green="0.098039215690000001" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" image="icons8-pen.png"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="numSegments">
+                                                        <integer key="value" value="2"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="segment">
+                                                        <integer key="value" value="2"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="handlePenButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Ef-3A-ijo"/>
+                                                </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="juC-xX-EAi" firstAttribute="top" secondItem="ixs-Kg-BNf" secondAttribute="top" id="0kY-Ll-bpL"/>
                                             <constraint firstItem="juC-xX-EAi" firstAttribute="leading" secondItem="ixs-Kg-BNf" secondAttribute="leading" id="4lR-s0-uHw"/>
@@ -211,8 +297,16 @@
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="actionMenuButton" destination="ufv-Ox-maj" id="N7R-Ex-Wxz"/>
+                        <outlet property="digitBox" destination="2Wl-Gl-E3E" id="PXD-8a-Abo"/>
+                        <outlet property="gridView" destination="qAd-33-fs5" id="orB-YG-uGC"/>
+                        <outlet property="histButton" destination="WQx-aj-ePo" id="2hg-3s-ebY"/>
                         <outlet property="newPuzzleButton" destination="vzw-Y0-QVQ" id="TZ2-VQ-oEi"/>
+                        <outlet property="penButton" destination="CBW-op-frp" id="U91-bJ-NSK"/>
+                        <outlet property="pencilButton" destination="juC-xX-EAi" id="cK0-oj-wL9"/>
                         <outlet property="puzzleSettingsButton" destination="vsN-Q1-QrK" id="dhQ-c5-ajW"/>
+                        <outlet property="redoButton" destination="gWz-yC-jRF" id="dYr-5W-xvf"/>
+                        <outlet property="undoButton" destination="CGf-Sm-nrl" id="fXA-pZ-yo5"/>
                         <segue destination="Sw4-EA-bfS" kind="show" identifier="showNewPuzzle" id="Ml1-Zw-KAI"/>
                         <segue destination="Mrr-Mm-ygk" kind="show" identifier="showScanPuzzle" id="WhI-5f-UZn"/>
                         <segue destination="9Tc-y0-J2h" kind="show" identifier="showRandomPuzzle" id="72l-BF-TIo"/>

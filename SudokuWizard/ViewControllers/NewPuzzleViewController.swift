@@ -29,7 +29,7 @@ class NewPuzzleViewController: UIViewController, SudokuWizardCellViewDelegate
   override func viewDidLoad()
   {
     super.viewDidLoad()
-    for cell in gridView.cellViews { cell.delegate = self }
+    gridView.cellDelegate = self
   }
   
   override func viewDidLayoutSubviews() {

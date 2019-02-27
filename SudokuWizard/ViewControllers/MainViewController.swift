@@ -8,15 +8,32 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UINavigationControllerDelegate, SettingsViewControllerDelegate
-{  
-  var puzzle : SudokuWizardGridView? = nil
+class MainViewController: UIViewController, UINavigationControllerDelegate, SettingsViewControllerDelegate, SudokuWizardCellViewDelegate
+{
+  @IBOutlet weak var undoButton: IconButton!
+  @IBOutlet weak var histButton: IconButton!
+  @IBOutlet weak var redoButton: IconButton!
+  @IBOutlet weak var actionMenuButton: IconButton!
+  @IBOutlet weak var pencilButton: IconButton!
+  @IBOutlet weak var penButton: IconButton!
+  
+  @IBOutlet weak var gridView: SudokuWizardGridView!
+  @IBOutlet weak var digitBox: DigitButtonBox!
+  
+  @IBOutlet weak var newPuzzleButton: UIBarButtonItem!
+  @IBOutlet weak var puzzleSettingsButton: UIBarButtonItem!
   
   enum NewPuzzleMethod
   {
     case manual
     case random
     case scan
+  }
+  
+  enum UserEntryTool
+  {
+    case pencil
+    case pen
   }
   
   override func awakeFromNib()
@@ -27,9 +44,16 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     self.modalPresentationStyle = .overCurrentContext
   }
   
+  override func viewDidLoad()
+  {
+    super.viewDidLoad()
+    gridView.cellDelegate = self
+  }
+  
   override func viewDidAppear(_ animated: Bool)
   {
     print("Put this into an if condition once loading old puzzles is implemented: ",#file,":",#line)
+    updateUI()
     startNewPuzzle(required:false)
   }
   
@@ -45,7 +69,29 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     }
   }
   
-  // MARK: - Navigation Controller Delegate Methods
+  // MARK: - UI State Machine
+  
+  private var entryTool = UserEntryTool.pen
+  {
+    didSet {
+      updateUI()
+    }
+  }
+  
+  func updateUI()
+  {
+    undoButton.isEnabled = false
+    histButton.isEnabled = false
+    redoButton.isEnabled = false
+    
+    actionMenuButton.isEnabled = true
+    
+    penButton.inverted    = entryTool == .pen
+    pencilButton.inverted = entryTool == .pencil
+  }
+  
+  
+  // MARK: - New Puzzle methods
   
   func navigationController(_ navigationController: UINavigationController,
                             animationControllerFor operation: UINavigationController.Operation,
@@ -65,17 +111,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     Settings.shared = settings
     print("Settings changed -- do something with them")
   }
-  
-  // MARK: - New Puzzle outlets
-  
-  @IBOutlet weak var newPuzzleButton: UIBarButtonItem!
-  @IBOutlet weak var puzzleSettingsButton: UIBarButtonItem!
-  
-  // MARK: - New Puzzle methods
+
   
   @IBAction func handleNewPuzzle(_ sender: UIBarButtonItem)
   {
-    if puzzle?.state == .Populated
+    if gridView?.state == .Populated
     {
       let alert = UIAlertController(title:"Discard Puzzle",
                                     message:"Replace active puzzle with new puzzle",
@@ -111,5 +151,57 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     self.present(alert,animated: true)
   }
   
+  // MARK: - Button Handlers
+  
+  @IBAction func handleUndoButton(_ sender: UIButton)
+  {
+    print("Add handleUndoButton logic")
+  }
+  
+  @IBAction func handleRedoButton(_ sender: UIButton)
+  {
+    print("Add handleRedoButton logic")
+  }
+  
+  @IBAction func handleHistoryButton(_ sender: UIButton)
+  {    print("Add handleHistoryutton logic")
+
+  }
+  
+  @IBAction func handleActionButton(_ sender: UIButton)
+  {
+    print("Add handleActionButton logic")
+  }
+  
+  @IBAction func handlePencilButton(_ sender: UIButton)
+  {
+    if entryMode == .digits { entryMode = .marks }
+  }
+  
+  @IBAction func handlePenButton(_ sender: UIButton)
+  {
+    if entryMode == .marks { entryMode = .digits }
+  }
+  
+  func sudokuWizardCellView(selected cell: SudokuWizardCellView)
+  {
+    gridView.selectedCell = cell
+    print("complete sudokuWizardCellView(selected cell: SudokuWizardCellView)")
+    
+//    var digit : Digit?
+//
+//    switch cell.state {
+//    case .locked(let d): digit = d
+//    case .filled(let d): digit = d
+//    case .empty: digit = nil
+//    }
+//    
+//    digitBox.select(digit: digit)
+//    updateUI()
+  }
+  
+  func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView) {
+    gridView.track(touch: touch)
+  }
 }
 

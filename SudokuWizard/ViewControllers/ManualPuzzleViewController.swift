@@ -170,8 +170,13 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
   
   @IBAction func handleRestart(_ sender: UIButton)
   {
-    print("MPVC: handle restart")
-    resetPuzzle()
+    let alert = UIAlertController(title:"Restart Puzzle",
+                                  message:"Clear all digits from the puzzle",
+                                  preferredStyle:.alert)
+    alert.addAction( UIAlertAction(title: "OK", style:.destructive) { _ in self.resetPuzzle() } )
+    alert.addAction( UIAlertAction(title:"Cancel", style:.cancel) )
+    
+    self.present(alert,animated: true)
   }
   
   override func sudokuWizardCellView(selected cell: SudokuWizardCellView)

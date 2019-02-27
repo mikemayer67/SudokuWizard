@@ -36,6 +36,13 @@ class SudokuWizardGridView: UIView
   var bgView : UIView!
   var cellViews = [SudokuWizardCellView]()
   
+  var cellDelegate : SudokuWizardCellViewDelegate?
+  {
+    didSet {
+      for c in cellViews { c.delegate = cellDelegate }
+    }
+  }
+  
   var highlightActiveDigit = true
   {
     didSet { updateHighlights() }
