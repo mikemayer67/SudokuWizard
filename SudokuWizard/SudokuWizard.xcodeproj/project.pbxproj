@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		270037AC2222D9FD00205DB8 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270037AB2222D9FD00205DB8 /* IconButton.swift */; };
+		270037AE2226D1D100205DB8 /* UndoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270037AD2226D1D100205DB8 /* UndoManager.swift */; };
 		27022B5B21A7B6970078588D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27022B5A21A7B6970078588D /* AppDelegate.swift */; };
 		27022B5D21A7B6970078588D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27022B5C21A7B6970078588D /* MainViewController.swift */; };
 		27022B6021A7B6970078588D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27022B5E21A7B6970078588D /* Main.storyboard */; };
@@ -53,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		270037AB2222D9FD00205DB8 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
+		270037AD2226D1D100205DB8 /* UndoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UndoManager.swift; sourceTree = "<group>"; };
 		27022B5721A7B6970078588D /* SudokuWizard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SudokuWizard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27022B5A21A7B6970078588D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27022B5C21A7B6970078588D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				27E94DAD21DBD76900D0C4EE /* RandomSudoku.swift */,
 				27E94DAF21E946C900D0C4EE /* SudokuGrader.swift */,
 				27E94DB521ECD3E700D0C4EE /* DigitSet.swift */,
+				270037AD2226D1D100205DB8 /* UndoManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				27E94DB021E946C900D0C4EE /* SudokuGrader.swift in Sources */,
 				27D1E930220DCE29001A1565 /* EditorBackgroundView.swift in Sources */,
 				27A1D63B21BA25A8007AF213 /* SudokuWizardCellView.swift in Sources */,
+				270037AE2226D1D100205DB8 /* UndoManager.swift in Sources */,
 				2734F55621CBBCC5005DA954 /* Transitions.swift in Sources */,
 				270037AC2222D9FD00205DB8 /* IconButton.swift in Sources */,
 				27022B5D21A7B6970078588D /* MainViewController.swift in Sources */,

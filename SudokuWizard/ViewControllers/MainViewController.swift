@@ -8,7 +8,8 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UINavigationControllerDelegate, SettingsViewControllerDelegate, SudokuWizardCellViewDelegate
+class MainViewController: UIViewController, UINavigationControllerDelegate, SettingsViewControllerDelegate,
+  SudokuWizardCellViewDelegate, EditorBackgroundViewDelegate
 {
   @IBOutlet weak var undoButton: IconButton!
   @IBOutlet weak var histButton: IconButton!
@@ -40,6 +41,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   {
     super.awakeFromNib()
     
+    (view as? EditorBackgroundView)?.delegate = self
+    
     self.navigationController?.delegate = self
     self.modalPresentationStyle = .overCurrentContext
   }
@@ -52,44 +55,45 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   
   override func viewDidAppear(_ animated: Bool)
   {
-    print("Put this into an if condition once loading old puzzles is implemented: ",#file,":",#line)
     updateUI()
-    startNewPuzzle(required:false)
+    
+    if gridView.isEmpty { startNewPuzzle(required:true) }
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
   {
-    if let dest = segue.destination as? SettingsViewController
-    {
+    if let dest = segue.destination as? SettingsViewController {
       dest.delegate = self
-    }
-    else
-    {
-      print("Prepare to segue to: ",segue.destination)
+    } else if let dest = segue.destination as? NewPuzzleViewController {
+      dest.puzzleController = self
+    }  else {
+      fatalError("Unknown segue destinatin: \(segue.destination)")
     }
   }
   
   // MARK: - UI State Machine
   
-  private var entryTool = UserEntryTool.pen
-  {
-    didSet {
-      updateUI()
-    }
-  }
+  private var entryTool = UserEntryTool.pen { didSet { updateUI() } }
   
   func updateUI()
   {
-    undoButton.isEnabled = false
-    histButton.isEnabled = false
-    redoButton.isEnabled = false
+    let um = UndoManager.shared
+    undoButton.isEnabled = um.hasUndo
+    histButton.isEnabled = um.hasUndo || um.hasRedo
+    redoButton.isEnabled = um.hasRedo
     
     actionMenuButton.isEnabled = true
     
-    penButton.inverted    = entryTool == .pen
-    pencilButton.inverted = entryTool == .pencil
+    penButton.inverted    = entryTool == .pencil
+    pencilButton.inverted = entryTool == .pen
   }
   
+  func handleBackgroundTap()
+  {
+    gridView.selectedCell = nil
+    digitBox.deselectAll()
+    digitBox.enabled = false
+  }
   
   // MARK: - New Puzzle methods
   
@@ -115,20 +119,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   
   @IBAction func handleNewPuzzle(_ sender: UIBarButtonItem)
   {
-    if gridView?.state == .Populated
-    {
-      let alert = UIAlertController(title:"Discard Puzzle",
-                                    message:"Replace active puzzle with new puzzle",
-                                    preferredStyle:.alert)
-      alert.addAction( UIAlertAction(title: "OK", style:.destructive) { _ in self.startNewPuzzle() } )
-      alert.addAction( UIAlertAction(title:"Cancel", style:.cancel) )
-      
-      self.present(alert,animated: true)
-    }
-    else
-    {
-      startNewPuzzle()
-    }
+    startNewPuzzle()
   }
   
   func startNewPuzzle(required:Bool=false)
@@ -164,29 +155,41 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   }
   
   @IBAction func handleHistoryButton(_ sender: UIButton)
-  {    print("Add handleHistoryutton logic")
-
+  {
+    print("Add history logic")
   }
   
   @IBAction func handleActionButton(_ sender: UIButton)
   {
-    print("Add handleActionButton logic")
+    let alert = UIAlertController(title:nil,
+                                  message:nil,
+                                  preferredStyle: .actionSheet)
+    
+    alert.addAction( UIAlertAction(title: "Start Over", style: .default)
+    { _ in print("Restart Puzzle") })
+    alert.addAction( UIAlertAction(title: "Erase All Marks", style:.default)
+    { _ in print( "Clear All Marks" ) })
+    alert.addAction( UIAlertAction(title: "Compute All Marks", style:.default)
+    { _ in print( "Compute All Marks" ) })
+    alert.addAction( UIAlertAction(title:"Cancel", style:.cancel) )
+    
+    self.present(alert,animated:true)
   }
   
   @IBAction func handlePencilButton(_ sender: UIButton)
   {
-    if entryMode == .digits { entryMode = .marks }
+    if entryTool == .pen { entryTool = .pencil }
   }
   
   @IBAction func handlePenButton(_ sender: UIButton)
   {
-    if entryMode == .marks { entryMode = .digits }
+    if entryTool == .pencil { entryTool = .pen }
   }
   
   func sudokuWizardCellView(selected cell: SudokuWizardCellView)
   {
     gridView.selectedCell = cell
-    print("complete sudokuWizardCellView(selected cell: SudokuWizardCellView)")
+    print("complete sudokuWizardCellView(selected cell: \(cell.row ?? -1), \(cell.col ?? -1)")
     
 //    var digit : Digit?
 //
@@ -202,6 +205,13 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   
   func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView) {
     gridView.track(touch: touch)
+  }
+  
+  // MARK: - Puzzle Logic
+  
+  func restart(with newPuzzle:SudokuWizardGridView)
+  {
+    guard gridView.copyPuzzle(from: newPuzzle) else { return }
   }
 }
 

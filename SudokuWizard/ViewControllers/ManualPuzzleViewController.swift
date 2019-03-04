@@ -29,10 +29,7 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    if let v = view as? EditorBackgroundView
-    {
-      v.delegate = self
-    }
+    (view as? EditorBackgroundView)?.delegate = self
   }
   
   override func viewDidLoad()
@@ -144,7 +141,10 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
         case .MultipleSolutions: state = .notUnique
         case .NoSolution:        state = .noSolution
         case .UniqueSolution(_):
-          let solution = dlx.sudokuSolution(0)
+          let solution = dlx.sudokuSolution()
+          
+          gridView.addSolution(solution)
+          
           if let grader = SudokuGrader(puzzle,solution)
           {
             let difficulty = Int(grader.difficulty)
@@ -164,7 +164,7 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
   }
     
   @IBAction func handleStart(_ sender: UIButton) {
-    print("MPVC: handle start")
+    puzzleController?.restart(with: gridView)
     dismiss()
   }
   
@@ -198,5 +198,39 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
   override func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView)
   {
     gridView.track(touch: touch)
+  }
+  
+  // MARK: - Test Hack
+  
+  @IBOutlet weak var hackButton : UIButton?
+  
+  @IBAction func testHack(_ sender: UIButton)
+  {
+    var demos : [String] = [String]()
+    demos.append("74..9.2.83.8..2....5.8....6..6....2.2.......5.1....4..1....3.6....9..8.18.9.1..53")
+    demos.append(".4..9.2..3.8..2....5.8....6..6....2.2.......5.1....4..1....3.6....9....18.9.1..53")
+    
+    let demo = demos[ Int.random(in: 0...1) ]
+    
+    let digits = try! demo.sudokuGrid()
+    
+    resetPuzzle()
+    for i in 0...80
+    {
+      let c = gridView.cellViews[i]
+      sudokuWizardCellView(selected: c )
+      
+      if let d = digits[i/9][i%9] {
+        digitBox.select(digit: d)
+        c.state = .filled(d)
+      }
+      else {
+        digitBox.select(digit: nil)
+      }
+    }
+    
+    updateState()
+    
+    handleBackgroundTap()
   }
 }

@@ -11,6 +11,8 @@ import UIKit
 class NewPuzzleViewController: UIViewController, SudokuWizardCellViewDelegate
 {
   @IBOutlet weak var gridView: SudokuWizardGridView!
+  
+  var puzzleController : MainViewController?
     
   private var buttons = [UIButton]()
   
@@ -71,8 +73,6 @@ class NewPuzzleViewController: UIViewController, SudokuWizardCellViewDelegate
     self.navigationController?.popViewController(animated: true)
   }
   
-  
   func sudokuWizardCellView(selected cell: SudokuWizardCellView) { cell.selected = false }
   func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView) { }
-
 }

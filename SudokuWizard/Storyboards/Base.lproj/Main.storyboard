@@ -577,6 +577,12 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z20-xu-WzW" userLabel="AlignmentBox">
                                         <rect key="frame" x="0.0" y="32" width="375" height="463.5"/>
                                         <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MzP-rk-iPg">
+                                                <rect key="frame" x="343" y="0.0" width="22" height="22"/>
+                                                <connections>
+                                                    <action selector="testHack:" destination="Sw4-EA-bfS" eventType="touchUpInside" id="CX5-KY-wBe"/>
+                                                </connections>
+                                            </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ih0-bD-Epb" customClass="SudokuWizardGridView" customModule="SudokuWizard" customModuleProvider="target">
                                                 <rect key="frame" x="10" y="55" width="355" height="355"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -628,10 +634,12 @@
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="2Of-qf-cRQ" secondAttribute="bottom" id="1Ce-Uw-jVR"/>
                                             <constraint firstItem="05X-I8-TiL" firstAttribute="top" secondItem="z20-xu-WzW" secondAttribute="top" id="2Wy-DJ-qH9"/>
+                                            <constraint firstAttribute="trailing" secondItem="MzP-rk-iPg" secondAttribute="trailing" constant="10" id="7AG-yz-TEl"/>
                                             <constraint firstAttribute="trailing" secondItem="Ih0-bD-Epb" secondAttribute="trailing" constant="10" id="9C8-GD-9d4"/>
                                             <constraint firstItem="05X-I8-TiL" firstAttribute="centerX" secondItem="Ih0-bD-Epb" secondAttribute="centerX" id="UKJ-2z-9PX"/>
                                             <constraint firstItem="2Of-qf-cRQ" firstAttribute="leading" secondItem="z20-xu-WzW" secondAttribute="leading" constant="20" id="V0z-aq-ak4"/>
                                             <constraint firstItem="Ih0-bD-Epb" firstAttribute="top" secondItem="05X-I8-TiL" secondAttribute="bottom" constant="20" id="dep-BO-h5f"/>
+                                            <constraint firstItem="MzP-rk-iPg" firstAttribute="top" secondItem="z20-xu-WzW" secondAttribute="top" id="hCR-2B-06t"/>
                                             <constraint firstItem="2Of-qf-cRQ" firstAttribute="top" secondItem="Ih0-bD-Epb" secondAttribute="bottom" constant="20" id="nhK-jD-USy"/>
                                             <constraint firstAttribute="trailing" secondItem="2Of-qf-cRQ" secondAttribute="trailing" constant="20" id="t45-Je-hlj"/>
                                             <constraint firstItem="Ih0-bD-Epb" firstAttribute="leading" secondItem="z20-xu-WzW" secondAttribute="leading" constant="10" id="wKE-FG-WmK"/>

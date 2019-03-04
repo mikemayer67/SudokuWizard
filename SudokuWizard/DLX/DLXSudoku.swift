@@ -17,8 +17,12 @@ class DLXSudoku : DLX
   typealias Digit = UInt8
   typealias Grid  = [[Digit?]]
   
+  var givens : Grid
+  
   init( _ grid:Grid ) throws
   {
+    givens = grid
+    
     var uncovered = [[Int]]();
     
     for row in 0...8 {
@@ -65,9 +69,14 @@ class DLXSudoku : DLX
     try self.init(grid)
   }
   
-  func sudokuSolution(_ n:Int) -> SudokuGrid
+  func sudokuSolution(_ n:Int = 0) -> SudokuGrid
   {
-    var rval = SudokuGrid(repeating: Digits(repeating: nil, count: 9), count: 9)
+    var rval = SudokuGrid(repeating: [Digit?](repeating: nil, count: 9), count: 9)
+    for r in 0...8 {
+      for c in 0...8 {
+        rval[r][c] = givens[r][c]
+      }
+    }
     
     if n < solutions.count {
       let rows = solutions[n]

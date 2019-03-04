@@ -32,9 +32,10 @@ class RandomPuzzleViewController: NewPuzzleViewController
   {
     generate()
   }
-  
+    
   @IBAction func handleStart(_ sender: UIButton)
   {
+    puzzleController?.restart(with: gridView)
     dismiss()
   }
   

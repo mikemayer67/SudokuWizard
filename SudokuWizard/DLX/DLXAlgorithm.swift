@@ -55,10 +55,13 @@ class DLXAlgorithm : Operation
       if audit {
         switch auditStatus {
         case .NoSolution:
-          auditStatus = .UniqueSolution(Q.sorted())
+          let solution = Q.sorted()
+          auditStatus = .UniqueSolution(solution)
+          dlx.addSolution(solution)
           return
         case .UniqueSolution(_):
           auditStatus = .MultipleSolutions
+          dlx.resetSolutions()
           return
         case .MultipleSolutions:
           fatalError("Should never get here \(#file):\(#line)")

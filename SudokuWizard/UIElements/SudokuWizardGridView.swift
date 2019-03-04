@@ -14,13 +14,6 @@ class SudokuWizardGridView: UIView
   
   // MARK: -
   
-  enum GridState
-  {
-    case Empty
-    case Populated
-    case Solved
-  }
-  
   class BackgroundView: UIView
   {
     override func draw(_ rect: CGRect) {
@@ -31,7 +24,23 @@ class SudokuWizardGridView: UIView
   
   // MARK: -
   
-  private(set) var state = GridState.Empty
+  var isEmpty : Bool {
+    get {
+      for c in cellViews {
+        guard case .empty = c.state else { return false }
+      }
+      return true
+    }
+  }
+  
+  var isSolved : Bool {
+    get {
+      for c in cellViews {
+        if case .empty = c.state { return false }
+      }
+      return true
+    }
+  }
   
   var bgView : UIView!
   var cellViews = [SudokuWizardCellView]()
@@ -189,8 +198,6 @@ class SudokuWizardGridView: UIView
       cell.clearAllMarks()
       cell.correctDigit = nil
     }
-    
-    state = .Empty
     selectedCell = nil
   }
   
@@ -209,20 +216,10 @@ class SudokuWizardGridView: UIView
       }
     }
     
-    if let s = solution
-    {
-      for i in 0...80 {
-        guard let d = s[i/9][i%9] else {
-          throw SudokuWizardError.InvalidPuzzle("Puzzle solution must contiain only digits 1-9")
-        }
-        cellViews[i].correctDigit = d
-      }
-    }
+    if let s = solution { addSolution(s) }
     
     computeAllMarks()
     findAllErrors()
-    
-    state = .Populated
   }
   
   var puzzle : SudokuGrid {
@@ -236,6 +233,45 @@ class SudokuWizardGridView: UIView
       }
     }
     return rval
+  }
+  
+  func addSolution(_ solution:SudokuGrid)
+  {
+    for i in 0...80 {
+      let d = solution[i/9][i%9]
+      cellViews[i].correctDigit = d
+    }
+  }
+  
+  func copyPuzzle(from truth:SudokuWizardGridView) -> Bool
+  {
+    if truth.isEmpty {
+      print("Attempted to copy empty puzzle \(#file):\(#line)")
+      return false
+    }
+    
+    for cell in truth.cellViews {
+      if cell.correctDigit == nil {
+        print("Attempted topy copy from puzzle without a known solution for (\(cell.row!),\(cell.col!))")
+        return false
+      }
+    }
+    
+    selectedCell = nil
+    clear()
+    
+    for i in 0...80 {
+      let c = cellViews[i]
+      let t = truth.cellViews[i]
+      
+      switch t.state {
+      case .empty:         c.state = .empty
+      case .filled(let d): c.state = .locked(d)
+      case .locked(let d): c.state = .locked(d)
+      }
+    }
+    
+    return true
   }
   
   // MARK: -
