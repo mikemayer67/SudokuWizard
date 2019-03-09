@@ -182,6 +182,25 @@ class SudokuWizardGridView: UIView
       }
     }
     
+    for r in 0...8 {
+      for c in 0...8 {
+        let cell = cellViews[9*r+c]
+        
+        let br = 3*(r/3)  // row index of NW cell in the current box
+        let bc = 3*(c/3)  // col index of NW cell in the current box
+        
+        for i in 0...8 {
+          if i != c { cell.addPeer(cell: cellViews[9*r + i]) }
+          if i != r { cell.addPeer(cell: cellViews[9*i + c]) }
+          
+          let ri = br + i/3
+          let ci = bc + i%3
+          
+          if ri != r, ci != c { cell.addPeer(cell: cellViews[9*ri + ci]) }
+        }
+      }
+    }
+    
     // MARK: popup controller
     
   }
@@ -269,6 +288,8 @@ class SudokuWizardGridView: UIView
       case .filled(let d): c.state = .locked(d)
       case .locked(let d): c.state = .locked(d)
       }
+      
+      c.correctDigit = t.correctDigit
     }
     
     return true
@@ -291,30 +312,18 @@ class SudokuWizardGridView: UIView
     var marks = [[Bool]](repeating: [Bool](repeating: true, count: 9), count: 81)
     
     // loop over grid cells, update marks based on values
-    cellViews.forEach { cell in
-      if case .empty = cell.state { return }
-      
-      let r = cell.row!
-      let c = cell.col!
-      let d = Int(cell.digit!)
-      
-      let br = 3*(r/3)  // row index of NW corner of current box
-      let bc = 3*(c/3)  // col index of NW corner of current box
-      
-      for i in 0...8 {
-        marks[9*r + c][i] = false  // clear all marks in current cell
-        
-        marks[9*r + i][d-1] = false  // clear v-mark in current column
-        marks[9*i + c][d-1] = false  // clear v-mark in current row
-        
-        let ri = i/3  // ith row offset in current box
-        let ci = i%3  // ith col offset in current box
-        
-        marks[9*(br+ri) + (bc+ci)][d-1] = false // clear v-mark in current box
+    for cell in cellViews
+    {
+      if let digit = cell.digit
+      {
+        let d = Int(digit)-1
+        for i    in 0...8      { marks[ 9*cell.row! + cell.col! ][i] = false }
+        for peer in cell.peers { marks[ 9*peer.row! + peer.col! ][d] = false }
       }
     }
     
-    for i in 0...80 {
+    for i in 0...80
+    {
       if markStrategy == .conflicted {
         for j in 0...8 { marks[i][j] = !marks[i][j] }
       }
@@ -329,26 +338,11 @@ class SudokuWizardGridView: UIView
   
   func handleValueChange(for cell:SudokuWizardCellView)
   {
-    let r = cell.row!
-    let c = cell.col!
-    
-    let br = 3*(r/3)  // row index of NW corner of current box
-    let bc = 3*(c/3)  // col index of NW corner of current box
-    
-    for i in 0...8 {
-      if i != c { update(cellViews[9*r + i] ) }
-      if i != r { update(cellViews[9*i + c] ) }
-      
-      let ri = i/3  // ith row offset in current box
-      let ci = i%3  // ith col offset in current box
-      update(cellViews[9*(br+ri) + (bc+ci)] )
+    for c in cell.peers
+    {
+      checkForErrors(for: c)
+      updateMarks(for: c)
     }
-  }
-  
-  func update(_ cell:SudokuWizardCellView)
-  {
-    checkForErrors(for:cell)
-    updateMarks(for:cell)
   }
   
   func checkForErrors(for cell:SudokuWizardCellView)
@@ -357,6 +351,7 @@ class SudokuWizardGridView: UIView
     
     if errorFeedback == .none { return }
     
+    // wrong value
     if errorFeedback == .error
     {
       if let d = cell.digit, let cd = cell.correctDigit, d != cd
@@ -366,25 +361,14 @@ class SudokuWizardGridView: UIView
       }
     }
     
-    let r = cell.row!
-    let c = cell.col!
-    
+    // conflicted value
     guard let d = cell.digit else { return }
-    
-    let br = 3*(r/3)  // row index of NW corner of current box
-    let bc = 3*(c/3)  // col index of NW corner of current box
-    
-    for i in 0...8 {
-      let rowCell = cellViews[9*r + i]
-      let colCell = cellViews[9*i + c]
-      
-      let ri = i/3  // ith row offset in current box
-      let ci = i%3  // ith col offset in current box
-      
-      let boxCell = cellViews[9*(br+ri)+(bc+ci)]
-      
-      for tc in [rowCell,colCell,boxCell] {
-        if tc !== cell, tc.digit == d { cell.errant = true; return }
+
+    for peer in cell.peers
+    {
+      if peer.digit == d {
+        cell.errant = true
+        return
       }
     }
   }
@@ -393,23 +377,11 @@ class SudokuWizardGridView: UIView
   {
     guard markStrategy != .manual else { return }
     
-    let r = cell.row!
-    let c = cell.col!
-    
-    let br = 3*(r/3)  // row index of NW corner of current box
-    let bc = 3*(c/3)  // col index of NW corner of current box
-    
     var marks = [Bool](repeating:true,count:9)
     
     for m : Digit in 1...9 {
-      let j = Int(m)-1
-      for i in 0...8 {
-        if cellViews[9*r + i].digit == m { marks[j] = false; break }
-        if cellViews[9*i + c].digit == m { marks[j] = false; break }
-        
-        let ri = i/3  // ith row offset in current box
-        let ci = i%3  // ith col offset in current box
-        if cellViews[9*(br+ri)+(bc+ci)].digit == m { marks[j] = false; break }
+      for peer in cell.peers {
+        if peer.digit == m { marks[ Int(m)-1 ] = false; break}
       }
     }
     if markStrategy == .conflicted {

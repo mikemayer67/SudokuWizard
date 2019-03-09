@@ -54,7 +54,7 @@ class RandomPuzzleViewController: NewPuzzleViewController
       DispatchQueue.main.async {
         if flashErr { self.gridView.cellViews[flashIndex].errant = false }
         else        { self.gridView.cellViews[flashIndex].highlighted = false }
-        flashErr = Int.random(in:0...1) == 0
+        flashErr   = Int.random(in:0...1) == 0
         flashIndex = Int.random(in:0...80)
           
         if flashErr { self.gridView.cellViews[flashIndex].errant = true }

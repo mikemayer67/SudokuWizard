@@ -215,22 +215,15 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
     let digits = try! demo.sudokuGrid()
     
     resetPuzzle()
-    for i in 0...80
-    {
-      let c = gridView.cellViews[i]
-      sudokuWizardCellView(selected: c )
-      
-      if let d = digits[i/9][i%9] {
-        digitBox.select(digit: d)
-        c.state = .filled(d)
-      }
-      else {
-        digitBox.select(digit: nil)
+    for r in 0...8 {
+      for c in 0...8 {
+        if let d = digits[r][c] {
+          gridView.cellViews[9*r+c].state = .filled(d)
+        }
       }
     }
     
-    updateState()
-    
     handleBackgroundTap()
+    updateState()
   }
 }

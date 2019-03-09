@@ -63,6 +63,10 @@ class SudokuWizardCellView: UIView, UIGestureRecognizerDelegate
   
   var delegate : SudokuWizardCellViewDelegate?
   
+  private(set) var peers = Set<SudokuWizardCellView>()
+  
+  func addPeer(cell : SudokuWizardCellView) { peers.insert(cell) }
+  
   // MARK: -
   
   let defaultBackgroundColor   = UIColor.white

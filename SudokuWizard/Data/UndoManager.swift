@@ -12,6 +12,14 @@ protocol UndoableAction : class
   func undo() -> Bool
   func redo() -> Bool
   var label : String { get }
+  
+  func merge(_ action:UndoableAction) -> Bool
+}
+
+extension UndoableAction
+{
+  func canMerge(_ action:UndoableAction) -> Bool { return false }
+  func merge(_ action:UndoableAction) {}
 }
 
 protocol UndoManagerObserver
@@ -54,7 +62,11 @@ class UndoManager
   
   func add(_ action : UndoableAction) -> Void
   {
-    undoStack.append(action)
+    guard action.redo() else { return }
+    
+    if redoStack.isEmpty, let head = undoStack.first, head.merge(action) {}
+    else { undoStack.append(action) }
+    
     redoStack.removeAll()
     notifyObservers()
   }

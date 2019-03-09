@@ -9,7 +9,7 @@
 import UIKit
 
 class MainViewController: UIViewController, UINavigationControllerDelegate, SettingsViewControllerDelegate,
-  SudokuWizardCellViewDelegate, EditorBackgroundViewDelegate
+  SudokuWizardCellViewDelegate, EditorBackgroundViewDelegate, DigitButtonBoxDelegate, UndoManagerObserver
 {
   @IBOutlet weak var undoButton: IconButton!
   @IBOutlet weak var histButton: IconButton!
@@ -45,6 +45,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     
     self.navigationController?.delegate = self
     self.modalPresentationStyle = .overCurrentContext
+    
+    digitBox.delegate = self
+    gridView.errorFeedback = .conflict
+    
+    UndoManager.shared.add(observer: self)
   }
   
   override func viewDidLoad()
@@ -146,17 +151,22 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   
   @IBAction func handleUndoButton(_ sender: UIButton)
   {
-    print("Add handleUndoButton logic")
+    UndoManager.shared.undo()
   }
   
   @IBAction func handleRedoButton(_ sender: UIButton)
   {
-    print("Add handleRedoButton logic")
+    UndoManager.shared.redo()
   }
   
   @IBAction func handleHistoryButton(_ sender: UIButton)
   {
     print("Add history logic")
+  }
+  
+  func updateUndoState(using um: UndoManager)
+  {
+    updateUI()
   }
   
   @IBAction func handleActionButton(_ sender: UIButton)
@@ -189,18 +199,19 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   func sudokuWizardCellView(selected cell: SudokuWizardCellView)
   {
     gridView.selectedCell = cell
-    print("complete sudokuWizardCellView(selected cell: \(cell.row ?? -1), \(cell.col ?? -1)")
     
-//    var digit : Digit?
-//
-//    switch cell.state {
-//    case .locked(let d): digit = d
-//    case .filled(let d): digit = d
-//    case .empty: digit = nil
-//    }
-//    
-//    digitBox.select(digit: digit)
-//    updateUI()
+    switch cell.state {
+    case .locked(_):
+      digitBox.enabled = false
+    case .filled(let d):
+      digitBox.enabled = true
+      digitBox.select(digit: d)
+    case .empty:
+      digitBox.enabled = true
+      digitBox.select(digit: nil)
+    }
+    
+    updateUI()
   }
   
   func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView) {
@@ -212,6 +223,22 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   func restart(with newPuzzle:SudokuWizardGridView)
   {
     guard gridView.copyPuzzle(from: newPuzzle) else { return }
+  }
+  
+  func digitButtonBox(selected digit: Digit)
+  {
+    guard let c = gridView.selectedCell else { return }
+    
+    let action = ChangeDigit(grid: gridView, cell: c, digit: digit)
+    UndoManager.shared.add(action)
+  }
+  
+  func digitButtonBox(unselected digit: Digit)
+  {
+    guard let c = gridView.selectedCell else { return }
+    
+    let action = ChangeDigit(grid: gridView, cell: c, digit: nil)
+    UndoManager.shared.add(action)
   }
 }
 
