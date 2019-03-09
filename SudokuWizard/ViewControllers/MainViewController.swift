@@ -8,9 +8,10 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UINavigationControllerDelegate, SettingsViewControllerDelegate,
-  SudokuWizardCellViewDelegate, EditorBackgroundViewDelegate, DigitButtonBoxDelegate, UndoManagerObserver
+class MainViewController: UIViewController, UINavigationControllerDelegate
 {
+  // MARK: - Outlets
+  
   @IBOutlet weak var undoButton: IconButton!
   @IBOutlet weak var histButton: IconButton!
   @IBOutlet weak var redoButton: IconButton!
@@ -23,6 +24,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   
   @IBOutlet weak var newPuzzleButton: UIBarButtonItem!
   @IBOutlet weak var puzzleSettingsButton: UIBarButtonItem!
+  
+  @IBOutlet weak var undoPickerView: UIView!
+  @IBOutlet weak var undoPicker: UIPickerView!
+  
+  // MARK: - Enums and Typedefs
   
   enum NewPuzzleMethod
   {
@@ -37,6 +43,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     case pen
   }
   
+  // MARK: - View overrides
+  
   override func awakeFromNib()
   {
     super.awakeFromNib()
@@ -48,6 +56,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     
     digitBox.delegate = self
     gridView.errorFeedback = .conflict
+    undoPickerView.isHidden = true
     
     UndoManager.shared.add(observer: self)
   }
@@ -63,17 +72,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     updateUI()
     
     if gridView.isEmpty { startNewPuzzle(required:true) }
-  }
-  
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-  {
-    if let dest = segue.destination as? SettingsViewController {
-      dest.delegate = self
-    } else if let dest = segue.destination as? NewPuzzleViewController {
-      dest.puzzleController = self
-    }  else {
-      fatalError("Unknown segue destinatin: \(segue.destination)")
-    }
   }
   
   // MARK: - UI State Machine
@@ -93,81 +91,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
     pencilButton.inverted = entryTool == .pen
   }
   
-  func handleBackgroundTap()
-  {
-    gridView.selectedCell = nil
-    digitBox.deselectAll()
-    digitBox.enabled = false
-  }
-  
-  // MARK: - New Puzzle methods
-  
-  func navigationController(_ navigationController: UINavigationController,
-                            animationControllerFor operation: UINavigationController.Operation,
-                            from fromVC: UIViewController,
-                            to toVC: UIViewController
-    ) -> UIViewControllerAnimatedTransitioning?
-  {
-    if toVC is SettingsViewController  { return SettingsTransition(operation) }
-    if fromVC is SettingsViewController  { return SettingsTransition(operation) }
-    if toVC is NewPuzzleViewController { return NewPuzzleTransition(operation) }
-    if fromVC is NewPuzzleViewController { return NewPuzzleTransition(operation) }
-    return nil    
-  }
-  
-  func settingsViewController(update settings: Settings)
-  {
-    Settings.shared = settings
-    print("Settings changed -- do something with them")
-  }
-
-  
-  @IBAction func handleNewPuzzle(_ sender: UIBarButtonItem)
-  {
-    startNewPuzzle()
-  }
-  
-  func startNewPuzzle(required:Bool=false)
-  {
-    let alert = UIAlertController(title:"New Puzzle",
-                                  message:"How would you like to start the new puzzle",
-                                  preferredStyle:.alert)
-    
-    alert.addAction( UIAlertAction(title: "Enter It by Hand", style:.default)
-    { _ in self.performSegue(withIdentifier: "showNewPuzzle", sender: self) } )
-    alert.addAction( UIAlertAction(title: "Randomly Generated", style:.default)
-    { _ in self.performSegue(withIdentifier: "showRandomPuzzle", sender: self) } )
-    alert.addAction( UIAlertAction(title: "Captured with Camera", style:.default)
-    { _ in self.performSegue(withIdentifier: "showScanPuzzle", sender: self) } )
-    
-    if !required {
-      alert.addAction( UIAlertAction(title:"Cancel", style:.cancel) )
-    }
-    
-    self.present(alert,animated: true)
-  }
-  
   // MARK: - Button Handlers
-  
-  @IBAction func handleUndoButton(_ sender: UIButton)
-  {
-    UndoManager.shared.undo()
-  }
-  
-  @IBAction func handleRedoButton(_ sender: UIButton)
-  {
-    UndoManager.shared.redo()
-  }
-  
-  @IBAction func handleHistoryButton(_ sender: UIButton)
-  {
-    print("Add history logic")
-  }
-  
-  func updateUndoState(using um: UndoManager)
-  {
-    updateUI()
-  }
   
   @IBAction func handleActionButton(_ sender: UIButton)
   {
@@ -195,7 +119,72 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   {
     if entryTool == .pencil { entryTool = .pen }
   }
+}
+
+// MARK: - Segues
+
+extension MainViewController
+{
+  func navigationController(_ navigationController: UINavigationController,
+                            animationControllerFor operation: UINavigationController.Operation,
+                            from fromVC: UIViewController,
+                            to toVC: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning?
+  {
+    if toVC is SettingsViewController  { return SettingsTransition(operation) }
+    if fromVC is SettingsViewController  { return SettingsTransition(operation) }
+    if toVC is NewPuzzleViewController { return NewPuzzleTransition(operation) }
+    if fromVC is NewPuzzleViewController { return NewPuzzleTransition(operation) }
+    return nil
+  }
   
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+  {
+    if let dest = segue.destination as? SettingsViewController {
+      dest.delegate = self
+    } else if let dest = segue.destination as? NewPuzzleViewController {
+      dest.puzzleController = self
+    }  else {
+      fatalError("Unknown segue destinatin: \(segue.destination)")
+    }
+  }
+  
+  @IBAction func handleNewPuzzle(_ sender: UIBarButtonItem)
+  {
+    startNewPuzzle()
+  }
+  
+  func startNewPuzzle(required:Bool=false)
+  {
+    let alert = UIAlertController(title:"New Puzzle",
+                                  message:"How would you like to start the new puzzle",
+                                  preferredStyle:.alert)
+    
+    alert.addAction( UIAlertAction(title: "Enter It by Hand", style:.default)
+    { _ in self.performSegue(withIdentifier: "showNewPuzzle", sender: self) } )
+    alert.addAction( UIAlertAction(title: "Randomly Generated", style:.default)
+    { _ in self.performSegue(withIdentifier: "showRandomPuzzle", sender: self) } )
+    alert.addAction( UIAlertAction(title: "Captured with Camera", style:.default)
+    { _ in self.performSegue(withIdentifier: "showScanPuzzle", sender: self) } )
+    
+    if !required {
+      alert.addAction( UIAlertAction(title:"Cancel", style:.cancel) )
+    }
+    
+    self.present(alert,animated: true)
+  }
+  
+  func restart(with newPuzzle:SudokuWizardGridView)
+  {
+    guard gridView.copyPuzzle(from: newPuzzle) else { return }
+  }
+}
+
+// MARK: - SudokuWizard CellViews
+
+extension MainViewController : SudokuWizardCellViewDelegate
+{
   func sudokuWizardCellView(selected cell: SudokuWizardCellView)
   {
     gridView.selectedCell = cell
@@ -217,14 +206,24 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView) {
     gridView.track(touch: touch)
   }
-  
-  // MARK: - Puzzle Logic
-  
-  func restart(with newPuzzle:SudokuWizardGridView)
+}
+
+// MARK: - Background View
+
+extension MainViewController : EditorBackgroundViewDelegate
+{
+  func handleBackgroundTap()
   {
-    guard gridView.copyPuzzle(from: newPuzzle) else { return }
+    gridView.selectedCell = nil
+    digitBox.deselectAll()
+    digitBox.enabled = false
   }
-  
+}
+
+// MARK: - Digit Box
+
+extension MainViewController : DigitButtonBoxDelegate
+{
   func digitButtonBox(selected digit: Digit)
   {
     guard let c = gridView.selectedCell else { return }
@@ -242,3 +241,141 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, Sett
   }
 }
 
+// MARK: - Undo Manager
+
+extension MainViewController : UndoManagerObserver, UIPickerViewDelegate, UIPickerViewDataSource
+{
+  @IBAction func handleUndoButton(_ sender: UIButton)
+  {
+    UndoManager.shared.undo()
+  }
+  
+  @IBAction func handleRedoButton(_ sender: UIButton)
+  {
+    UndoManager.shared.redo()
+  }
+  
+  @IBAction func handleHistoryButton(_ sender: UIButton)
+  {
+    let hist = UndoManager.shared.history()
+    let redoCount = hist.redo?.count ?? 0
+    let undoCount = hist.undo?.count ?? 0
+    
+    let bgView = undoPicker.superview
+    if let bgLayer = bgView?.layer
+    {
+      bgLayer.shadowPath = UIBezierPath(rect: bgLayer.bounds).cgPath
+      bgLayer.shadowColor = UIColor.black.cgColor
+      bgLayer.shadowRadius = 5.0
+      bgLayer.shadowOpacity = 0.5
+      bgLayer.masksToBounds = false
+    }
+
+    let curRow = undoCount > 0 ? redoCount : redoCount - 1
+    undoPicker.reloadAllComponents()
+    undoPicker.selectRow(curRow, inComponent: 0, animated: false)
+
+    bgView?.alpha = 0.0
+    undoPickerView.isHidden = false
+    UIView.animate(withDuration: 0.2) { bgView?.alpha = 1.0 }
+  }
+  
+  @IBAction func handlePickerOK(_ sender:UIButton)
+  {
+    let row = undoPicker.selectedRow(inComponent: 0)
+    
+    let um = UndoManager.shared
+    let hist = um.history()
+    let redoCount = hist.redo?.count ?? 0
+    
+    if row < redoCount
+    {
+      for _ in 0..<(redoCount - row) { um.redo() }
+    }
+    else
+    {
+      for _ in 0...(row-redoCount) { um.undo() }
+    }
+    
+    hidePickerView()
+  }
+  
+  @IBAction func handlePickerCancel(_ sender:UIButton)
+  {
+    hidePickerView()
+  }
+  
+  func updateUndoState(using um: UndoManager)
+  {
+    updateUI()
+  }
+  
+  func hidePickerView()
+  {
+    let bgView = undoPicker.superview
+    UIView.animate(withDuration: 0.2,
+                   animations:{ bgView?.alpha = 0.0 },
+                   completion:{ _ in bgView?.alpha = 1.0; self.undoPickerView.isHidden = true }
+    )
+  }
+  
+  func numberOfComponents(in pickerView: UIPickerView) -> Int
+  {
+    return 1
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+  {
+    let hist = UndoManager.shared.history()
+    let undoCount = hist.undo?.count ?? 0
+    let redoCount = hist.redo?.count ?? 0
+    let numRows = undoCount + redoCount
+    return numRows
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
+  {
+    let hist = UndoManager.shared.history()
+    let redoCount = hist.redo?.count ?? 0
+    let undoCount = hist.undo?.count ?? 0
+    
+    var pickerLabel: UILabel? = (view as? UILabel)
+    if pickerLabel == nil {
+      pickerLabel = UILabel()
+//      pickerLabel?.font = UIFont(name: "<Your Font Name>", size: <Font Size>)
+      pickerLabel?.textAlignment = .center
+    }
+    
+    pickerLabel?.text = ""
+    
+    if row < redoCount
+    {
+      let text = hist.redo![row]
+      let prep = row == redoCount - 1 ? "" : "to "
+      pickerLabel?.text = "Redo \(prep)\(text)"
+      pickerLabel?.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
+    }
+    else if row >= redoCount
+    {
+      let undoIndex = row - redoCount
+      let text = hist.undo![undoCount - 1 - undoIndex]
+      let prep = row == redoCount ? "" : "to "
+      pickerLabel?.text = "Undo \(prep)\(text)"
+      pickerLabel?.textColor = UIColor.blue
+    }
+    
+    return pickerLabel!
+  }
+}
+
+
+// MARK: - Settings
+
+extension MainViewController : SettingsViewControllerDelegate
+{
+  func settingsViewController(update settings: Settings)
+  {
+    Settings.shared = settings
+    print("Settings changed -- do something with them")
+  }
+}

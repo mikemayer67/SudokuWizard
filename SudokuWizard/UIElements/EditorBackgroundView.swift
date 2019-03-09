@@ -32,6 +32,7 @@ class EditorBackgroundView : UIView
   {
     return CAGradientLayer.self
   }
+  
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     delegate?.handleBackgroundTap()
   }

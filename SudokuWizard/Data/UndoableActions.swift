@@ -10,7 +10,7 @@ import Foundation
 
 class ChangeDigit : UndoableAction
 {
-  let label : String
+  private(set) var label : String
   
   let grid     : SudokuWizardGridView
   let cell     : SudokuWizardCellView
@@ -27,7 +27,8 @@ class ChangeDigit : UndoableAction
     
     self.grid = grid
     self.cell  = cell
-    self.label = digit == nil ? "Remove Digit" : "Add \(digit!)"
+    self.label = digit == nil ? "clearing of " : "add \(digit!) to "
+    self.label = self.label + "(r\(cell.row! + 1),c\(cell.col! + 1))"
     
     if self.oldDigit != nil { oldMarks[cell] = cell.marks }
     
@@ -66,6 +67,7 @@ class ChangeDigit : UndoableAction
     guard cell === a.cell else { return false }
     
     newDigit = a.newDigit
+    label = a.label
     
     return true
   }

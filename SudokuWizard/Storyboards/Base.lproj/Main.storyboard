@@ -260,12 +260,75 @@
                                     <constraint firstAttribute="trailing" secondItem="TmA-gC-CBQ" secondAttribute="trailing" id="teJ-zb-I24"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Meo-WN-65J" customClass="TransparentBackgroundView" customModule="SudokuWizard" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdi-ON-b9S">
+                                        <rect key="frame" x="0.0" y="370" width="375" height="233"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XcA-RJ-ab2">
+                                                <rect key="frame" x="10" y="200" width="172.5" height="33"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <state key="normal" title="Cancel">
+                                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="handlePickerCancel:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fGw-Qz-4xR"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m0u-t5-X2L">
+                                                <rect key="frame" x="192.5" y="200" width="172.5" height="33"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <state key="normal" title="OK">
+                                                    <color key="titleColor" red="0.026243810409999999" green="0.25389355460000002" blue="0.68315326710000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="handlePickerOK:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nkF-q1-XaB"/>
+                                                </connections>
+                                            </button>
+                                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rbb-Rh-jG6">
+                                                <rect key="frame" x="10" y="0.0" width="355" height="200"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="200" id="kIx-yb-wF8"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="jqH-N4-4Cy"/>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="4hh-lm-XJI"/>
+                                                </connections>
+                                            </pickerView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="m0u-t5-X2L" secondAttribute="trailing" constant="10" id="9Yb-O4-WpV"/>
+                                            <constraint firstAttribute="bottom" secondItem="m0u-t5-X2L" secondAttribute="bottom" id="GsP-dN-bik"/>
+                                            <constraint firstItem="rbb-Rh-jG6" firstAttribute="top" secondItem="fdi-ON-b9S" secondAttribute="top" id="H3g-l1-iyu"/>
+                                            <constraint firstItem="XcA-RJ-ab2" firstAttribute="top" secondItem="rbb-Rh-jG6" secondAttribute="bottom" id="MNs-PB-fLe"/>
+                                            <constraint firstAttribute="bottom" secondItem="XcA-RJ-ab2" secondAttribute="bottom" id="ZH6-eP-8B8"/>
+                                            <constraint firstItem="rbb-Rh-jG6" firstAttribute="leading" secondItem="fdi-ON-b9S" secondAttribute="leading" constant="10" id="aFs-xb-Wpu"/>
+                                            <constraint firstAttribute="trailing" secondItem="rbb-Rh-jG6" secondAttribute="trailing" constant="10" id="aqn-UA-qxX"/>
+                                            <constraint firstItem="m0u-t5-X2L" firstAttribute="leading" secondItem="XcA-RJ-ab2" secondAttribute="trailing" constant="10" id="mFM-ju-bGb"/>
+                                            <constraint firstItem="XcA-RJ-ab2" firstAttribute="width" secondItem="m0u-t5-X2L" secondAttribute="width" id="w4k-EL-LbV"/>
+                                            <constraint firstItem="XcA-RJ-ab2" firstAttribute="leading" secondItem="fdi-ON-b9S" secondAttribute="leading" constant="10" id="zCj-tE-UdA"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="fdi-ON-b9S" secondAttribute="trailing" id="chs-S7-sHO"/>
+                                    <constraint firstAttribute="bottom" secondItem="fdi-ON-b9S" secondAttribute="bottom" id="eQ7-bL-H7U"/>
+                                    <constraint firstItem="fdi-ON-b9S" firstAttribute="leading" secondItem="Meo-WN-65J" secondAttribute="leading" id="hSh-zd-13b"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstItem="0nK-I0-KSv" firstAttribute="top" secondItem="mZY-9o-LmA" secondAttribute="bottom" id="29G-N6-pce"/>
+                            <constraint firstItem="Meo-WN-65J" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="2k3-Xp-7kS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mZY-9o-LmA" secondAttribute="trailing" id="6p8-kW-yPX"/>
+                            <constraint firstItem="Meo-WN-65J" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="AWk-fO-aGh"/>
                             <constraint firstItem="mZY-9o-LmA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="EUn-sY-7sH"/>
+                            <constraint firstItem="Meo-WN-65J" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Gca-Rr-r0f"/>
                             <constraint firstItem="mZY-9o-LmA" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="VIw-pp-tJK"/>
+                            <constraint firstItem="Meo-WN-65J" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Ymd-RT-8R3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0nK-I0-KSv" secondAttribute="bottom" constant="20" id="dKt-Mv-Ngu"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0nK-I0-KSv" secondAttribute="trailing" constant="20" id="uqG-7c-YeP"/>
                             <constraint firstItem="0nK-I0-KSv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="zKd-Fz-gpz"/>
@@ -307,6 +370,8 @@
                         <outlet property="puzzleSettingsButton" destination="vsN-Q1-QrK" id="dhQ-c5-ajW"/>
                         <outlet property="redoButton" destination="gWz-yC-jRF" id="dYr-5W-xvf"/>
                         <outlet property="undoButton" destination="CGf-Sm-nrl" id="fXA-pZ-yo5"/>
+                        <outlet property="undoPicker" destination="rbb-Rh-jG6" id="B6q-Ru-7lf"/>
+                        <outlet property="undoPickerView" destination="Meo-WN-65J" id="bLP-og-dim"/>
                         <segue destination="Sw4-EA-bfS" kind="show" identifier="showNewPuzzle" id="Ml1-Zw-KAI"/>
                         <segue destination="Mrr-Mm-ygk" kind="show" identifier="showScanPuzzle" id="WhI-5f-UZn"/>
                         <segue destination="9Tc-y0-J2h" kind="show" identifier="showRandomPuzzle" id="72l-BF-TIo"/>
