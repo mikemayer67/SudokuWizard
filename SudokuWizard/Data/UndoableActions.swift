@@ -46,6 +46,7 @@ class ChangeDigit : UndoableAction
     
     for (cell,marks) in oldMarks { cell.set(marks:marks) }
     
+    cell.selected = true
     grid.findAllErrors()
     
     return true
@@ -56,6 +57,7 @@ class ChangeDigit : UndoableAction
     if let d = newDigit { cell.state = .filled(d) }
     else                { cell.state = .empty     }
 
+    cell.selected = true
     grid.findAllErrors()
     
     return true
@@ -69,6 +71,58 @@ class ChangeDigit : UndoableAction
     newDigit = a.newDigit
     label = a.label
     
+    return true
+  }
+}
+
+class ResetPuzzle : UndoableAction
+{  
+  let label : String = "puzzle restart"
+  
+  let grid : SudokuWizardGridView
+  
+  private(set) var priorState = Dictionary<SudokuWizardCellView,(digit:Digit?,marks:[Bool])>()
+  
+  init(grid:SudokuWizardGridView)
+  {
+    self.grid = grid
+    for cell in grid.cellViews
+    {
+      if case .locked = cell.state {} else
+      {
+        priorState[cell] = (digit:cell.digit, marks:cell.marks)
+      }
+    }
+  }
+  
+  func undo() -> Bool
+  {
+    for cell in grid.cellViews
+    {
+      if let ps = priorState[cell]
+      {
+        if let d = ps.digit { cell.state = .filled(d) }
+        else                { cell.state = .empty     }
+        cell.set(marks: ps.marks)
+      }
+    }
+    grid.selectedCell = nil
+    grid.findAllErrors()
+    return true
+  }
+  
+  func redo() -> Bool
+  {
+    for cell in grid.cellViews
+    {
+      if case .locked = cell.state {} else
+      {
+        cell.clearAllMarks()
+        cell.state = .empty
+      }
+    }
+    grid.selectedCell = nil
+    grid.findAllErrors()
     return true
   }
 }

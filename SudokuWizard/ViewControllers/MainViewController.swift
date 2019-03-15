@@ -89,6 +89,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate
     
     penButton.inverted    = entryTool == .pencil
     pencilButton.inverted = entryTool == .pen
+    
+    updateDigitBox()
   }
   
   // MARK: - Button Handlers
@@ -100,7 +102,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate
                                   preferredStyle: .actionSheet)
     
     alert.addAction( UIAlertAction(title: "Start Over", style: .default)
-    { _ in print("Restart Puzzle") })
+    { _ in
+      let action = ResetPuzzle(grid: self.gridView)
+      UndoManager.shared.add(action)
+    })
+
     alert.addAction( UIAlertAction(title: "Erase All Marks", style:.default)
     { _ in print( "Clear All Marks" ) })
     alert.addAction( UIAlertAction(title: "Compute All Marks", style:.default)
@@ -188,19 +194,14 @@ extension MainViewController : SudokuWizardCellViewDelegate
   func sudokuWizardCellView(selected cell: SudokuWizardCellView)
   {
     gridView.selectedCell = cell
-    
-    switch cell.state {
-    case .locked(_):
-      digitBox.enabled = false
-    case .filled(let d):
-      digitBox.enabled = true
-      digitBox.select(digit: d)
-    case .empty:
-      digitBox.enabled = true
-      digitBox.select(digit: nil)
-    }
-    
     updateUI()
+  }
+  
+  func selectCell(_ cell:SudokuWizardCellView?)
+  {
+    gridView.selectedCell = cell
+    
+
   }
   
   func sudokuWizardCellView(touch: UITouch, outside cell: SudokuWizardCellView) {
@@ -215,8 +216,7 @@ extension MainViewController : EditorBackgroundViewDelegate
   func handleBackgroundTap()
   {
     gridView.selectedCell = nil
-    digitBox.deselectAll()
-    digitBox.enabled = false
+    updateUI()
   }
 }
 
@@ -238,6 +238,27 @@ extension MainViewController : DigitButtonBoxDelegate
     
     let action = ChangeDigit(grid: gridView, cell: c, digit: nil)
     UndoManager.shared.add(action)
+  }
+  
+  func updateDigitBox()
+  {
+    if let cell = gridView.selectedCell {
+      switch cell.state {
+      case .locked(_):
+        digitBox.enabled = false
+      case .filled(let d):
+        digitBox.enabled = true
+        digitBox.select(digit: d)
+      case .empty:
+        digitBox.enabled = true
+        digitBox.select(digit: nil)
+      }
+    }
+    else
+    {
+      digitBox.deselectAll()
+      digitBox.enabled = false
+    }
   }
 }
 
@@ -351,16 +372,14 @@ extension MainViewController : UndoManagerObserver, UIPickerViewDelegate, UIPick
     if row < redoCount
     {
       let text = hist.redo![row]
-      let prep = row == redoCount - 1 ? "" : "to "
-      pickerLabel?.text = "Redo \(prep)\(text)"
+      pickerLabel?.text = "Redo \(text)"
       pickerLabel?.textColor = UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
     }
     else if row >= redoCount
     {
       let undoIndex = row - redoCount
       let text = hist.undo![undoCount - 1 - undoIndex]
-      let prep = row == redoCount ? "" : "to "
-      pickerLabel?.text = "Undo \(prep)\(text)"
+      pickerLabel?.text = "Undo \(text)"
       pickerLabel?.textColor = UIColor.blue
     }
     

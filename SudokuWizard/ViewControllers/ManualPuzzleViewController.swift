@@ -225,5 +225,6 @@ class ManualPuzzleViewController: NewPuzzleViewController, EditorBackgroundViewD
     
     handleBackgroundTap()
     updateState()
+    handleStart(startButton)
   }
 }
